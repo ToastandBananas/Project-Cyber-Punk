@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour {
             set { _currentHealth = Mathf.Clamp(value, 0f, maxHealth); }
         }
 
+        public float damage = 20;
+
         public void Init()
         {
             currentHealth = maxHealth * startHealthPercent;
@@ -24,6 +26,11 @@ public class Enemy : MonoBehaviour {
     }
 
     public EnemyStats enemyStats = new EnemyStats();
+
+    public Transform deathParticles;
+
+    // public float shakeAmt = 0.1f;
+    // public float shakeLength = 0.3f;
 
     [Header("Optional: ")][SerializeField] private StatusIndicator statusIndicator;
 
@@ -35,9 +42,14 @@ public class Enemy : MonoBehaviour {
         {
             statusIndicator.SetHealth(enemyStats.currentHealth, enemyStats.maxHealth); // Set health to max health at start
         }
+
+        if (deathParticles == null)
+        {
+            Debug.LogError("No death particles referenced on Enemy");
+        }
     }
 
-    public void DamageEnemy(int damage)
+    public void DamageEnemy(float damage)
     {
         enemyStats.currentHealth -= damage;
 
@@ -49,6 +61,16 @@ public class Enemy : MonoBehaviour {
         if (statusIndicator != null)
         {
             statusIndicator.SetHealth(enemyStats.currentHealth, enemyStats.maxHealth); // Subtract damage from health if damage doesn't kill enemy
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D _colliderInfo) // Damage player on collision with enemy
+    {
+        Player _player = _colliderInfo.collider.GetComponent<Player>();
+
+        if(_player != null)
+        {
+            _player.DamagePlayer(enemyStats.damage);
         }
     }
 }

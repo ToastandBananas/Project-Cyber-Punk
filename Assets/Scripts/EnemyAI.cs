@@ -5,7 +5,7 @@ using Pathfinding;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
 
-public class AlienAI : MonoBehaviour {
+public class EnemyAI : MonoBehaviour {
 
     // What to chase
     public Transform target;

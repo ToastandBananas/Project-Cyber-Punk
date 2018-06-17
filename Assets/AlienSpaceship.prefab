@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212776679307365574}
   - component: {fileID: 114570258291850004}
   - component: {fileID: 50958630762273124}
-  - component: {fileID: 114385129109889594}
   - component: {fileID: 58246582835374662}
   - component: {fileID: 114826661581121376}
+  - component: {fileID: 114598078958049110}
   m_Layer: 0
   m_Name: AlienSpaceship
   m_TagString: Enemy
@@ -155,23 +155,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 5
---- !u!114 &114385129109889594
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1019179602100098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 668e0d08648fc6b4caca96971fab5055, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  updateRate: 2
-  speed: 600
-  fMode: 0
-  pathIsEnded: 0
-  nextWaypointDistance: 3
 --- !u!114 &114457736683990352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -258,6 +241,23 @@ MonoBehaviour:
   traversableTags: -1
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask: -1
+--- !u!114 &114598078958049110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019179602100098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668e0d08648fc6b4caca96971fab5055, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  updateRate: 2
+  speed: 300
+  fMode: 0
+  pathIsEnded: 0
+  nextWaypointDistance: 3
 --- !u!114 &114666110679312780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -301,6 +301,11 @@ MonoBehaviour:
   enemyStats:
     maxHealth: 100
     startHealthPercent: 1
+    damage: 20
+  deathParticles: {fileID: 4429038686353620, guid: b3233578f0502b841b8d34ad332ac5c1,
+    type: 2}
+  shakeAmt: 0.1
+  shakeLength: 0.1
   statusIndicator: {fileID: 114666110679312780}
 --- !u!212 &212776679307365574
 SpriteRenderer:
@@ -396,7 +401,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.01, y: 1.308}
+  m_AnchoredPosition: {x: 0, y: 1.308}
   m_SizeDelta: {x: 61.8497, y: 16.7196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224505571874763786

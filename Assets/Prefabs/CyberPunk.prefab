@@ -271,7 +271,7 @@ AudioSource:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1734231622000224}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -535,7 +535,7 @@ MonoBehaviour:
   effectSpawnRate: 10
   camShakeAmt: 0.05
   camShakeLength: 0.1
-  shootSound: {fileID: 8300000, guid: 21c74128d2462f24896a37c89808b3ea, type: 3}
+  gunfireSoundName: PistolGunfire
 --- !u!114 &114911755225710096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -783,6 +783,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 37.8}
+  m_AnchoredPosition: {x: 0, y: 46}
   m_SizeDelta: {x: 61.8497, y: 16.7196}
   m_Pivot: {x: 0.5, y: 0.5}

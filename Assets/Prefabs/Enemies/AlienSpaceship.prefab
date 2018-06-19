@@ -304,8 +304,6 @@ MonoBehaviour:
     damage: 20
   deathParticles: {fileID: 4429038686353620, guid: b3233578f0502b841b8d34ad332ac5c1,
     type: 2}
-  shakeAmt: 0.1
-  shakeLength: 0.1
   statusIndicator: {fileID: 114666110679312780}
 --- !u!212 &212776679307365574
 SpriteRenderer:

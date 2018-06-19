@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 114065641153834954}
   - component: {fileID: 114119529712417298}
   - component: {fileID: 114962056705339610}
+  - component: {fileID: 114738745577848144}
   m_Layer: 0
   m_Name: _GM
   m_TagString: GM
@@ -186,6 +187,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 0}
+--- !u!114 &114738745577848144
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1339053200500200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd81891259dff94fb94e03db0ea4072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - soundName: PistolGunfire
+    clip: {fileID: 8300000, guid: 21c74128d2462f24896a37c89808b3ea, type: 3}
+    volume: 1
+    pitch: 1
 --- !u!114 &114962056705339610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -198,18 +215,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - name: Alien Invasion
-    enemy: {fileID: 4898415585683840, guid: a055d446d654ce84c8ff94f0da6e7f74, type: 2}
-    count: 2
-    rate: 1
-  - name: Alien Invasion 2.0
-    enemy: {fileID: 4898415585683840, guid: a055d446d654ce84c8ff94f0da6e7f74, type: 2}
-    count: 3
-    rate: 1.5
-  - name: Run!!!
-    enemy: {fileID: 4898415585683840, guid: a055d446d654ce84c8ff94f0da6e7f74, type: 2}
-    count: 5
-    rate: 2
+  - name: 
+    enemy: {fileID: 0}
+    count: 0
+    rate: 0
   spawnPoints:
   - {fileID: 4492278683577482}
   - {fileID: 4322041187564840}

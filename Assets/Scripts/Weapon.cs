@@ -21,14 +21,18 @@ public class Weapon : MonoBehaviour {
     public float camShakeLength = 0.1f;
     CameraShake camShake;
 
-    public AudioClip shootSound;
-    private AudioSource gunFire;
+    // public AudioClip shootSound;
+    // private AudioSource gunFire;
+
+    // Cache
+    private AudioManager audioManager;
+    public string gunfireSoundName;
 
     bool isShooting = false;
 
     // Use this for initialization
     void Awake () {
-        gunFire = GetComponent<AudioSource>();
+        // gunFire = GetComponent<AudioSource>();
 
         firePoint = transform.Find("FirePoint");
         if (firePoint == null)
@@ -43,6 +47,13 @@ public class Weapon : MonoBehaviour {
         if (camShake == null)
         {
             Debug.LogError("No CameraShake script found on GM object.");
+        }
+
+        // Caching
+        audioManager = AudioManager.instance;
+        if (audioManager == null)
+        {
+            Debug.LogError("No AudioManager found in the scene");
         }
     }
 
@@ -128,7 +139,8 @@ public class Weapon : MonoBehaviour {
 
     void PlayShootSound()
     {
-        gunFire.PlayOneShot(shootSound, 1f);
+        //gunFire.PlayOneShot(shootSound, 1f);
+        audioManager.PlaySound(gunfireSoundName);
     }
 
     void CreateMuzzleFlash()

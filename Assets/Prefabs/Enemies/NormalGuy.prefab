@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50664248015666570}
   - component: {fileID: 61252411806855964}
   m_Layer: 0
-  m_Name: Player Guy
+  m_Name: NormalGuy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,10 +151,12 @@ MonoBehaviour:
   runSpeed: 5
   jumpPower: 5
   facingRight: 1
+  isAiming: 0
   groundCheck: {fileID: 4653290136381480}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4294967039
+  arm: {fileID: 0}
 --- !u!212 &212151803800891972
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -188,7 +190,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -640138859
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300012, guid: 40ed488550c90a6488c4dab6c4024612, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

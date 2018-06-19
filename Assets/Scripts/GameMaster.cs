@@ -20,11 +20,21 @@ public class GameMaster : MonoBehaviour {
 
     public CameraShake cameraShake;
 
+    // Cache
+    private AudioManager audioManager;
+
     void Start()
     {
         if (cameraShake == null)
         {
             Debug.LogError("No camera shake referenced in GameMaster.");
+        }
+
+        // Caching
+        audioManager = AudioManager.instance;
+        if (audioManager == null)
+        {
+            Debug.LogError("No AudioManager found in the scene");
         }
     }
 

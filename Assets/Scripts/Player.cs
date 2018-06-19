@@ -7,8 +7,8 @@ public class Player : MonoBehaviour {
     [System.Serializable]
     public class PlayerStats
     {
-        public float maxHealth = 100;
-        public float startHealthPercent = 1f;
+        public float maxHealth = 1;
+        [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent = 1f;
 
         private float _currentHealth;
         public float currentHealth
@@ -27,6 +27,11 @@ public class Player : MonoBehaviour {
 
     public int fallBoundary = -20;
 
+    public string deathSoundName = "DeathVoice";
+    public string damageSoundName = "DamageVoice";
+
+    private AudioManager audioManager;
+
     [SerializeField] private StatusIndicator statusIndicator;
 
     void Start()
@@ -39,6 +44,12 @@ public class Player : MonoBehaviour {
         else
         {
             statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);
+        }
+
+        audioManager = AudioManager.instance;
+        if (audioManager == null)
+        {
+            Debug.LogError("No audio manager in scene.");
         }
     }
 
@@ -56,7 +67,16 @@ public class Player : MonoBehaviour {
         
         if(playerStats.currentHealth <= 0)
         {
+            // Play death sound
+            audioManager.PlaySound(deathSoundName);
+
+            // Kill player
             GameMaster.KillPlayer(this);
+        }
+        else
+        {
+            // Play damage sound
+            audioManager.PlaySound(damageSoundName);
         }
 
         statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);

@@ -7,8 +7,8 @@ public class Enemy : MonoBehaviour {
     [System.Serializable]
     public class EnemyStats
     {
-        public float maxHealth = 100;
-        public float startHealthPercent = 1f;
+        public float maxHealth = 1;
+        [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent = 1f;
 
         private float _currentHealth;
         public float currentHealth
@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour {
             set { _currentHealth = Mathf.Clamp(value, 0f, maxHealth); }
         }
 
-        public float damage = 20;
+        public float damage = 1;
 
         public void Init()
         {
@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour {
     public EnemyStats enemyStats = new EnemyStats();
 
     public Transform deathParticles;
+
+    public string deathSoundName = "Explosion";
 
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;

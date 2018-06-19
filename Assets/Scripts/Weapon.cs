@@ -4,7 +4,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour {
     
     public float fireRate = 0;
-    public int damage = 10;
+    public int damage = 1;
     public LayerMask whatToHit;
 
     public Transform BulletTrailPrefab;
@@ -72,7 +72,7 @@ public class Weapon : MonoBehaviour {
                 if (Input.GetButtonDown("Fire1")) // Left click while holding right click
                 {
                     Shoot();
-                    PlayShootSound();
+                    audioManager.PlaySound(gunfireSoundName);
                 }
             }
             else
@@ -81,7 +81,7 @@ public class Weapon : MonoBehaviour {
                 {
                     timeToFire = Time.time + 1 / fireRate;
                     Shoot();
-                    PlayShootSound();
+                    audioManager.PlaySound(gunfireSoundName);
                 }
             }
         }
@@ -135,12 +135,6 @@ public class Weapon : MonoBehaviour {
     {
         CreateBulletTrail(hitPos, hitNormal);
         CreateMuzzleFlash();
-    }
-
-    void PlayShootSound()
-    {
-        //gunFire.PlayOneShot(shootSound, 1f);
-        audioManager.PlaySound(gunfireSoundName);
     }
 
     void CreateMuzzleFlash()

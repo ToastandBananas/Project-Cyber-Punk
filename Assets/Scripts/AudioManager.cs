@@ -6,11 +6,13 @@ public class Sound {
     public string soundName;
     public AudioClip clip;
 
-    [Range(0f, 1f)] public float volume = 1f;
+    [Range(0f, 1.5f)] public float volume = 1f;
     [Range(0f, 1.5f)] public float pitch = 1f;
 
     [Range(0f, 0.5f)] public float randomVolume;
     [Range(0f, 0.5f)] public float randomPitch;
+
+    public bool loop = false;
 
     private AudioSource source;
 
@@ -18,6 +20,7 @@ public class Sound {
     {
         source = _source;
         source.clip = clip;
+        source.loop = loop;
     }
 
     public void Play()
@@ -27,6 +30,12 @@ public class Sound {
 
         source.Play();
     }
+
+    public void Stop()
+    {
+        source.Stop();
+    }
+
 }
 
 public class AudioManager : MonoBehaviour {
@@ -40,11 +49,15 @@ public class AudioManager : MonoBehaviour {
     {
         if (instance != null)
         {
-            Debug.LogError("More than one AudioManager in the scene.");
+            if (instance != this)
+            {
+                Destroy(this.gameObject);
+            }
         }
         else
         {
             instance = this;
+            DontDestroyOnLoad(this);
         }
     }
 
@@ -56,6 +69,8 @@ public class AudioManager : MonoBehaviour {
             _go.transform.SetParent(this.transform);
             sounds[i].SetSource (_go.AddComponent<AudioSource>());
         }
+
+        PlaySound("Music1");
     }
 
     public void PlaySound(string _soundName)
@@ -65,6 +80,21 @@ public class AudioManager : MonoBehaviour {
             if (sounds[i].soundName == _soundName)
             {
                 sounds[i].Play();
+                return;
+            }
+        }
+
+        // No sound with _soundName
+        Debug.LogWarning("AudioManager: Sound not found in list: " + _soundName);
+    }
+
+    public void StopSound(string _soundName)
+    {
+        for (int i = 0; i < sounds.Length; i++)
+        {
+            if (sounds[i].soundName == _soundName)
+            {
+                sounds[i].Stop();
                 return;
             }
         }

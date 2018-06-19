@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float walkSpeed = 2.3f;
     [SerializeField] float runSpeed = 5f;
     [SerializeField] float jumpPower = 5f;
+    [SerializeField] string landingSoundName = "LandingFootsteps";
 
     float speedFactor = 2.3f;
     float moveSpeed;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     bool onGround = false;
     public bool facingRight = true;
     public bool isAiming = false;
+    private bool inAir = false;
 
     public Transform groundCheck;
     float groundRadius = 0.1f;
@@ -24,26 +26,63 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigidBody;
     public GameObject arm;
 
+    AudioManager audioManager;
+
     void Start()
     {
         playerSpriteRenderer = GetComponent <SpriteRenderer>();
         playerAnim = gameObject.GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.freezeRotation = true;
-        arm = transform.Find("Arm").gameObject;
+
+        audioManager = AudioManager.instance;
+        if(audioManager == null)
+        {
+            Debug.LogError("No audio manager found.");
+        }
     }
 
     void Update()
     {
         Flip();
         CheckIfAiming();
+        MoveHorizontally();
     }
 
     void FixedUpdate()
     {
-        MoveHorizontally();
+        PlayLandingSoundUponLanding();
         Jump();
         GetPlayerVelocity();
+    }
+
+    private void PlayLandingSoundUponLanding()
+    {
+        //bool wasGrounded = onGround;
+
+        /*if (wasGrounded != onGround && onGround == true)
+        {
+            audioManager.PlaySound(landingSoundName);
+        }*/
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundRadius, whatIsGround);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i].gameObject != gameObject)
+                onGround = true;
+        }
+
+        if (!onGround && !inAir)
+        {
+            inAir = true;
+        }
+
+        if (onGround && inAir)
+        {
+            inAir = false;
+            audioManager.PlaySound(landingSoundName);
+        }
     }
 
     void GetPlayerVelocity()
@@ -54,6 +93,7 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         onGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+
         playerAnim.SetBool("onGround", onGround);
 
         if (onGround && Input.GetButtonDown("Jump"))

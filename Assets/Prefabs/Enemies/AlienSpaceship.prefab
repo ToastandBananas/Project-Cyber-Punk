@@ -299,11 +299,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyStats:
-    maxHealth: 100
+    maxHealth: 1
     startHealthPercent: 1
-    damage: 20
+    damage: 1
   deathParticles: {fileID: 4429038686353620, guid: b3233578f0502b841b8d34ad332ac5c1,
     type: 2}
+  deathSoundName: Explosion
   statusIndicator: {fileID: 114666110679312780}
 --- !u!212 &212776679307365574
 SpriteRenderer:

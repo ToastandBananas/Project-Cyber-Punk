@@ -58,8 +58,14 @@ public class GameMaster : MonoBehaviour {
 
     public void _KillEnemy(Enemy _enemy)
     {
+        // Death sound
+        audioManager.PlaySound(_enemy.deathSoundName);
+
+        // Add particles
         Transform _clone = Instantiate(_enemy.deathParticles, _enemy.transform.position, Quaternion.identity) as Transform;
         Destroy(_clone.gameObject, 3f);
+
+        // Camera Shake
         // cameraShake.Shake(_enemy.shakeAmt, _enemy.shakeLength);
         Destroy(_enemy.gameObject);
     }

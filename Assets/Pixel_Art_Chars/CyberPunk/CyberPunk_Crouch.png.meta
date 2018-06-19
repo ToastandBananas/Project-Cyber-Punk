@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: d910b28c70af41c49a022f63b23a1293
-timeCreated: 1473786094
-licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: CyberPunk_Crouch_1_0
@@ -10,14 +8,23 @@ TextureImporter:
     21300006: CyberPunk_Crouch_1_3
     21300008: CyberPunk_Crouch_1_4
     21300010: CyberPunk_Crouch_1_5
-  serializedVersion: 2
+    21300012: CyberPunk_Crouch_0
+    21300014: CyberPunk_Crouch_1
+    21300016: CyberPunk_Crouch_2
+    21300018: CyberPunk_Crouch_3
+    21300020: CyberPunk_Crouch_4
+    21300022: CyberPunk_Crouch_5
+  externalObjects: {}
+  serializedVersion: 5
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -27,157 +34,182 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 1
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: 0
     aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 100
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: CyberPunk_Crouch_1_0
+    - serializedVersion: 2
+      name: CyberPunk_Crouch_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 15
         y: 0
-        width: 64
-        height: 64
+        width: 33
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: -14}
-        - {x: 17, y: -14}
-        - {x: 17, y: 12}
-        - {x: 16, y: 18}
-        - {x: 0, y: 18}
-        - {x: -13, y: 3}
-        - {x: -14, y: -1}
-        - {x: -14, y: -8}
-        - {x: -19, y: -25}
-        - {x: -19, y: -32}
-        - {x: 9, y: -32}
-        - {x: 13, y: -17}
-        - {x: 8, y: -13}
-    - name: CyberPunk_Crouch_1_1
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d7ef65cc6830394aa1eed57f3023b4f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Crouch_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 79
         y: 0
-        width: 64
-        height: 64
+        width: 30
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: 12}
-        - {x: 4, y: 12}
-        - {x: -7, y: 7}
-        - {x: -15, y: -4}
-        - {x: -15, y: -13}
-        - {x: -12, y: -16}
-        - {x: -19, y: -24}
-        - {x: -19, y: -32}
-        - {x: 10, y: -32}
-        - {x: 15, y: -21}
-        - {x: 15, y: 1}
-        - {x: 14, y: 10}
-    - name: CyberPunk_Crouch_1_2
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 232a274c38ac24d45ae5297999400d70
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Crouch_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
+        x: 144
+        y: 1
+        width: 28
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 1, y: 6}
-        - {x: -18, y: -6}
-        - {x: -17, y: -17}
-        - {x: -12, y: -21}
-        - {x: -18, y: -26}
-        - {x: -18, y: -29}
-        - {x: -17, y: -32}
-        - {x: 13, y: -32}
-        - {x: 14, y: -28}
-        - {x: 14, y: 6}
-    - name: CyberPunk_Crouch_1_3
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21dda979fbe5e7349aee176bfd7eb05a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Crouch_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 207
         y: 0
-        width: 64
-        height: 64
+        width: 30
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 4, y: 12}
-        - {x: -19, y: 3}
-        - {x: -19, y: -32}
-        - {x: 10, y: -32}
-        - {x: 15, y: -28}
-        - {x: 15, y: 12}
-    - name: CyberPunk_Crouch_1_4
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d92f23b542c4204ea1ca7354d04a77f
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Crouch_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 271
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -2, y: 18}
-        - {x: -14, y: 4}
-        - {x: -19, y: -13}
-        - {x: -19, y: -32}
-        - {x: 17, y: -32}
-        - {x: 17, y: 18}
-    - name: CyberPunk_Crouch_1_5
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96b8cd42a1f6c7d46a9dd28a9c920331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Crouch_5
       rect:
         serializedVersion: 2
-        x: 320
+        x: 337
         y: 0
-        width: 64
-        height: 64
+        width: 31
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: 21}
-        - {x: 5, y: 23}
-        - {x: 1, y: 23}
-        - {x: -17, y: 6}
-        - {x: -17, y: -32}
-        - {x: 14, y: -32}
-        - {x: 18, y: -8}
-        - {x: 18, y: -3}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1c2d50d9dfb8214bbaf74ebca56e942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 10dfe398d7a0adf459b4a150ea771480
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
   userData: 
   assetBundleName: 

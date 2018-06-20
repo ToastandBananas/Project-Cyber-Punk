@@ -28,8 +28,6 @@ public class Weapon : MonoBehaviour {
     private AudioManager audioManager;
     public string gunfireSoundName;
 
-    bool isShooting = false;
-
     // Use this for initialization
     void Awake () {
         // gunFire = GetComponent<AudioSource>();

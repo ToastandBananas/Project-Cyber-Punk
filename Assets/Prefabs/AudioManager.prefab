@@ -108,3 +108,17 @@ MonoBehaviour:
     randomVolume: 0.1
     randomPitch: 0.1
     loop: 0
+  - soundName: NoMoney
+    clip: {fileID: 8300000, guid: 038dee603aea1c54192e9c2471ec9965, type: 3}
+    volume: 1.5
+    pitch: 1.5
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - soundName: Money
+    clip: {fileID: 8300000, guid: 46af810a6afcbd245b9720fea8f2aa01, type: 3}
+    volume: 1.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0.1
+    loop: 0

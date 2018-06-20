@@ -309,10 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8aca009b6e78c94194017eca29d9601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats:
-    maxHealth: 1
-    startHealthPercent: 1
-  fallBoundary: -20
+  fallBoundary: -10
   deathSoundName: DeathVoice
   damageSoundName: DamageVoice
   statusIndicator: {fileID: 114719414046335686}

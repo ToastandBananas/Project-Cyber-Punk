@@ -6,6 +6,16 @@ public class StatusIndicator : MonoBehaviour {
     [SerializeField] private RectTransform healthBarRect;
     [SerializeField] private Text healthText;
 
+    public static StatusIndicator instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     void Start()
     {
         if (healthBarRect == null)

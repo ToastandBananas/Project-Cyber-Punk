@@ -1,29 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
+[RequireComponent(typeof(PlayerController))]
 public class Player : MonoBehaviour {
-
-    [System.Serializable]
-    public class PlayerStats
-    {
-        public float maxHealth = 1;
-        [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent = 1f;
-
-        private float _currentHealth;
-        public float currentHealth
-        {
-            get { return _currentHealth; }
-            set { _currentHealth = Mathf.Clamp(value, 0f, maxHealth); }
-        }
-
-        public void Init()
-        {
-            currentHealth = maxHealth;
-        }
-    }
-
-    public PlayerStats playerStats = new PlayerStats();
 
     public int fallBoundary = -20;
 
@@ -34,9 +13,12 @@ public class Player : MonoBehaviour {
 
     [SerializeField] private StatusIndicator statusIndicator;
 
+    private PlayerStats playerStats;
+
     void Start()
     {
-        playerStats.Init();
+        playerStats = PlayerStats.instance;
+
         if (statusIndicator == null)
         {
             Debug.LogError("No status indicator referenced on Player.");
@@ -45,6 +27,8 @@ public class Player : MonoBehaviour {
         {
             statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);
         }
+
+        GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -58,6 +42,23 @@ public class Player : MonoBehaviour {
         if (transform.position.y <= fallBoundary)
         {
             DamagePlayer(1000000000);
+        }
+    }
+
+    void RegenHealth()
+    {
+        playerStats.currentHealth += 1;
+        statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);
+    }
+
+    void OnUpgradeMenuToggle(bool active)
+    {
+        // Handle what happens when the upgrade menu is toggled
+        GetComponent<PlayerController>().enabled = !active;
+        Weapon _weapon = GetComponentInChildren<Weapon>();
+        if(_weapon != null)
+        {
+            _weapon.enabled = !active;
         }
     }
 

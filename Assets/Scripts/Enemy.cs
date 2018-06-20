@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(EnemyAI))]
 public class Enemy : MonoBehaviour {
 
     [System.Serializable]
@@ -31,6 +30,8 @@ public class Enemy : MonoBehaviour {
 
     public string deathSoundName = "Explosion";
 
+    public int moneyDrop = 10;
+
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;
 
@@ -45,9 +46,20 @@ public class Enemy : MonoBehaviour {
             statusIndicator.SetHealth(enemyStats.currentHealth, enemyStats.maxHealth); // Set health to max health at start
         }
 
+        GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
+
         if (deathParticles == null)
         {
             Debug.LogError("No death particles referenced on Enemy");
+        }
+    }
+
+    void OnUpgradeMenuToggle(bool active)
+    {
+        // Handle what happens when the upgrade menu is toggled
+        if (this != null)
+        {
+            GetComponent<EnemyAI>().enabled = !active;
         }
     }
 

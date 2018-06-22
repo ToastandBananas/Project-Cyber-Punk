@@ -1,21 +1,15 @@
 fileFormatVersion: 2
-guid: 3f9dd01d38d333a48803681dea69bb36
+guid: 336fc00be9f7b5e4794bb5a7cfdaa18d
 TextureImporter:
   fileIDToRecycleName:
-    21300000: CyberPunk_Death_1_0
-    21300002: CyberPunk_Death_1_1
-    21300004: CyberPunk_Death_1_2
-    21300006: CyberPunk_Death_1_3
-    21300008: CyberPunk_Death_1_4
-    21300010: CyberPunk_Death_1_5
-    21300012: CyberPunk_Death_1_6
-    21300014: CyberPunk_Death_0
-    21300016: CyberPunk_Death_1
-    21300018: CyberPunk_Death_2
-    21300020: CyberPunk_Death_3
-    21300022: CyberPunk_Death_4
-    21300024: CyberPunk_Death_5
-    21300026: CyberPunk_Death_6
+    21300000: CyberPunk_Jump_FreeAim_0
+    21300002: CyberPunk_Jump_FreeAim_1
+    21300004: CyberPunk_Jump_FreeAim_2
+    21300006: CyberPunk_Jump_FreeAim_3
+    21300008: CyberPunk_Jump_FreeAim_4
+    21300010: CyberPunk_Jump_FreeAim_5
+    21300012: CyberPunk_Jump_FreeAim_6
+    21300014: CyberPunk_Jump_FreeAim_7
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -39,7 +33,7 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -3
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
@@ -51,7 +45,7 @@ TextureImporter:
     wrapW: 1
   nPOTScale: 0
   lightmap: 0
-  compressionQuality: 100
+  compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -76,7 +70,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
-    compressionQuality: 100
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -85,73 +90,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CyberPunk_Death_0
+      name: CyberPunk_Jump_FreeAim_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 1
-        width: 33
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c504c714df668e45a8b55bb4553f5d4
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CyberPunk_Death_1
-      rect:
-        serializedVersion: 2
-        x: 81
-        y: 1
-        width: 31
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 47f70435999e1ad419efcef97e658023
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CyberPunk_Death_2
-      rect:
-        serializedVersion: 2
-        x: 146
-        y: 1
-        width: 29
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed9e257a76e1bb640ab2b68ad158478a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CyberPunk_Death_3
-      rect:
-        serializedVersion: 2
-        x: 206
+        x: 21
         y: 0
-        width: 36
-        height: 52
+        width: 24
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,59 +104,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 617e08b4ac0140a49ba9e2fcd6a29e92
+      spriteID: e5f0c58f5567be544b1b82bc830a3e59
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CyberPunk_Death_4
+      name: CyberPunk_Jump_FreeAim_1
       rect:
         serializedVersion: 2
-        x: 265
-        y: 2
-        width: 50
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10deac4b99d84b948be8430c5ef8463c
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CyberPunk_Death_5
-      rect:
-        serializedVersion: 2
-        x: 325
-        y: 2
-        width: 56
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bdfaf29bcd3fc3041aa23fc7c1202731
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CyberPunk_Death_6
-      rect:
-        serializedVersion: 2
-        x: 389
+        x: 85
         y: 0
-        width: 56
-        height: 52
+        width: 23
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,7 +124,127 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5c661054562d314b9d2655dca8288e1
+      spriteID: c881f8da94cc28347a7df85859dff4b1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Jump_FreeAim_2
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 1
+        width: 21
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d7015879a1f765478d2342f843f343d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Jump_FreeAim_3
+      rect:
+        serializedVersion: 2
+        x: 215
+        y: 1
+        width: 16
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b00424c5e533c5f419757d210de70c50
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Jump_FreeAim_4
+      rect:
+        serializedVersion: 2
+        x: 279
+        y: 1
+        width: 17
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a281d2b2d680f84429e90f208b39a373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Jump_FreeAim_5
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 2
+        width: 16
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f44048f5f6fce44fa8c03d42083bb53
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Jump_FreeAim_6
+      rect:
+        serializedVersion: 2
+        x: 410
+        y: 1
+        width: 19
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f0efee26b76cf84a832d8770b70cbfe
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Jump_FreeAim_7
+      rect:
+        serializedVersion: 2
+        x: 474
+        y: 1
+        width: 21
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b94c29372e793c489c8c7a5e3a2c218
       vertices: []
       indices: 
       edges: []
@@ -227,7 +252,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 82a65a2114fcbe74bb59d6b453f8043c
+    spriteID: 272242ed0ad78be4db6a724052d6ccfc
     vertices: []
     indices: 
     edges: []

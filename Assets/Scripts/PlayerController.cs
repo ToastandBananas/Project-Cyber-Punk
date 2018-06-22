@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float walkSpeed = 2.3f;
     [SerializeField] float runSpeed = 5f;
-    [SerializeField] float jumpPower = 5f;
+    [SerializeField] float jumpPower = 7f;
     [SerializeField] string landingSoundName = "LandingFootsteps";
 
     float speedFactor = 2.3f;
@@ -24,16 +23,27 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer playerSpriteRenderer;
     Animator playerAnim;
     Rigidbody2D rigidBody;
-    public GameObject arm;
+
+    Player player;
+    
+    SpriteRenderer[] childSpriteRenderer;
+
+    Vector3 playerLocation;
 
     AudioManager audioManager;
 
     void Start()
     {
-        playerSpriteRenderer = GetComponent <SpriteRenderer>();
+        player = Player.instance;
+
+        playerSpriteRenderer = GetComponent<SpriteRenderer>();
         playerAnim = gameObject.GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.freezeRotation = true;
+
+        childSpriteRenderer = GetComponentsInChildren<SpriteRenderer>(); //(typeof(SpriteRenderer)) as SpriteRenderer;
+        
+        playerLocation = transform.localScale;
 
         audioManager = AudioManager.instance;
         if(audioManager == null)
@@ -58,19 +68,15 @@ public class PlayerController : MonoBehaviour
 
     private void PlayLandingSoundUponLanding()
     {
-        //bool wasGrounded = onGround;
-
-        /*if (wasGrounded != onGround && onGround == true)
-        {
-            audioManager.PlaySound(landingSoundName);
-        }*/
-
         Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheck.position, groundRadius, whatIsGround);
 
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
+            {
                 onGround = true;
+                playerAnim.SetBool("onGround", onGround);
+            }
         }
 
         if (!onGround && !inAir)
@@ -96,7 +102,7 @@ public class PlayerController : MonoBehaviour
 
         playerAnim.SetBool("onGround", onGround);
 
-        if (onGround && Input.GetButtonDown("Jump"))
+        if (onGround && Input.GetButtonDown("Jump") && player.isDead == false)
         {
             rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         }
@@ -104,64 +110,76 @@ public class PlayerController : MonoBehaviour
 
     void MoveHorizontally()
     {
-        float x = Input.GetAxis("Horizontal");
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && onGround == true)
+        if (player.isDead == false)
         {
-            speedFactor = runSpeed;
-            isRunning = true;
-            playerAnim.SetBool("isRunning", isRunning);
+            float x = Input.GetAxis("Horizontal");
+
+            if (Input.GetKeyDown(KeyCode.LeftShift) && onGround == true)
+            {
+                speedFactor = runSpeed;
+                isRunning = true;
+                playerAnim.SetBool("isRunning", isRunning);
+            }
+            else if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                speedFactor = walkSpeed;
+                isRunning = false;
+                playerAnim.SetBool("isRunning", isRunning);
+            }
+
+            moveSpeed = x * speedFactor;
+            Vector2 move = new Vector2(moveSpeed, rigidBody.velocity.y);
+            rigidBody.velocity = move;
+            playerAnim.SetFloat("moveSpeed", Mathf.Abs(moveSpeed));
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            speedFactor = walkSpeed;
-            isRunning = false;
-            playerAnim.SetBool("isRunning", isRunning);
-        }
-
-        moveSpeed = x * speedFactor;
-        Vector2 move = new Vector2(moveSpeed, rigidBody.velocity.y);
-        rigidBody.velocity = move;
-        playerAnim.SetFloat("moveSpeed", Mathf.Abs(moveSpeed));
-
-        //moveSpeed = move * Time.deltaTime * speedFactor;
-        //transform.Translate(moveSpeed, 0, 0);
-        //playerAnim.SetFloat("moveSpeed", Mathf.Abs(moveSpeed));
-
-        //if (x < 0 && facingRight) Flip();
-        //if (x > 0 && !facingRight) Flip();
     }
 
     void Flip()
     {
-        //facingRight = !facingRight;
-
-        if (playerSpriteRenderer != null)
+        if (playerSpriteRenderer != null && player.isDead == false)
         {
-            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+            if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && facingRight == true)
             {
-                playerSpriteRenderer.flipX = true;
+                playerLocation.x *= -1;
+                transform.localScale = playerLocation;
+                ArmRotation.rotationOffset = 180;
+                facingRight = false;
             }
-            else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+            else if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && facingRight == false)
 
             {
-                playerSpriteRenderer.flipX = false;
+                playerLocation.x *= -1;
+                transform.localScale = playerLocation;
+                ArmRotation.rotationOffset = 360;
+                facingRight = true;
             }
         }
     }
 
     void CheckIfAiming()
     {
-        if (Input.GetButton("Fire2")) // Holding right click
+        if (Input.GetButton("Fire2") && player.isDead == false) // Holding right click
         {
-            arm.SetActive(true);
             isAiming = true;
+
+            int i;
+            for (i = 1; i < childSpriteRenderer.Length; ++i)
+            {
+                childSpriteRenderer[i].enabled = true;
+            }
+
             playerAnim.SetBool("isAiming", isAiming);
         }
         else
         {
-            arm.SetActive(false);
             isAiming = false;
+
+            int i;
+            for (i = 1; i < childSpriteRenderer.Length; ++i)
+            {
+                childSpriteRenderer[i].enabled = false;
+            }
+
             playerAnim.SetBool("isAiming", isAiming);
         }
     }

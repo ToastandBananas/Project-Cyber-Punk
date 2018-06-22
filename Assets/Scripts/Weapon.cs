@@ -2,6 +2,8 @@
 using UnityEngine;
 
 public class Weapon : MonoBehaviour {
+
+    public static Weapon instance;
     
     public float fireRate = 0;
     public int damage = 1;
@@ -21,16 +23,23 @@ public class Weapon : MonoBehaviour {
     public float camShakeLength = 0.1f;
     CameraShake camShake;
 
-    // public AudioClip shootSound;
-    // private AudioSource gunFire;
-
     // Cache
     private AudioManager audioManager;
     public string gunfireSoundName;
 
     // Use this for initialization
     void Awake () {
-        // gunFire = GetComponent<AudioSource>();
+        if (instance != null)
+        {
+            if (instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        else
+        {
+            instance = this;
+        }
 
         firePoint = transform.Find("FirePoint");
         if (firePoint == null)
@@ -58,7 +67,7 @@ public class Weapon : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         CheckIfShooting();
-	}
+    }
 
     void CheckIfShooting()
     {

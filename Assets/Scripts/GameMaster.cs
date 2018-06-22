@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameMaster : MonoBehaviour {
@@ -8,14 +8,6 @@ public class GameMaster : MonoBehaviour {
 
     [SerializeField] private int startingMoney = 100;
     public static int Money;
-
-    void Awake()
-    {
-        if (gm == null)
-        {
-            gm = this;
-        }
-    }
 
     public Transform playerPrefab;
     public Transform spawnPoint;
@@ -30,11 +22,25 @@ public class GameMaster : MonoBehaviour {
     public delegate void UpgradeMenuCallback(bool active);
     public UpgradeMenuCallback onToggleUpgradeMenu;
 
+    Player player;
+
+    Scene currentScene;
+
     // Cache
     private AudioManager audioManager;
 
+    void Awake()
+    {
+        if (gm == null)
+        {
+            gm = this;
+        }
+    }
+
     void Start()
     {
+        player = Player.instance;
+
         if (cameraShake == null)
         {
             Debug.LogError("No camera shake referenced in GameMaster.");
@@ -48,6 +54,8 @@ public class GameMaster : MonoBehaviour {
         {
             Debug.LogError("No AudioManager found in the scene");
         }
+
+        currentScene = SceneManager.GetActiveScene();
     }
 
     void Update()
@@ -56,6 +64,8 @@ public class GameMaster : MonoBehaviour {
         {
             ToggleUpgradeMenu();
         }
+
+        Debug.Log("Player Health: " + player.playerStats.currentHealth);
     }
 
     private void ToggleUpgradeMenu()
@@ -69,12 +79,13 @@ public class GameMaster : MonoBehaviour {
     {
         yield return new WaitForSeconds(spawnDelay);
 
-        Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+        SceneManager.LoadScene(currentScene.buildIndex);
+
+        //Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
     public static void KillPlayer(Player player)
     {
-        Destroy(player.gameObject);
         gm.StartCoroutine(gm._RespawnPlayer());
     }
 

@@ -1,21 +1,17 @@
 fileFormatVersion: 2
-guid: 3f9dd01d38d333a48803681dea69bb36
+guid: d6a8d0e90dd716943af3df40674d5b39
 TextureImporter:
   fileIDToRecycleName:
-    21300000: CyberPunk_Death_1_0
-    21300002: CyberPunk_Death_1_1
-    21300004: CyberPunk_Death_1_2
-    21300006: CyberPunk_Death_1_3
-    21300008: CyberPunk_Death_1_4
-    21300010: CyberPunk_Death_1_5
-    21300012: CyberPunk_Death_1_6
-    21300014: CyberPunk_Death_0
-    21300016: CyberPunk_Death_1
-    21300018: CyberPunk_Death_2
-    21300020: CyberPunk_Death_3
-    21300022: CyberPunk_Death_4
-    21300024: CyberPunk_Death_5
-    21300026: CyberPunk_Death_6
+    21300000: CyberPunk_Walk_FreeAim_0
+    21300002: CyberPunk_Walk_FreeAim_1
+    21300004: CyberPunk_Walk_FreeAim_2
+    21300006: CyberPunk_Walk_FreeAim_3
+    21300008: CyberPunk_Walk_FreeAim_4
+    21300010: CyberPunk_Walk_FreeAim_5
+    21300012: CyberPunk_Walk_FreeAim_6
+    21300014: CyberPunk_Walk_FreeAim_7
+    21300016: CyberPunk_Walk_FreeAim_8
+    21300018: CyberPunk_Walk_FreeAim_9
   externalObjects: {}
   serializedVersion: 5
   mipmaps:
@@ -39,7 +35,7 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -3
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
@@ -51,7 +47,7 @@ TextureImporter:
     wrapW: 1
   nPOTScale: 0
   lightmap: 0
-  compressionQuality: 100
+  compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -76,7 +72,18 @@ TextureImporter:
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
-    compressionQuality: 100
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -85,13 +92,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CyberPunk_Death_0
+      name: CyberPunk_Walk_FreeAim_0
       rect:
         serializedVersion: 2
-        x: 16
-        y: 1
-        width: 33
-        height: 52
+        x: 19
+        y: 3
+        width: 22
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,19 +106,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5c504c714df668e45a8b55bb4553f5d4
+      spriteID: 9969219a6864b524caaf344573f88070
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CyberPunk_Death_1
+      name: CyberPunk_Walk_FreeAim_1
       rect:
         serializedVersion: 2
-        x: 81
-        y: 1
-        width: 31
-        height: 52
+        x: 85
+        y: 3
+        width: 21
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,59 +126,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47f70435999e1ad419efcef97e658023
+      spriteID: d463ce7e1defdcb4b91ab8f7141722ac
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CyberPunk_Death_2
+      name: CyberPunk_Walk_FreeAim_2
       rect:
         serializedVersion: 2
-        x: 146
-        y: 1
-        width: 29
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed9e257a76e1bb640ab2b68ad158478a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CyberPunk_Death_3
-      rect:
-        serializedVersion: 2
-        x: 206
-        y: 0
-        width: 36
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 617e08b4ac0140a49ba9e2fcd6a29e92
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: CyberPunk_Death_4
-      rect:
-        serializedVersion: 2
-        x: 265
+        x: 151
         y: 2
-        width: 50
-        height: 52
+        width: 15
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,19 +146,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10deac4b99d84b948be8430c5ef8463c
+      spriteID: 75152aab8f28f0b4cb2e31e70c4a572a
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CyberPunk_Death_5
+      name: CyberPunk_Walk_FreeAim_3
       rect:
         serializedVersion: 2
-        x: 325
+        x: 216
         y: 2
-        width: 56
-        height: 52
+        width: 15
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -199,19 +166,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdfaf29bcd3fc3041aa23fc7c1202731
+      spriteID: c9cab52582fad7248b1ef66daa025425
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CyberPunk_Death_6
+      name: CyberPunk_Walk_FreeAim_4
       rect:
         serializedVersion: 2
-        x: 389
-        y: 0
-        width: 56
-        height: 52
+        x: 278
+        y: 3
+        width: 19
+        height: 56
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -219,7 +186,107 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5c661054562d314b9d2655dca8288e1
+      spriteID: 3129ecfcc55a38248ab2607c56c439eb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Walk_FreeAim_5
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 3
+        width: 15
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3efa7237612a8c468110d7ea1408bba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Walk_FreeAim_6
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 3
+        width: 15
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48f8a48fb790e24408684dfd1484afc5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Walk_FreeAim_7
+      rect:
+        serializedVersion: 2
+        x: 471
+        y: 3
+        width: 16
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f6702f7e0846f843bdef95ba3217969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Walk_FreeAim_8
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 3
+        width: 26
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5839cdadd39328f4586618a1157c6b63
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CyberPunk_Walk_FreeAim_9
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 3
+        width: 28
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5a88dbd1760eaa4fa1897e330357202
       vertices: []
       indices: 
       edges: []
@@ -227,7 +294,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 82a65a2114fcbe74bb59d6b453f8043c
+    spriteID: 03dfed09ebc10784cafd05815ef28fac
     vertices: []
     indices: 
     edges: []

@@ -5,7 +5,7 @@ using Pathfinding;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
 
-public class EnemyAI : MonoBehaviour {
+public class EnemyMovement : MonoBehaviour {
 
     // What to chase
     public Transform target;
@@ -35,8 +35,14 @@ public class EnemyAI : MonoBehaviour {
 
     private bool searchingForPlayer = false;
 
+    Player player;
+    EnemySenses enemySenses;
+
     void Start()
     {
+        player = Player.instance;
+        enemySenses = EnemySenses.instance;
+
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
 
@@ -64,7 +70,7 @@ public class EnemyAI : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
             StartCoroutine(SearchForPlayer());
         }
-        else
+        else if (player.isDead == false && enemySenses.CanPlayerBeSeen() != false)
         {
             target = searchResult.transform;
             searchingForPlayer = false;
@@ -104,7 +110,12 @@ public class EnemyAI : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (target == null)
+        if (target != null && player.isDead == true)
+        {
+            searchingForPlayer = false;
+            return;
+        }
+        else if (target == null)
         {
             if (!searchingForPlayer)
             {

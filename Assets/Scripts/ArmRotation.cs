@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ArmRotation : MonoBehaviour {
 
-    public int rotationOffset = 90;
+    [SerializeField] public static int rotationOffset = 360;
 
 	// Use this for initialization
 	void Start () {
@@ -17,6 +17,6 @@ public class ArmRotation : MonoBehaviour {
         difference.Normalize(); // Normalize the vector. Meaning that the sum of the vector will be equal to 1.
 
         float rotationZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg; // Find the angle in degrees.
-        transform.rotation = Quaternion.Euler(0f, 0f, rotationZ + rotationOffset);
+        transform.rotation = Quaternion.Euler(0f, 0f, (rotationZ + rotationOffset));
 	}
 }

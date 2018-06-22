@@ -7,17 +7,20 @@ public class UpgradeMenu : MonoBehaviour {
 
     [SerializeField] private int upgradeCost = 50;
 
-    private PlayerStats playerStats;
+    StatusIndicator statusIndicator;
+
+    Player player;
 
     void OnEnable()
     {
-        playerStats = PlayerStats.instance;
+        statusIndicator = StatusIndicator.instance;
+        player = Player.instance;
         UpdateValues();
     }
 
     void UpdateValues()
     {
-        healthText.text = "Health: " + playerStats.maxHealth.ToString();
+        healthText.text = "Health: " + player.playerStats.maxHealth.ToString();
     }
 
     public void UpgradeHealth()
@@ -27,11 +30,12 @@ public class UpgradeMenu : MonoBehaviour {
             AudioManager.instance.PlaySound("NoMoney");
             return;
         }
-
-        playerStats.maxHealth += 1;
+        
+        player.playerStats.maxHealth += 1;
         GameMaster.Money -= upgradeCost;
         AudioManager.instance.PlaySound("Money");
-        playerStats.currentHealth = playerStats.maxHealth;
+        player.playerStats.currentHealth = player.playerStats.maxHealth;
+        //player.statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);
         UpdateValues();
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveBullet : MonoBehaviour {
 
@@ -11,4 +9,9 @@ public class MoveBullet : MonoBehaviour {
         transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
         Destroy(gameObject, 1);
 	}
+
+    void OnCollisionEnter()
+    {
+        Destroy(gameObject);
+    }
 }

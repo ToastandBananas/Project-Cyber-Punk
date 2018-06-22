@@ -2,17 +2,19 @@
 
 public class PlayerStats : MonoBehaviour {
 
-    public static PlayerStats instance;
+    /*public static PlayerStats instance;
 
-    public float maxHealth = 1;
+    public float maxHealth = 5;
     [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent = 1f;
 
-    private float _currentHealth;
+    [SerializeField] private float _currentHealth;
     public float currentHealth
     {
         get { return _currentHealth; }
         set { _currentHealth = Mathf.Clamp(value, 0f, maxHealth); }
     }
+
+    public PlayerStats playerStats = new PlayerStats();
 
     void Awake()
     {
@@ -21,5 +23,5 @@ public class PlayerStats : MonoBehaviour {
             instance = this;
         }
         currentHealth = maxHealth;
-    }
+    }*/
 }

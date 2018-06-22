@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(EnemyAI))]
+[RequireComponent(typeof(EnemyMovement))]
 public class Enemy : MonoBehaviour {
 
     [System.Serializable]
@@ -8,19 +8,20 @@ public class Enemy : MonoBehaviour {
     {
         public float maxHealth = 1;
         [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent = 1f;
+        public float actualMaxHealth;
 
         private float _currentHealth;
         public float currentHealth
         {
             get { return _currentHealth; }
-            set { _currentHealth = Mathf.Clamp(value, 0f, maxHealth); }
+            set { _currentHealth = Mathf.Clamp(value, 0f, actualMaxHealth); }
         }
 
         public float damage = 1;
 
         public void Init()
         {
-            currentHealth = maxHealth * startHealthPercent;
+            currentHealth = actualMaxHealth;
         }
     }
 
@@ -39,12 +40,13 @@ public class Enemy : MonoBehaviour {
 
     void Start()
     {
+        enemyStats.actualMaxHealth = enemyStats.maxHealth * enemyStats.startHealthPercent;
         enemyStats.Init();
 
-        if (statusIndicator != null)
+        /*if (statusIndicator != null)
         {
             statusIndicator.SetHealth(enemyStats.currentHealth, enemyStats.maxHealth); // Set health to max health at start
-        }
+        }*/
 
         GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
 
@@ -59,7 +61,7 @@ public class Enemy : MonoBehaviour {
         // Handle what happens when the upgrade menu is toggled
         if (this != null)
         {
-            GetComponent<EnemyAI>().enabled = !active;
+            GetComponent<EnemyMovement>().enabled = !active;
         }
     }
 

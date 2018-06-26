@@ -35,6 +35,18 @@ public class EnemyMovement : MonoBehaviour {
 
     private bool searchingForPlayer = false;
 
+    public bool stillSearching = false;
+
+    public bool facingRight = true;
+
+    float horizontalVelocity;
+
+    float timer = 0f;
+
+    float continueSearchingTime = 15f;
+
+    Vector3 enemyLocation;
+
     Player player;
     EnemySenses enemySenses;
 
@@ -42,6 +54,8 @@ public class EnemyMovement : MonoBehaviour {
     {
         player = Player.instance;
         enemySenses = EnemySenses.instance;
+
+        enemyLocation = transform.localScale;
 
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
@@ -62,6 +76,84 @@ public class EnemyMovement : MonoBehaviour {
         StartCoroutine(UpdatePath());
     }
 
+    void FixedUpdate()
+    {
+
+        if (target != null && player.isDead == true || target != null && enemySenses.CanPlayerBeSeen() == false && stillSearching == false)
+        {
+            searchingForPlayer = false;
+            return;
+        }
+        else if (target != null && stillSearching == true && enemySenses.CanPlayerBeSeen() == false)
+        {
+            if (!searchingForPlayer)
+            {
+                searchingForPlayer = true;
+                StartCoroutine(SearchForPlayer());
+            }
+        }
+        else if (target == null)
+        {
+            if (!searchingForPlayer)
+            {
+                searchingForPlayer = true;
+                StartCoroutine(SearchForPlayer());
+            }
+            return;
+        }
+
+        if (path == null)
+            return;
+
+        if (currentWaypoint >= path.vectorPath.Count)
+        {
+            if (pathIsEnded)
+                return;
+
+            // Debug.Log("End of path reached.");
+            pathIsEnded = true;
+            return;
+        }
+        pathIsEnded = false;
+
+        // Direction to the next waypoint
+        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+        dir *= speed * Time.fixedDeltaTime;
+
+        // Move the AI
+        rb.AddForce(dir, fMode);
+
+        float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
+        if (dist < nextWaypointDistance)
+        {
+            currentWaypoint++;
+            return;
+        }
+    }
+
+    void LateUpdate()
+    {
+        Flip();
+    }
+
+    void Flip()
+    {
+        horizontalVelocity = rb.velocity.x;
+
+        if (facingRight == true && horizontalVelocity < -.10) // Facing right and moving left
+        {
+            enemyLocation.x *= -1;
+            transform.localScale = enemyLocation;
+            facingRight = false;
+        }
+        else if (facingRight == false && horizontalVelocity > .10) // Facing left and moving right
+        {
+            enemyLocation.x *= -1;
+            transform.localScale = enemyLocation;
+            facingRight = true;
+        }
+    }
+
     IEnumerator SearchForPlayer()
     {
         GameObject searchResult = GameObject.FindGameObjectWithTag("Player");
@@ -70,7 +162,7 @@ public class EnemyMovement : MonoBehaviour {
             yield return new WaitForSeconds(0.5f);
             StartCoroutine(SearchForPlayer());
         }
-        else if (player.isDead == false && enemySenses.CanPlayerBeSeen() != false)
+        else if (player.isDead == false)
         {
             target = searchResult.transform;
             searchingForPlayer = false;
@@ -108,50 +200,26 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
-    void FixedUpdate()
+    IEnumerator OnTriggerExit2D()
     {
-        if (target != null && player.isDead == true)
+        stillSearching = true;
+
+        while (timer < continueSearchingTime)
         {
-            searchingForPlayer = false;
-            return;
-        }
-        else if (target == null)
-        {
-            if (!searchingForPlayer)
-            {
-                searchingForPlayer = true;
-                StartCoroutine(SearchForPlayer());
-            }
-            return;
+            yield return new WaitForSeconds(1f);
+            timer++;
+            Debug.Log("Timer: " + timer);
         }
 
-        if (path == null)
-            return;
-
-        if(currentWaypoint >= path.vectorPath.Count)
+        if (timer > continueSearchingTime)
         {
-            if (pathIsEnded)
-                return;
-
-            // Debug.Log("End of path reached.");
-            pathIsEnded = true;
-            return;
+            stillSearching = false;
         }
+    }
 
-        pathIsEnded = false;
-
-        // Direction to the next waypoint
-        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
-        dir *= speed * Time.fixedDeltaTime;
-
-        // Move the AI
-        rb.AddForce(dir, fMode);
-
-        float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
-        if (dist < nextWaypointDistance)
-        {
-            currentWaypoint++;
-            return;
-        }
+    void OnTriggerEnter2D()
+    {
+        timer = 0;
+        stillSearching = false;
     }
 }

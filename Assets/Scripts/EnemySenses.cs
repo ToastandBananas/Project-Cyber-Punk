@@ -91,7 +91,7 @@ public class EnemySenses : MonoBehaviour
         float angle = Vector2.Angle(directionToPlayer, lineOfSight);
         
         // if the player is within 65 degrees (either direction) of the enemy's centre of vision (i.e. within a 130 degree cone whose centre is directly ahead of the enemy) return true
-        if (angle < 80)
+        if (angle < 65)
             return true;
         else
             return false;

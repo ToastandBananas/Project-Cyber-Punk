@@ -36,6 +36,9 @@ public class Player : MonoBehaviour {
 
     public static Player instance;
 
+    [HideInInspector]
+    public Vector3 playerLocation;
+
     // [SerializeField] private StatusIndicator statusIndicator;
 
     Animator playerAnim;
@@ -78,6 +81,8 @@ public class Player : MonoBehaviour {
 
     void Update()
     {
+        playerLocation = transform.localScale;
+
         if (transform.position.y <= fallBoundary)
         {
             DamagePlayer(1000000000);

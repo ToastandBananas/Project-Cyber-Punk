@@ -22,7 +22,7 @@ public class CameraController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         lastTargetPosition = target.position;
-        offsetZ = (transform.position = target.position).z - 20;
+        offsetZ = (transform.position = target.position).z - 1;
         transform.parent = null;
 	}
 

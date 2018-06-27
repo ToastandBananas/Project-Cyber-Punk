@@ -122,3 +122,10 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0.1
     loop: 0
+  - soundName: MachineGun1
+    clip: {fileID: 8300000, guid: babbbf9ace5883c4f8b56c17247ead42, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0.1
+    loop: 0

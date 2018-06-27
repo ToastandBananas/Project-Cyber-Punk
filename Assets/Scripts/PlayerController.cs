@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
             isAiming = true;
 
             int i;
-            for (i = 1; i < childSpriteRenderer.Length; ++i)
+            for (i = 1; i < childSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
                 childSpriteRenderer[i].enabled = true;
             }
@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
             isAiming = false;
 
             int i;
-            for (i = 1; i < childSpriteRenderer.Length; ++i)
+            for (i = 1; i < childSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
                 childSpriteRenderer[i].enabled = false;
             }

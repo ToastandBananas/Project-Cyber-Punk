@@ -1,17 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class Weapon : MonoBehaviour {
+public class EnemyWeapon : MonoBehaviour {
 
-    public static Weapon instance;
-    
-    public float fireRate = 1;
+    public static EnemyWeapon instance;
+
+    Enemy enemy;
+    EnemySenses enemySenses;
+    EnemyMovement enemyMovement;
+
+    public Transform target;
+
     public int damage = 1;
     public LayerMask whatToHit;
 
     public Transform BulletTrailPrefab;
     public Transform MuzzleFlashPrefab;
     public Transform HitEffectPrefab;
-
+    
     float timeToFire = 0;
     float timeToSpawnEffect = 0;
     public float effectSpawnRate = 10;
@@ -26,8 +32,24 @@ public class Weapon : MonoBehaviour {
     private AudioManager audioManager;
     public string gunfireSoundName;
 
-    // Use this for initialization
-    void Awake () {
+    public float bulletMoveSpeed = 20f;
+    public float maxShootDistance = 5.5f;
+
+    public bool isAutomatic = false;
+    bool isAbleToShoot = false;
+    bool isCoolingDown = false;
+
+    public float initialWaitToShootTime;
+    public float semiAutoCoolDownTime = 0.75f;
+    public float autoCoolDownTime = .2f;
+    float coolDownTime;
+
+    Rigidbody2D rb;
+
+    Vector2 bulletMoveDirection;
+
+    void Awake()
+    {
         if (instance != null)
         {
             if (instance != this)
@@ -47,94 +69,80 @@ public class Weapon : MonoBehaviour {
         }
     }
 
-    void Start()
-    {
-        camShake = GameMaster.gm.GetComponent<CameraShake>();
-        if (camShake == null)
+    // Use this for initialization
+    void Start () {
+        enemySenses = EnemySenses.instance;
+        enemyMovement = EnemyMovement.instance;
+        enemy = Enemy.instance;
+
+        if (target == null)
         {
-            Debug.LogError("No CameraShake script found on GM object.");
+            target = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
-        // Caching
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {
             Debug.LogError("No AudioManager found in the scene");
         }
-    }
 
-    // Update is called once per frame
-    void Update () {
+        // bulletMoveDirection = (target.position - transform.position).normalized * bulletMoveSpeed;
+	}
+	
+	// Update is called once per frame
+	void Update () {
         CheckIfShooting();
+
+        if (enemyMovement.stillSearching == false)
+        {
+            initialWaitToShootTime = 2f;
+        }
     }
 
     void CheckIfShooting()
     {
-        if (Input.GetButton("Fire2")) // Holding right click
+        if (enemySenses.CanPlayerBeSeen() == true && enemy.distanceToPlayer <= maxShootDistance)
         {
-            if (fireRate == 1)
+            isAbleToShoot = true;
+        }
+        else
+        {
+            isAbleToShoot = false;
+        }
+
+        if (isCoolingDown == false && isAbleToShoot == true)
+        {
+            if (isAutomatic == false) // For semi-auto guns
             {
-                print("fire rate is 1");
-                if (Input.GetButtonDown("Fire1")) // Left click while holding right click
-                {
-                    Shoot();
-                    audioManager.PlaySound(gunfireSoundName);
-                }
+                coolDownTime = semiAutoCoolDownTime;
+                StartCoroutine(Shoot());
             }
-            else
+            else if (isAutomatic == true) // For automatic guns
             {
-                if (Input.GetButton("Fire1") && Time.time > timeToFire) // For automatic guns
-                {
-                    timeToFire = Time.time + 1 / fireRate;
-                    Shoot();
-                    audioManager.PlaySound(gunfireSoundName);
-                }
+                coolDownTime = autoCoolDownTime;
+                StartCoroutine(Shoot());
             }
         }
     }
 
-    void Shoot()
+    IEnumerator Shoot()
     {
-        Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
-        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, mousePosition - firePointPosition, 100f, whatToHit);
+        StartCoroutine(Wait());
 
-        Vector3 hitPos;
-        Vector3 hitNormal;
-
-        // Debug.DrawLine(firePointPosition, (mousePosition - firePointPosition) * 100, Color.cyan);
-
-        if (hit.collider != null)
+        if (initialWaitToShootTime == 0)
         {
-            // Debug.DrawLine(firePointPosition, hit.point, Color.red);
-            Enemy enemy = hit.collider.GetComponent<Enemy>();
-            if(enemy != null)
-            {
-                hitPos = hit.point;
-                hitNormal = hit.normal;
+            audioManager.PlaySound(gunfireSoundName);
 
-                enemy.DamageEnemy(damage);
-                CreateHitParticle(hitPos, hitNormal);
-                Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
-            }
+            isCoolingDown = true;
+            yield return new WaitForSeconds(coolDownTime);
+            isCoolingDown = false;
         }
+    }
 
-        if (Time.time >= timeToSpawnEffect)
-        {
-            if (hit.collider == null)
-            {
-                hitPos = (mousePosition - firePointPosition) * 30;
-                hitNormal = new Vector3(9999, 9999, 9999);
-            }
-            else
-            {
-                hitPos = hit.point;
-                hitNormal = hit.normal;
-            }
-
-            Effect(hitPos, hitNormal);
-            timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
-        }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(initialWaitToShootTime);
+        initialWaitToShootTime = 0f;
     }
 
     void Effect(Vector3 hitPos, Vector3 hitNormal)

@@ -33,13 +33,34 @@ public class Enemy : MonoBehaviour {
 
     public int moneyDrop = 10;
 
+    public float distanceToPlayer;
+
+    public static Enemy instance;
+
+    Player player;
+
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;
 
     [Header("Optional: ")][SerializeField] private StatusIndicator statusIndicator;
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     void Start()
     {
+        player = Player.instance;
+
+        if (instance == null)
+        {
+            instance = this;
+        }
+
         enemyStats.actualMaxHealth = enemyStats.maxHealth * enemyStats.startHealthPercent;
         enemyStats.Init();
 
@@ -54,6 +75,12 @@ public class Enemy : MonoBehaviour {
         {
             Debug.LogError("No death particles referenced on Enemy");
         }
+    }
+
+    void FixedUpdate()
+    {
+        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+        // print("Distance to Player: " + distanceToPlayer + " units");
     }
 
     void OnUpgradeMenuToggle(bool active)

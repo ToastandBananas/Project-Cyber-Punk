@@ -28,7 +28,7 @@ public class EnemyMovement : MonoBehaviour {
     public bool pathIsEnded = false;
 
     // The max distance from the AI to a waypoint for it to continue to the next waypoint
-    public float nextWaypointDistance = 3f;
+    public float nextWaypointDistance = 1f;
 
     // The waypoint we are currently moving towards
     private int currentWaypoint = 0;
@@ -43,12 +43,22 @@ public class EnemyMovement : MonoBehaviour {
 
     float timer = 0f;
 
-    float continueSearchingTime = 15f;
+    public float continueSearchingTime = 15f;
 
     Vector3 enemyLocation;
 
     Player player;
     EnemySenses enemySenses;
+
+    public static EnemyMovement instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     void Start()
     {
@@ -78,18 +88,17 @@ public class EnemyMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
-
         if (target != null && player.isDead == true || target != null && enemySenses.CanPlayerBeSeen() == false && stillSearching == false)
         {
             searchingForPlayer = false;
             return;
         }
-        else if (target != null && stillSearching == true && enemySenses.CanPlayerBeSeen() == false)
+        else if ((target != null && stillSearching == true && enemySenses.CanPlayerBeSeen() == false) || (target != null && stillSearching == false && enemySenses.CanPlayerBeSeen() == true))
         {
             if (!searchingForPlayer)
             {
                 searchingForPlayer = true;
-                StartCoroutine(SearchForPlayer());
+                StartCoroutine(UpdatePath());
             }
         }
         else if (target == null)
@@ -117,11 +126,13 @@ public class EnemyMovement : MonoBehaviour {
         pathIsEnded = false;
 
         // Direction to the next waypoint
-        Vector3 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
+        Vector2 dir = (path.vectorPath[currentWaypoint] - transform.position).normalized;
         dir *= speed * Time.fixedDeltaTime;
 
         // Move the AI
         rb.AddForce(dir, fMode);
+
+        // Debug.Log("Dir: " + dir);
 
         float dist = Vector3.Distance(transform.position, path.vectorPath[currentWaypoint]);
         if (dist < nextWaypointDistance)
@@ -208,10 +219,10 @@ public class EnemyMovement : MonoBehaviour {
         {
             yield return new WaitForSeconds(1f);
             timer++;
-            Debug.Log("Timer: " + timer);
+            // Debug.Log("Timer: " + timer);
         }
 
-        if (timer > continueSearchingTime)
+        if (timer >= continueSearchingTime)
         {
             stillSearching = false;
         }
@@ -219,7 +230,6 @@ public class EnemyMovement : MonoBehaviour {
 
     void OnTriggerEnter2D()
     {
-        timer = 0;
-        stillSearching = false;
+        timer = 0.0f;
     }
 }

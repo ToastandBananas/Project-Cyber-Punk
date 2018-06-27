@@ -9,6 +9,8 @@ TagManager:
   - GM
   - EquippedWeapon
   - Arm
+  - EnemyArm
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - Enemy
   - Obstacle
   - 
   - 
@@ -54,6 +56,9 @@ TagManager:
     locked: 0
   - name: Midground
     uniqueID: 402886503
+    locked: 0
+  - name: Enemy
+    uniqueID: 1838205595
     locked: 0
   - name: Player
     uniqueID: 2881718567

@@ -50,6 +50,7 @@ public class Enemy : MonoBehaviour {
     Animator anim;
 
     Player player;
+    EnemyMovement enemyMovement;
 
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;
@@ -67,6 +68,7 @@ public class Enemy : MonoBehaviour {
     void Start()
     {
         player = Player.instance;
+        enemyMovement = EnemyMovement.instance;
 
         boxCollider = GetComponent<BoxCollider2D>();
         playerBoxCollider = player.GetComponent<BoxCollider2D>();
@@ -101,8 +103,11 @@ public class Enemy : MonoBehaviour {
 
     void FixedUpdate()
     {
-        distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        print("Distance to Player: " + distanceToPlayer + " units");
+        if (enemyMovement.currentState != EnemyMovement.State.Dead)
+        {
+            distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            // print("Distance to Player: " + distanceToPlayer + " units");
+        }
     }
 
     void OnUpgradeMenuToggle(bool active)
@@ -124,12 +129,18 @@ public class Enemy : MonoBehaviour {
 
         if (enemyStats.currentHealth <= 0 && isDead == false)
         {
-            // Play death sound
+            // Death sound
             audioManager.PlaySound(deathSoundName);
 
-            // Kill enemy
-            GameMaster.KillEnemy(this);
+            // Drop money on death
+            GameMaster.Money += moneyDrop;
+            audioManager.PlaySound("Money");
+
+            // Camera Shake
+            // cameraShake.Shake(_enemy.shakeAmt, _enemy.shakeLength);
+            
             isDead = true;
+            enemyMovement.currentState = EnemyMovement.State.Dead;
         }
         else if (enemyStats.currentHealth > 0 && isDead == false)
         {

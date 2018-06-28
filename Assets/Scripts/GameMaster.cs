@@ -90,22 +90,4 @@ public class GameMaster : MonoBehaviour {
     {
         gm.StartCoroutine(gm._RespawnPlayer());
     }
-
-    public static void KillEnemy(Enemy enemy)
-    {
-        gm._KillEnemy(enemy);
-    }
-
-    public void _KillEnemy(Enemy _enemy)
-    {
-        // Death sound
-        audioManager.PlaySound(_enemy.deathSoundName);
-
-        // Drop money on death
-        Money += _enemy.moneyDrop;
-        audioManager.PlaySound("Money");
-
-        // Camera Shake
-        // cameraShake.Shake(_enemy.shakeAmt, _enemy.shakeLength);
-    }
 }

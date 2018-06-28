@@ -21,11 +21,10 @@ public class EnemyMovement : MonoBehaviour {
     public Path path;
 
     // The AI's speed per second
+    float noSpeed = 0f;
     public float runSpeed = 1100f;
     public float walkSpeed = 700f;
-    public float noSpeed = 0f;
     public float moveSpeed = 0f;
-    float velocity;
 
     public ForceMode2D fMode;
 
@@ -41,9 +40,11 @@ public class EnemyMovement : MonoBehaviour {
     private bool searchingForPlayer = false;
     public bool stillSearching = false;
     public bool facingRight = true;
-    public bool isAiming = false;
-    public bool isRunning = false;
+    bool isAiming = false;
+    bool isRunning = false;
+    bool isWalking = false;
     bool onGround = false;
+    public bool playerPositionKnown = false;
 
     public Transform groundCheck;
     float groundRadius = 0.1f;
@@ -66,6 +67,18 @@ public class EnemyMovement : MonoBehaviour {
 
     public static EnemyMovement instance;
 
+    public enum State
+    {
+        Dead = 0,
+        Idle = 1,
+        Patrol = 2,
+        CheckSound = 3,
+        Attack = 4
+    }
+
+    public State startState;
+    public State currentState;
+
     void Awake()
     {
         if (instance == null)
@@ -76,6 +89,8 @@ public class EnemyMovement : MonoBehaviour {
 
     void Start()
     {
+        currentState = startState;
+
         player = Player.instance;
         enemySenses = EnemySenses.instance;
         enemy = Enemy.instance;
@@ -93,9 +108,16 @@ public class EnemyMovement : MonoBehaviour {
             if (!searchingForPlayer)
             {
                 searchingForPlayer = true;
-                StartCoroutine(RefreshTarget());
             }
             return;
+        }
+
+        if (facingRight == false)
+        {
+            enemyLocation.x *= -1;
+            transform.localScale = enemyLocation;
+            EnemyArmRotation.rotationOffset = 180;
+            facingRight = false;
         }
 
         // Start a new path to the target position, return the result to the OnPathComplete method
@@ -104,32 +126,142 @@ public class EnemyMovement : MonoBehaviour {
         StartCoroutine(RunTowardsPlayer());
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        CheckIfShouldFollowPlayer();
-        CalculateWaypointMovement();
-        GroundCheck();
-        CheckIfAiming();
-        CheckIfRunning();
+        CheckCurrentState();
     }
 
-    void LateUpdate()
+    void CheckCurrentState()
     {
-        Flip();
-        DetermineMoveSpeed();
+        if (currentState == State.Dead)
+        {
+            CheckIfAiming();
+            anim.SetInteger("currentState", 0);
+            return;
+        }
+        else if (currentState == State.Idle)
+        {
+            anim.SetInteger("currentState", 1);
+        }
+        else if (currentState == State.Patrol)
+        {
+            anim.SetInteger("currentState", 2);
+        }
+        else if (currentState == State.CheckSound)
+        {
+            anim.SetInteger("currentState", 3);
+        }
+        else if (currentState == State.Attack) // Attack state is determined in the EnemySenses script, when the player can be seen
+        {
+            anim.SetInteger("currentState", 4);
+
+            CheckIfShouldFollowPlayer();
+            FlipDuringAttackState();
+            CalculateWaypointMovement();
+            DetermineMoveSpeed();
+            CheckIfAiming();
+            CheckIfRunning();
+            GroundCheck();
+        }
     }
 
-    void GroundCheck()
+    private void CheckIfShouldFollowPlayer()
     {
-        onGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
-        anim.SetBool("onGround", onGround);
+        if (enemy.isDead == false)
+        {
+            if ((target != null && player.isDead == true) || (target != null && enemySenses.CanPlayerBeSeen() == false && stillSearching == false))
+            {
+                searchingForPlayer = false;
+                playerPositionKnown = false;
+                return;
+            }
+            else if ((target != null && stillSearching == true && enemySenses.CanPlayerBeSeen() == false) || (target != null && stillSearching == false && enemySenses.CanPlayerBeSeen() == true))
+            {
+                if (!searchingForPlayer)
+                {
+                    searchingForPlayer = true;
+                    playerPositionKnown = true;
+                    StartCoroutine(RunTowardsPlayer());
+                }
+            }
+            else if (target == null)
+            {
+                if (!searchingForPlayer)
+                {
+                    searchingForPlayer = true;
+                    playerPositionKnown = false;
+                }
+                return;
+            }
+        }
+    }
+
+    void FlipDuringAttackState()
+    {
+        if (enemy.isDead == false && target == player.transform)
+        {
+            horizontalVelocity = rb.velocity.x;
+
+            if (facingRight == true && horizontalVelocity < -1f) // Facing right and moving left
+            {
+                enemyLocation.x *= -1;
+                transform.localScale = enemyLocation;
+                EnemyArmRotation.rotationOffset = 180;
+                facingRight = false;
+            }
+            else if (facingRight == false && horizontalVelocity > 1f) // Facing left and moving right
+            {
+                enemyLocation.x *= -1;
+                transform.localScale = enemyLocation;
+                EnemyArmRotation.rotationOffset = 360;
+                facingRight = true;
+            }
+            else if (facingRight == true && transform.position.x > player.transform.position.x)
+            {
+                enemyLocation.x *= -1;
+                transform.localScale = enemyLocation;
+                EnemyArmRotation.rotationOffset = 180;
+                facingRight = false;
+            }
+            else if (facingRight == false && transform.position.x < player.transform.position.x)
+            {
+                enemyLocation.x *= -1;
+                transform.localScale = enemyLocation;
+                EnemyArmRotation.rotationOffset = 360;
+                facingRight = true;
+            }
+        }
+    }
+
+    void Flip()
+    {
+        if (enemy.isDead == false)
+        {
+            horizontalVelocity = rb.velocity.x;
+
+            if (facingRight == true && horizontalVelocity < -1f) // Facing right and moving left
+            {
+                enemyLocation.x *= -1;
+                transform.localScale = enemyLocation;
+                EnemyArmRotation.rotationOffset = 180;
+                facingRight = false;
+            }
+            else if (facingRight == false && horizontalVelocity > 1f) // Facing left and moving right
+            {
+                enemyLocation.x *= -1;
+                transform.localScale = enemyLocation;
+                EnemyArmRotation.rotationOffset = 360;
+                facingRight = true;
+            }
+        }
     }
 
     void CheckIfAiming()
     {
-        if (enemy.isDead == false && (enemySenses.CanPlayerBeSeen() == true || stillSearching == true))
+        if (currentState == State.Attack)
         {
             isAiming = true;
+            playerPositionKnown = true;
 
             for (int i = 1; i < childSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
@@ -141,6 +273,7 @@ public class EnemyMovement : MonoBehaviour {
         else
         {
             isAiming = false;
+            playerPositionKnown = false;
 
             for (int i = 1; i < childSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
@@ -153,44 +286,15 @@ public class EnemyMovement : MonoBehaviour {
 
     void CheckIfRunning()
     {
-        if (enemy.isDead == false && ((enemySenses.CanPlayerBeSeen() == false && stillSearching == true) || enemySenses.CanPlayerBeSeen() == true))
+        if (enemy.distanceToPlayer > 3f && ((enemySenses.CanPlayerBeSeen() == false && stillSearching == true) || enemySenses.CanPlayerBeSeen() == true))
         {
             isRunning = true;
             anim.SetBool("isRunning", isRunning);
         }
-        else
+        else if (enemy.distanceToPlayer < 3f)
         {
             isRunning = false;
             anim.SetBool("isRunning", isRunning);
-        }
-    }
-
-    private void CheckIfShouldFollowPlayer()
-    {
-        if (enemy.isDead == false)
-        {
-            if (target != null && player.isDead == true || target != null && enemySenses.CanPlayerBeSeen() == false && stillSearching == false)
-            {
-                searchingForPlayer = false;
-                return;
-            }
-            else if ((target != null && stillSearching == true && enemySenses.CanPlayerBeSeen() == false) || (target != null && stillSearching == false && enemySenses.CanPlayerBeSeen() == true))
-            {
-                if (!searchingForPlayer)
-                {
-                    searchingForPlayer = true;
-                    StartCoroutine(RunTowardsPlayer());
-                }
-            }
-            else if (target == null)
-            {
-                if (!searchingForPlayer)
-                {
-                    searchingForPlayer = true;
-                    StartCoroutine(RefreshTarget());
-                }
-                return;
-            }
         }
     }
 
@@ -237,79 +341,21 @@ public class EnemyMovement : MonoBehaviour {
             if ((enemySenses.CanPlayerBeSeen() == true && enemy.distanceToPlayer < 3f) || (enemySenses.CanPlayerBeSeen() == false && stillSearching == false))
             {
                 moveSpeed = noSpeed;
+                isWalking = false;
             }
             else if (isRunning == true)
             {
                 moveSpeed = runSpeed;
+                isWalking = false;
             }
             else
             {
                 moveSpeed = walkSpeed;
+                isWalking = true;
             }
 
-            velocity = rb.velocity.magnitude;
-            anim.SetFloat("moveSpeed", velocity);
-        }
-    }
-
-    void Flip()
-    {
-        if (enemy.isDead == false)
-        {
-            horizontalVelocity = rb.velocity.x;
-
-            if (facingRight == true && horizontalVelocity < -1f) // Facing right and moving left
-            {
-                enemyLocation.x *= -1;
-                transform.localScale = enemyLocation;
-                EnemyArmRotation.rotationOffset = 180;
-                facingRight = false;
-            }
-            else if (facingRight == false && horizontalVelocity > 1f) // Facing left and moving right
-            {
-                enemyLocation.x *= -1;
-                transform.localScale = enemyLocation;
-                EnemyArmRotation.rotationOffset = 360;
-                facingRight = true;
-            }
-
-            if (facingRight == true && transform.position.x > player.transform.position.x)
-            {
-                if (stillSearching == true)
-                {
-                    enemyLocation.x *= -1;
-                    transform.localScale = enemyLocation;
-                    EnemyArmRotation.rotationOffset = 180;
-                    facingRight = false;
-                }
-            }
-            else if (facingRight == false && transform.position.x < player.transform.position.x)
-            {
-                if (stillSearching == true)
-                {
-                    enemyLocation.x *= -1;
-                    transform.localScale = enemyLocation;
-                    EnemyArmRotation.rotationOffset = 360;
-                    facingRight = true;
-                }
-            }
-        }
-    }
-
-    IEnumerator RefreshTarget()
-    {
-        GameObject searchResult = GameObject.FindGameObjectWithTag("Player");
-        if (searchResult == null)
-        {
-            yield return new WaitForSeconds(0.5f);
-            StartCoroutine(RefreshTarget());
-        }
-        else if (player.isDead == false)
-        {
-            target = searchResult.transform;
-            searchingForPlayer = false;
-            StartCoroutine(RunTowardsPlayer());
-            yield return false;
+            anim.SetFloat("moveSpeed", moveSpeed);
+            anim.SetBool("isWalking", isWalking);
         }
     }
 
@@ -320,7 +366,6 @@ public class EnemyMovement : MonoBehaviour {
             if (!searchingForPlayer)
             {
                 searchingForPlayer = true;
-                StartCoroutine(RefreshTarget());
             }
             yield return false;
         }
@@ -342,20 +387,32 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
-    IEnumerator OnTriggerExit2D()
+    void GroundCheck()
     {
-        stillSearching = true;
+        onGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+        anim.SetBool("onGround", onGround);
+    }
 
-        while (timer < continueSearchingTime)
+    IEnumerator OnTriggerExit2D() 
+    {
+        if (currentState == State.Attack)
         {
-            yield return new WaitForSeconds(1f);
-            timer++;
-            // Debug.Log("Timer: " + timer);
-        }
+            // If the player leaves the enemy's trigger, they will continue following the player for a set amount of time.
+            stillSearching = true;
 
-        if (timer >= continueSearchingTime)
-        {
-            stillSearching = false;
+            while (timer < continueSearchingTime)
+            {
+                playerPositionKnown = true;
+                yield return new WaitForSeconds(1f);
+                timer++;
+                // Debug.Log("Timer: " + timer);
+            }
+
+            if (timer >= continueSearchingTime)
+            {
+                stillSearching = false;
+                playerPositionKnown = false;
+            }
         }
     }
 

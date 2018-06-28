@@ -16,6 +16,7 @@ public class EnemySenses : MonoBehaviour
     public static EnemySenses instance;
 
     Enemy enemy;
+    EnemyMovement enemyMovement;
 
     void Awake()
     {
@@ -28,6 +29,7 @@ public class EnemySenses : MonoBehaviour
     void Start()
     {
         enemy = Enemy.instance;
+        enemyMovement = EnemyMovement.instance;
 
         playerInRange = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -37,9 +39,15 @@ public class EnemySenses : MonoBehaviour
     void FixedUpdate()
     {
         if (CanPlayerBeSeen())
-            spr.color = Color.red;
+        {
+            // spr.color = Color.red;
+            enemyMovement.target = player;
+            enemyMovement.currentState = EnemyMovement.State.Attack;
+        }
         else
-            spr.color = Color.white;
+        {
+            // spr.color = Color.white;
+        }
     }
 
     public bool CanPlayerBeSeen()
@@ -50,7 +58,9 @@ public class EnemySenses : MonoBehaviour
             if (playerInRange)
             {
                 if (PlayerInFieldOfView())
+                {
                     return (!PlayerHiddenByObstacles());
+                }
                 else
                     return false;
             }
@@ -109,7 +119,6 @@ public class EnemySenses : MonoBehaviour
 
     public bool PlayerHiddenByObstacles()
     {
-
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, player.position - transform.position, distanceToPlayer);
         Debug.DrawRay(transform.position, player.position - transform.position, Color.blue); // draw line in the Scene window to show where the raycast is looking

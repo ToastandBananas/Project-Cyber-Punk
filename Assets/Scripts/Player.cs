@@ -8,7 +8,11 @@ public class Player : MonoBehaviour {
     {
         public float maxHealth = 5f;
         [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent;
+
+        [HideInInspector]
         public float actualMaxHealth;
+
+        public float accuracyFactor = 0.4f; // 0 equals 100 percent accurate.
 
         [SerializeField] private float _currentHealth;
         public float currentHealth
@@ -56,10 +60,9 @@ public class Player : MonoBehaviour {
         playerStats.actualMaxHealth = playerStats.maxHealth * playerStats.startHealthPercent;
         playerStats.Init();
 
-        playerAnim = gameObject.GetComponent<Animator>();
+        playerAnim = GetComponent<Animator>();
 
         playerAnim.SetFloat("health", playerStats.currentHealth);
-        
 
         /*if (statusIndicator == null)
         {

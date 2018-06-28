@@ -8,7 +8,11 @@ public class Enemy : MonoBehaviour {
     {
         public float maxHealth = 1;
         [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent = 1f;
+
+        [HideInInspector]
         public float actualMaxHealth;
+
+        public float accuracyFactor = 0.4f; // 0 equals 100 percent accurate.
 
         private float _currentHealth;
         public float currentHealth
@@ -27,15 +31,23 @@ public class Enemy : MonoBehaviour {
 
     public EnemyStats enemyStats = new EnemyStats();
 
-    public Transform deathParticles;
-
-    public string deathSoundName = "Explosion";
+    public string deathSoundName = "DeathVoice";
+    public string damageSoundName = "DamageVoice";
 
     public int moneyDrop = 10;
 
     public float distanceToPlayer;
 
     public static Enemy instance;
+
+    public bool isDead = false;
+
+    private AudioManager audioManager;
+
+    BoxCollider2D boxCollider;
+    BoxCollider2D playerBoxCollider;
+
+    Animator anim;
 
     Player player;
 
@@ -56,6 +68,11 @@ public class Enemy : MonoBehaviour {
     {
         player = Player.instance;
 
+        boxCollider = GetComponent<BoxCollider2D>();
+        playerBoxCollider = player.GetComponent<BoxCollider2D>();
+
+        Physics2D.IgnoreCollision(boxCollider, playerBoxCollider);
+
         if (instance == null)
         {
             instance = this;
@@ -64,6 +81,10 @@ public class Enemy : MonoBehaviour {
         enemyStats.actualMaxHealth = enemyStats.maxHealth * enemyStats.startHealthPercent;
         enemyStats.Init();
 
+        anim = GetComponent<Animator>();
+
+        anim.SetFloat("health", enemyStats.currentHealth);
+
         /*if (statusIndicator != null)
         {
             statusIndicator.SetHealth(enemyStats.currentHealth, enemyStats.maxHealth); // Set health to max health at start
@@ -71,16 +92,17 @@ public class Enemy : MonoBehaviour {
 
         GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
 
-        if (deathParticles == null)
+        audioManager = AudioManager.instance;
+        if (audioManager == null)
         {
-            Debug.LogError("No death particles referenced on Enemy");
+            Debug.LogError("No audio manager in scene.");
         }
     }
 
     void FixedUpdate()
     {
         distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-        // print("Distance to Player: " + distanceToPlayer + " units");
+        print("Distance to Player: " + distanceToPlayer + " units");
     }
 
     void OnUpgradeMenuToggle(bool active)
@@ -94,16 +116,25 @@ public class Enemy : MonoBehaviour {
 
     public void DamageEnemy(float damage)
     {
-        enemyStats.currentHealth -= damage;
-
-        if (enemyStats.currentHealth <= 0)
+        if (enemyStats.currentHealth > 0)
         {
-            GameMaster.KillEnemy(this);
+            enemyStats.currentHealth -= damage;
+            anim.SetFloat("health", enemyStats.currentHealth);
         }
 
-        if (statusIndicator != null)
+        if (enemyStats.currentHealth <= 0 && isDead == false)
         {
-            statusIndicator.SetHealth(enemyStats.currentHealth, enemyStats.maxHealth); // Subtract damage from health if damage doesn't kill enemy
+            // Play death sound
+            audioManager.PlaySound(deathSoundName);
+
+            // Kill enemy
+            GameMaster.KillEnemy(this);
+            isDead = true;
+        }
+        else if (enemyStats.currentHealth > 0 && isDead == false)
+        {
+            // Play damage sound
+            audioManager.PlaySound(damageSoundName);
         }
     }
 

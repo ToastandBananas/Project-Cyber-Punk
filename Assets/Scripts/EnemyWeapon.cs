@@ -8,6 +8,7 @@ public class EnemyWeapon : MonoBehaviour {
     Enemy enemy;
     EnemySenses enemySenses;
     EnemyMovement enemyMovement;
+    Player player;
 
     public Transform target;
 
@@ -32,7 +33,6 @@ public class EnemyWeapon : MonoBehaviour {
     private AudioManager audioManager;
     public string gunfireSoundName;
 
-    public float bulletMoveSpeed = 20f;
     public float maxShootDistance = 5.5f;
 
     public bool isAutomatic = false;
@@ -46,6 +46,7 @@ public class EnemyWeapon : MonoBehaviour {
 
     Rigidbody2D rb;
 
+    RaycastHit2D hit;
     Vector2 bulletMoveDirection;
 
     void Awake()
@@ -74,6 +75,7 @@ public class EnemyWeapon : MonoBehaviour {
         enemySenses = EnemySenses.instance;
         enemyMovement = EnemyMovement.instance;
         enemy = Enemy.instance;
+        player = Player.instance;
 
         if (target == null)
         {
@@ -101,26 +103,29 @@ public class EnemyWeapon : MonoBehaviour {
 
     void CheckIfShooting()
     {
-        if (enemySenses.CanPlayerBeSeen() == true && enemy.distanceToPlayer <= maxShootDistance)
+        if (enemy.isDead == false)
         {
-            isAbleToShoot = true;
-        }
-        else
-        {
-            isAbleToShoot = false;
-        }
-
-        if (isCoolingDown == false && isAbleToShoot == true)
-        {
-            if (isAutomatic == false) // For semi-auto guns
+            if (enemySenses.CanPlayerBeSeen() == true && enemy.distanceToPlayer <= maxShootDistance)
             {
-                coolDownTime = semiAutoCoolDownTime;
-                StartCoroutine(Shoot());
+                isAbleToShoot = true;
             }
-            else if (isAutomatic == true) // For automatic guns
+            else
             {
-                coolDownTime = autoCoolDownTime;
-                StartCoroutine(Shoot());
+                isAbleToShoot = false;
+            }
+
+            if (isCoolingDown == false && isAbleToShoot == true)
+            {
+                if (isAutomatic == false) // For semi-auto guns
+                {
+                    coolDownTime = semiAutoCoolDownTime;
+                    StartCoroutine(Shoot());
+                }
+                else if (isAutomatic == true) // For automatic guns
+                {
+                    coolDownTime = autoCoolDownTime;
+                    StartCoroutine(Shoot());
+                }
             }
         }
     }
@@ -129,8 +134,53 @@ public class EnemyWeapon : MonoBehaviour {
     {
         StartCoroutine(Wait());
 
+        Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
+        Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.y);
+
+        if (enemy.distanceToPlayer < 2f)
+        {
+            hit = Physics2D.Raycast(firePointPosition, (playerPosition - firePointPosition), 100f, whatToHit);
+        }
+        else
+        {
+            hit = Physics2D.Raycast(firePointPosition, (playerPosition - firePointPosition) + new Vector2(0, Random.Range(-enemy.enemyStats.accuracyFactor, enemy.enemyStats.accuracyFactor)), 100f, whatToHit);
+        }
+
+        Vector3 hitPos;
+        Vector3 hitNormal;
+
         if (initialWaitToShootTime == 0)
         {
+            if (hit.collider != null)
+            {
+                Player playerCollider = hit.collider.GetComponent<Player>();
+                if (playerCollider != null)
+                {
+                    hitPos = hit.point;
+                    hitNormal = hit.normal;
+
+                    playerCollider.DamagePlayer(damage);
+                    CreateHitParticle(hitPos, hitNormal);
+                }
+            }
+
+            if (Time.time >= timeToSpawnEffect)
+            {
+                if (hit.collider == null)
+                {
+                    hitPos = (playerPosition - firePointPosition) * 9999;
+                    hitNormal = new Vector3(9999, 9999, 9999);
+                }
+                else
+                {
+                    hitPos = hit.point;
+                    hitNormal = hit.normal;
+                }
+
+                Effect(hitPos, hitNormal);
+                timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
+            }
+
             audioManager.PlaySound(gunfireSoundName);
 
             isCoolingDown = true;

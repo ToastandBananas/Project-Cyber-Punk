@@ -26,6 +26,9 @@ public class Weapon : MonoBehaviour {
     private AudioManager audioManager;
     public string gunfireSoundName;
 
+    PlayerController playerController;
+    Player player;
+
     // Use this for initialization
     void Awake () {
         if (instance != null)
@@ -49,6 +52,9 @@ public class Weapon : MonoBehaviour {
 
     void Start()
     {
+        playerController = PlayerController.instance;
+        player = Player.instance;
+
         camShake = GameMaster.gm.GetComponent<CameraShake>();
         if (camShake == null)
         {
@@ -97,7 +103,7 @@ public class Weapon : MonoBehaviour {
     {
         Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
-        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, mousePosition - firePointPosition, 100f, whatToHit);
+        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, (mousePosition - firePointPosition) + new Vector2(0, Random.Range(-player.playerStats.accuracyFactor, player.playerStats.accuracyFactor)), 100f, whatToHit);
 
         Vector3 hitPos;
         Vector3 hitNormal;
@@ -107,15 +113,15 @@ public class Weapon : MonoBehaviour {
         if (hit.collider != null)
         {
             // Debug.DrawLine(firePointPosition, hit.point, Color.red);
-            Enemy enemy = hit.collider.GetComponent<Enemy>();
-            if(enemy != null)
+            Enemy enemyCollider = hit.collider.GetComponent<Enemy>();
+            if(enemyCollider != null)
             {
                 hitPos = hit.point;
                 hitNormal = hit.normal;
 
-                enemy.DamageEnemy(damage);
+                enemyCollider.DamageEnemy(damage);
                 CreateHitParticle(hitPos, hitNormal);
-                Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
+                // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
             }
         }
 
@@ -123,7 +129,7 @@ public class Weapon : MonoBehaviour {
         {
             if (hit.collider == null)
             {
-                hitPos = (mousePosition - firePointPosition) * 30;
+                hitPos = (mousePosition - firePointPosition) * 9999;
                 hitNormal = new Vector3(9999, 9999, 9999);
             }
             else

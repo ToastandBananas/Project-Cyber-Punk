@@ -15,6 +15,8 @@ public class EnemySenses : MonoBehaviour
 
     public static EnemySenses instance;
 
+    Enemy enemy;
+
     void Awake()
     {
         if (instance == null)
@@ -25,6 +27,8 @@ public class EnemySenses : MonoBehaviour
 
     void Start()
     {
+        enemy = Enemy.instance;
+
         playerInRange = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -40,22 +44,28 @@ public class EnemySenses : MonoBehaviour
 
     public bool CanPlayerBeSeen()
     {
-        // we only need to check visibility if the player is within the enemy's visual range
-        if (playerInRange)
+        if (enemy.isDead == false)
         {
-            if (PlayerInFieldOfView())
-                return (!PlayerHiddenByObstacles());
+            // we only need to check visibility if the player is within the enemy's visual range
+            if (playerInRange)
+            {
+                if (PlayerInFieldOfView())
+                    return (!PlayerHiddenByObstacles());
+                else
+                    return false;
+            }
             else
+            {
+                // always false if the player is not within the enemy's range
                 return false;
+            }
+
+            //return playerInRange;
         }
         else
         {
-            // always false if the player is not within the enemy's range
-            return false;
+            return false; // Return false if enemy is dead
         }
-
-        //return playerInRange;
-
     }
 
     void OnTriggerStay2D(Collider2D other)

@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 58191340047451074}
   - component: {fileID: 114354315461295966}
   - component: {fileID: 61870474251307124}
+  - component: {fileID: 95763579391726576}
   m_Layer: 9
   m_Name: NormalGuy
   m_TagString: Enemy
@@ -66,6 +67,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1653156323842888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4269116382323314}
+  m_Layer: 8
+  m_Name: EnemyGroundCheck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1654934997933842
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +91,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4261731672446398}
   - component: {fileID: 212873871826049790}
-  - component: {fileID: 114066645887167426}
+  - component: {fileID: 114072747644905178}
   m_Layer: 0
   m_Name: NormalGuyArm
   m_TagString: EnemyArm
@@ -109,7 +125,7 @@ Transform:
   m_LocalScale: {x: 3.5504081, y: 3.5504081, z: 3.5504081}
   m_Children: []
   m_Father: {fileID: 4898415585683840}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4261731672446398
 Transform:
@@ -123,7 +139,20 @@ Transform:
   m_Children:
   - {fileID: 4606140039341150}
   m_Father: {fileID: 4898415585683840}
-  m_RootOrder: 1
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4269116382323314
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1653156323842888}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.01, y: -28.56, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4898415585683840}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4451550528312188
 Transform:
@@ -159,9 +188,10 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1019179602100098}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.794002, y: 1.048351, z: 0}
+  m_LocalPosition: {x: 2.16, y: -0.492, z: 0}
   m_LocalScale: {x: 0.009, y: 0.009, z: 0.009}
   m_Children:
+  - {fileID: 4269116382323314}
   - {fileID: 4095566049699436}
   - {fileID: 4261731672446398}
   m_Father: {fileID: 0}
@@ -179,14 +209,14 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
-  m_AngularDrag: 0.05
+  m_LinearDrag: 4
+  m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!58 &58191340047451074
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -201,7 +231,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 270.51392
+  m_Radius: 680
 --- !u!61 &61870474251307124
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -214,19 +244,37 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.1298008, y: -3.7999458}
+  m_Offset: {x: -0.1298008, y: -3.0644312}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 64, y: 64}
+    oldSize: {x: 21, y: 56}
     newSize: {x: 2.3, y: 1.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 28.45523, y: 47.730118}
+  m_Size: {x: 28.45523, y: 46.259087}
   m_EdgeRadius: 0
+--- !u!95 &95763579391726576
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019179602100098}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8d271ee570c7c9248a26d691baa96ff5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114049600394609266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -253,21 +301,20 @@ MonoBehaviour:
   camShakeAmt: 0.05
   camShakeLength: 0.1
   gunfireSoundName: PistolGunfire
-  bulletMoveSpeed: 20
-  maxShootDistance: 5.5
+  maxShootDistance: 5
   isAutomatic: 0
   initialWaitToShootTime: 0
   semiAutoCoolDownTime: 0.75
   autoCoolDownTime: 0.2
---- !u!114 &114066645887167426
+--- !u!114 &114072747644905178
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1654934997933842}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72b2a1687d107fa45bc8ef51fb63e232, type: 3}
+  m_Script: {fileID: 11500000, guid: c6943203b3f2dd14face98113dd8a6b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114354315461295966
@@ -323,12 +370,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   updateRate: 2
-  speed: 300
+  runSpeed: 1100
+  walkSpeed: 700
+  noSpeed: 0
+  moveSpeed: 0
   fMode: 0
   pathIsEnded: 0
   nextWaypointDistance: 1
   stillSearching: 0
   facingRight: 1
+  isAiming: 0
+  isRunning: 0
+  groundCheck: {fileID: 4269116382323314}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
   continueSearchingTime: 15
 --- !u!114 &114826661581121376
 MonoBehaviour:
@@ -345,12 +401,13 @@ MonoBehaviour:
     maxHealth: 1
     startHealthPercent: 1
     actualMaxHealth: 1
+    accuracyFactor: 0.5
     damage: 1
-  deathParticles: {fileID: 4429038686353620, guid: b3233578f0502b841b8d34ad332ac5c1,
-    type: 2}
-  deathSoundName: Explosion
+  deathSoundName: DeathVoice
+  damageSoundName: DamageVoice
   moneyDrop: 10
   distanceToPlayer: 0
+  isDead: 0
   statusIndicator: {fileID: 0}
 --- !u!212 &212448455840089524
 SpriteRenderer:
@@ -432,7 +489,7 @@ SpriteRenderer:
   m_SortingLayerID: 1838205595
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300008, guid: 9182ba9fc9d5cd9419ed6bb9ed3a5872, type: 3}
+  m_Sprite: {fileID: 21300016, guid: 40ed488550c90a6488c4dab6c4024612, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

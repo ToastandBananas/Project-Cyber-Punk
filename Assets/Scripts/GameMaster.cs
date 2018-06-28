@@ -23,6 +23,7 @@ public class GameMaster : MonoBehaviour {
     public UpgradeMenuCallback onToggleUpgradeMenu;
 
     Player player;
+    Enemy enemy;
 
     Scene currentScene;
 
@@ -40,6 +41,7 @@ public class GameMaster : MonoBehaviour {
     void Start()
     {
         player = Player.instance;
+        enemy = Enemy.instance;
 
         if (cameraShake == null)
         {
@@ -103,12 +105,7 @@ public class GameMaster : MonoBehaviour {
         Money += _enemy.moneyDrop;
         audioManager.PlaySound("Money");
 
-        // Add particles
-        Transform _clone = Instantiate(_enemy.deathParticles, _enemy.transform.position, Quaternion.identity) as Transform;
-        Destroy(_clone.gameObject, 3f);
-
         // Camera Shake
         // cameraShake.Shake(_enemy.shakeAmt, _enemy.shakeLength);
-        Destroy(_enemy.gameObject);
     }
 }

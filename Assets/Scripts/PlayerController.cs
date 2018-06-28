@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigidBody;
 
     Player player;
+
+    public static PlayerController instance;
     
     SpriteRenderer[] childSpriteRenderer;
 
@@ -32,16 +34,24 @@ public class PlayerController : MonoBehaviour
 
     AudioManager audioManager;
 
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     void Start()
     {
         player = Player.instance;
 
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
-        playerAnim = gameObject.GetComponent<Animator>();
+        playerAnim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
         rigidBody.freezeRotation = true;
 
-        childSpriteRenderer = GetComponentsInChildren<SpriteRenderer>(); //(typeof(SpriteRenderer)) as SpriteRenderer;
+        childSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
         
         playerLocation = transform.localScale;
 
@@ -112,7 +122,7 @@ public class PlayerController : MonoBehaviour
     {
         if (player.isDead == false)
         {
-            float x = Input.GetAxis("Horizontal");
+            float x = Input.GetAxisRaw("Horizontal");
 
             if (Input.GetKeyDown(KeyCode.LeftShift) && onGround == true)
             {
@@ -162,8 +172,7 @@ public class PlayerController : MonoBehaviour
         {
             isAiming = true;
 
-            int i;
-            for (i = 1; i < childSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the player's body)
+            for (int i = 1; i < childSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
                 childSpriteRenderer[i].enabled = true;
             }
@@ -174,8 +183,7 @@ public class PlayerController : MonoBehaviour
         {
             isAiming = false;
 
-            int i;
-            for (i = 1; i < childSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the player's body)
+            for (int i = 1; i < childSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
                 childSpriteRenderer[i].enabled = false;
             }

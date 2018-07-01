@@ -38,8 +38,6 @@ public class Enemy : MonoBehaviour {
 
     public float distanceToPlayer;
 
-    public static Enemy instance;
-
     public bool isDead = false;
 
     private AudioManager audioManager;
@@ -50,35 +48,22 @@ public class Enemy : MonoBehaviour {
     Animator anim;
 
     Player player;
-    EnemyMovement enemyMovement;
+    EnemyMovement enemyMovementScript;
 
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;
 
     [Header("Optional: ")][SerializeField] private StatusIndicator statusIndicator;
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
-
     void Start()
     {
         player = Player.instance;
-        enemyMovement = EnemyMovement.instance;
+        enemyMovementScript = gameObject.GetComponent<EnemyMovement>();
 
         boxCollider = GetComponent<BoxCollider2D>();
         playerBoxCollider = player.GetComponent<BoxCollider2D>();
 
         Physics2D.IgnoreCollision(boxCollider, playerBoxCollider);
-
-        if (instance == null)
-        {
-            instance = this;
-        }
 
         enemyStats.actualMaxHealth = enemyStats.maxHealth * enemyStats.startHealthPercent;
         enemyStats.Init();
@@ -103,7 +88,7 @@ public class Enemy : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (enemyMovement.currentState != EnemyMovement.State.Dead)
+        if (enemyMovementScript.currentState != EnemyMovement.State.Dead)
         {
             distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             // print("Distance to Player: " + distanceToPlayer + " units");
@@ -140,9 +125,12 @@ public class Enemy : MonoBehaviour {
             // cameraShake.Shake(_enemy.shakeAmt, _enemy.shakeLength);
             
             isDead = true;
-            enemyMovement.currentState = EnemyMovement.State.Dead;
+            enemyMovementScript.currentState = EnemyMovement.State.Dead;
+
+            boxCollider.offset = new Vector2(-0.13f, -23.6f);
+            boxCollider.size = new Vector2(52.5f, 4.8f);
         }
-        else if (enemyStats.currentHealth > 0 && isDead == false)
+        else if (enemyStats.currentHealth > 0)
         {
             // Play damage sound
             audioManager.PlaySound(damageSoundName);

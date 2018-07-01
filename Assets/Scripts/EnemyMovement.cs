@@ -59,13 +59,20 @@ public class EnemyMovement : MonoBehaviour {
     Vector3 enemyLocation;
 
     Animator anim;
-    SpriteRenderer[] childSpriteRenderer;
+    SpriteRenderer[] childrenSpriteRenderer;
+
+    Transform arm;
 
     Player player;
-    EnemySenses enemySenses;
-    Enemy enemy;
+    EnemySight enemySightScript;
+    Enemy enemyScript;
+    ArmRotation armRotationScript;
 
-    public static EnemyMovement instance;
+    GameObject[] enemies;
+    GameObject enemySight;
+
+    BoxCollider2D thisCollider;
+    BoxCollider2D enemyCollider;
 
     public enum State
     {
@@ -78,30 +85,46 @@ public class EnemyMovement : MonoBehaviour {
 
     public State startState;
     public State currentState;
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
+    public State lostPlayerPositionState;
 
     void Start()
     {
+        arm = gameObject.transform.Find("EnemyArm");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemySight = GameObject.Find("Sight");
+
+        thisCollider = gameObject.GetComponent<BoxCollider2D>();
+
+        foreach (GameObject enemy in enemies)
+        {
+            enemyCollider = enemy.GetComponent<BoxCollider2D>();
+        }
+
+        Physics2D.IgnoreCollision(thisCollider, enemyCollider);
+
         currentState = startState;
+        lostPlayerPositionState = State.Idle;
 
         player = Player.instance;
-        enemySenses = EnemySenses.instance;
-        enemy = Enemy.instance;
+        enemySightScript = enemySight.GetComponent<EnemySight>();
+        enemyScript = gameObject.GetComponent<Enemy>();
+        armRotationScript = arm.GetComponent<ArmRotation>();
 
-        childSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
+        childrenSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
         anim = GetComponent<Animator>();
 
         enemyLocation = transform.localScale;
 
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+
+        if (facingRight == false)
+        {
+            enemyLocation.x *= -1;
+            transform.localScale = enemyLocation;
+            armRotationScript.enemyRotationOffset = 180;
+            facingRight = false;
+        }
 
         if (target == null)
         {
@@ -112,18 +135,10 @@ public class EnemyMovement : MonoBehaviour {
             return;
         }
 
-        if (facingRight == false)
-        {
-            enemyLocation.x *= -1;
-            transform.localScale = enemyLocation;
-            EnemyArmRotation.rotationOffset = 180;
-            facingRight = false;
-        }
-
         // Start a new path to the target position, return the result to the OnPathComplete method
         seeker.StartPath(transform.position, target.position, OnPathComplete);
 
-        StartCoroutine(RunTowardsPlayer());
+        StartCoroutine(MoveTowardsTarget());
     }
 
     void Update()
@@ -141,14 +156,17 @@ public class EnemyMovement : MonoBehaviour {
         }
         else if (currentState == State.Idle)
         {
+            CheckIfAiming();
             anim.SetInteger("currentState", 1);
         }
         else if (currentState == State.Patrol)
         {
+            CheckIfAiming();
             anim.SetInteger("currentState", 2);
         }
         else if (currentState == State.CheckSound)
         {
+            CheckIfAiming();
             anim.SetInteger("currentState", 3);
         }
         else if (currentState == State.Attack) // Attack state is determined in the EnemySenses script, when the player can be seen
@@ -167,21 +185,21 @@ public class EnemyMovement : MonoBehaviour {
 
     private void CheckIfShouldFollowPlayer()
     {
-        if (enemy.isDead == false)
+        if (enemyScript.isDead == false && player.isDead == false)
         {
-            if ((target != null && player.isDead == true) || (target != null && enemySenses.CanPlayerBeSeen() == false && stillSearching == false))
+            if ((target != null && player.isDead == true) || (target != null && enemySightScript.CanPlayerBeSeen() == false && stillSearching == false))
             {
                 searchingForPlayer = false;
                 playerPositionKnown = false;
                 return;
             }
-            else if ((target != null && stillSearching == true && enemySenses.CanPlayerBeSeen() == false) || (target != null && stillSearching == false && enemySenses.CanPlayerBeSeen() == true))
+            else if ((target != null && stillSearching == true && enemySightScript.CanPlayerBeSeen() == false) || (target != null && stillSearching == false && enemySightScript.CanPlayerBeSeen() == true))
             {
                 if (!searchingForPlayer)
                 {
                     searchingForPlayer = true;
                     playerPositionKnown = true;
-                    StartCoroutine(RunTowardsPlayer());
+                    StartCoroutine(MoveTowardsTarget());
                 }
             }
             else if (target == null)
@@ -198,44 +216,41 @@ public class EnemyMovement : MonoBehaviour {
 
     void FlipDuringAttackState()
     {
-        if (enemy.isDead == false && target == player.transform)
-        {
-            horizontalVelocity = rb.velocity.x;
+        horizontalVelocity = rb.velocity.x;
 
-            if (facingRight == true && horizontalVelocity < -1f) // Facing right and moving left
-            {
-                enemyLocation.x *= -1;
-                transform.localScale = enemyLocation;
-                EnemyArmRotation.rotationOffset = 180;
-                facingRight = false;
-            }
-            else if (facingRight == false && horizontalVelocity > 1f) // Facing left and moving right
-            {
-                enemyLocation.x *= -1;
-                transform.localScale = enemyLocation;
-                EnemyArmRotation.rotationOffset = 360;
-                facingRight = true;
-            }
-            else if (facingRight == true && transform.position.x > player.transform.position.x)
-            {
-                enemyLocation.x *= -1;
-                transform.localScale = enemyLocation;
-                EnemyArmRotation.rotationOffset = 180;
-                facingRight = false;
-            }
-            else if (facingRight == false && transform.position.x < player.transform.position.x)
-            {
-                enemyLocation.x *= -1;
-                transform.localScale = enemyLocation;
-                EnemyArmRotation.rotationOffset = 360;
-                facingRight = true;
-            }
+        if (facingRight == true && horizontalVelocity < -1f) // Facing right and moving left
+        {
+            enemyLocation.x *= -1;
+            transform.localScale = enemyLocation;
+            armRotationScript.enemyRotationOffset = 180;
+            facingRight = false;
+        }
+        else if (facingRight == false && horizontalVelocity > 1f) // Facing left and moving right
+        {
+            enemyLocation.x *= -1;
+            transform.localScale = enemyLocation;
+            armRotationScript.enemyRotationOffset = 360;
+            facingRight = true;
+        }
+        else if (facingRight == true && transform.position.x > player.transform.position.x)
+        {
+            enemyLocation.x *= -1;
+            transform.localScale = enemyLocation;
+            armRotationScript.enemyRotationOffset = 180;
+            facingRight = false;
+        }
+        else if (facingRight == false && transform.position.x < player.transform.position.x)
+        {
+            enemyLocation.x *= -1;
+            transform.localScale = enemyLocation;
+            armRotationScript.enemyRotationOffset = 360;
+            facingRight = true;
         }
     }
 
     void Flip()
     {
-        if (enemy.isDead == false)
+        if (enemyScript.isDead == false)
         {
             horizontalVelocity = rb.velocity.x;
 
@@ -243,14 +258,14 @@ public class EnemyMovement : MonoBehaviour {
             {
                 enemyLocation.x *= -1;
                 transform.localScale = enemyLocation;
-                EnemyArmRotation.rotationOffset = 180;
+                armRotationScript.enemyRotationOffset = 180;
                 facingRight = false;
             }
             else if (facingRight == false && horizontalVelocity > 1f) // Facing left and moving right
             {
                 enemyLocation.x *= -1;
                 transform.localScale = enemyLocation;
-                EnemyArmRotation.rotationOffset = 360;
+                armRotationScript.enemyRotationOffset = 360;
                 facingRight = true;
             }
         }
@@ -263,9 +278,9 @@ public class EnemyMovement : MonoBehaviour {
             isAiming = true;
             playerPositionKnown = true;
 
-            for (int i = 1; i < childSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the player's body)
+            for (int i = 1; i < childrenSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the enemy's body)
             {
-                childSpriteRenderer[i].enabled = true;
+                childrenSpriteRenderer[i].enabled = true;
             }
 
             anim.SetBool("isAiming", isAiming);
@@ -275,9 +290,9 @@ public class EnemyMovement : MonoBehaviour {
             isAiming = false;
             playerPositionKnown = false;
 
-            for (int i = 1; i < childSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the player's body)
+            for (int i = 1; i < childrenSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the enemy's body)
             {
-                childSpriteRenderer[i].enabled = false;
+                childrenSpriteRenderer[i].enabled = false;
             }
 
             anim.SetBool("isAiming", isAiming);
@@ -286,12 +301,12 @@ public class EnemyMovement : MonoBehaviour {
 
     void CheckIfRunning()
     {
-        if (enemy.distanceToPlayer > 3f && ((enemySenses.CanPlayerBeSeen() == false && stillSearching == true) || enemySenses.CanPlayerBeSeen() == true))
+        if (enemyScript.distanceToPlayer > 3f && player.isDead == false && ((enemySightScript.CanPlayerBeSeen() == false && stillSearching == true) || enemySightScript.CanPlayerBeSeen() == true))
         {
             isRunning = true;
             anim.SetBool("isRunning", isRunning);
         }
-        else if (enemy.distanceToPlayer < 3f)
+        else if (enemyScript.distanceToPlayer < 3f || player.isDead == true)
         {
             isRunning = false;
             anim.SetBool("isRunning", isRunning);
@@ -300,7 +315,7 @@ public class EnemyMovement : MonoBehaviour {
 
     void CalculateWaypointMovement()
     {
-        if (enemy.isDead == false)
+        if (enemyScript.isDead == false)
         {
             if (path == null)
                 return;
@@ -336,9 +351,9 @@ public class EnemyMovement : MonoBehaviour {
 
     void DetermineMoveSpeed()
     {
-        if (enemy.isDead == false)
+        if (enemyScript.isDead == false)
         {
-            if ((enemySenses.CanPlayerBeSeen() == true && enemy.distanceToPlayer < 3f) || (enemySenses.CanPlayerBeSeen() == false && stillSearching == false))
+            if ((enemySightScript.CanPlayerBeSeen() == true && enemyScript.distanceToPlayer < 3f) || (enemySightScript.CanPlayerBeSeen() == false && stillSearching == false))
             {
                 moveSpeed = noSpeed;
                 isWalking = false;
@@ -359,7 +374,7 @@ public class EnemyMovement : MonoBehaviour {
         }
     }
 
-    IEnumerator RunTowardsPlayer()
+    IEnumerator MoveTowardsTarget()
     {
         if (target == null)
         {
@@ -374,7 +389,7 @@ public class EnemyMovement : MonoBehaviour {
         seeker.StartPath(transform.position, target.position, OnPathComplete);
 
         yield return new WaitForSeconds(1f / updateRate); // Update path towards player after this amount of time
-        StartCoroutine(RunTowardsPlayer());
+        StartCoroutine(MoveTowardsTarget());
     }
 
     public void OnPathComplete (Path p)
@@ -393,9 +408,9 @@ public class EnemyMovement : MonoBehaviour {
         anim.SetBool("onGround", onGround);
     }
 
-    IEnumerator OnTriggerExit2D() 
+    IEnumerator OnTriggerExit2D(Collider2D other) 
     {
-        if (currentState == State.Attack)
+        if (currentState == State.Attack && other.name == "Player")
         {
             // If the player leaves the enemy's trigger, they will continue following the player for a set amount of time.
             stillSearching = true;
@@ -408,10 +423,11 @@ public class EnemyMovement : MonoBehaviour {
                 // Debug.Log("Timer: " + timer);
             }
 
-            if (timer >= continueSearchingTime)
+            if (timer >= continueSearchingTime && enemyScript.enemyStats.currentHealth > 0)
             {
                 stillSearching = false;
                 playerPositionKnown = false;
+                currentState = lostPlayerPositionState;
             }
         }
     }

@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class EnemyWeapon : MonoBehaviour {
 
-    public static EnemyWeapon instance;
-
-    Enemy enemy;
-    EnemySenses enemySenses;
-    EnemyMovement enemyMovement;
+    Enemy enemyScript;
+    EnemySight enemySightScript;
+    EnemyMovement enemyMovementScript;
     Player player;
-
-    public Transform target;
+    Transform enemy;
+    GameObject enemySight;
 
     public int damage = 1;
     public LayerMask whatToHit;
@@ -51,18 +49,6 @@ public class EnemyWeapon : MonoBehaviour {
 
     void Awake()
     {
-        if (instance != null)
-        {
-            if (instance != this)
-            {
-                Destroy(this.gameObject);
-            }
-        }
-        else
-        {
-            instance = this;
-        }
-
         firePoint = transform.Find("FirePoint");
         if (firePoint == null)
         {
@@ -72,15 +58,13 @@ public class EnemyWeapon : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        enemySenses = EnemySenses.instance;
-        enemyMovement = EnemyMovement.instance;
-        enemy = Enemy.instance;
-        player = Player.instance;
+        enemy = transform.root;
+        enemySight = GameObject.Find("Sight");
 
-        if (target == null)
-        {
-            target = GameObject.FindGameObjectWithTag("Player").transform;
-        }
+        enemySightScript = enemySight.GetComponent<EnemySight>();
+        enemyMovementScript = enemy.GetComponent<EnemyMovement>();
+        enemyScript = enemy.GetComponent<Enemy>();
+        player = Player.instance;
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -93,19 +77,19 @@ public class EnemyWeapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        CheckIfShooting();
+        EnemyCheckIfShooting();
 
-        if (enemyMovement.stillSearching == false)
+        if (enemyMovementScript.stillSearching == false)
         {
             initialWaitToShootTime = 2f;
         }
     }
 
-    void CheckIfShooting()
+    void EnemyCheckIfShooting()
     {
-        if (enemy.isDead == false)
+        if (enemyScript.isDead == false)
         {
-            if (enemySenses.CanPlayerBeSeen() == true && enemy.distanceToPlayer <= maxShootDistance)
+            if (enemySightScript.CanPlayerBeSeen() == true && enemyScript.distanceToPlayer <= maxShootDistance)
             {
                 isAbleToShoot = true;
             }
@@ -119,31 +103,31 @@ public class EnemyWeapon : MonoBehaviour {
                 if (isAutomatic == false) // For semi-auto guns
                 {
                     coolDownTime = semiAutoCoolDownTime;
-                    StartCoroutine(Shoot());
+                    StartCoroutine(EnemyShoot());
                 }
                 else if (isAutomatic == true) // For automatic guns
                 {
                     coolDownTime = autoCoolDownTime;
-                    StartCoroutine(Shoot());
+                    StartCoroutine(EnemyShoot());
                 }
             }
         }
     }
 
-    IEnumerator Shoot()
+    IEnumerator EnemyShoot()
     {
         StartCoroutine(Wait());
 
         Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
         Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.y);
 
-        if (enemy.distanceToPlayer < 2f)
+        if (enemyScript.distanceToPlayer < 2f)
         {
             hit = Physics2D.Raycast(firePointPosition, (playerPosition - firePointPosition), 100f, whatToHit);
         }
         else
         {
-            hit = Physics2D.Raycast(firePointPosition, (playerPosition - firePointPosition) + new Vector2(0, Random.Range(-enemy.enemyStats.accuracyFactor, enemy.enemyStats.accuracyFactor)), 100f, whatToHit);
+            hit = Physics2D.Raycast(firePointPosition, (playerPosition - firePointPosition) + new Vector2(0, Random.Range(-enemyScript.enemyStats.accuracyFactor, enemyScript.enemyStats.accuracyFactor)), 100f, whatToHit);
         }
 
         Vector3 hitPos;

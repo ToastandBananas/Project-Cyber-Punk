@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
@@ -6,6 +7,7 @@ public class Weapon : MonoBehaviour {
     
     public float fireRate = 1;
     public int damage = 1;
+    public float soundRadius = 100f;
     public LayerMask whatToHit;
 
     public Transform BulletTrailPrefab;
@@ -28,6 +30,7 @@ public class Weapon : MonoBehaviour {
 
     PlayerController playerController;
     Player player;
+    ProduceSoundTrigger produceSoundTriggerScript;
 
     // Use this for initialization
     void Awake () {
@@ -54,6 +57,7 @@ public class Weapon : MonoBehaviour {
     {
         playerController = PlayerController.instance;
         player = Player.instance;
+        produceSoundTriggerScript = gameObject.GetComponent<ProduceSoundTrigger>();
 
         camShake = GameMaster.gm.GetComponent<CameraShake>();
         if (camShake == null)
@@ -71,12 +75,12 @@ public class Weapon : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        CheckIfShooting();
+        PlayerCheckIfShooting();
     }
 
-    void CheckIfShooting()
+    void PlayerCheckIfShooting()
     {
-        if (Input.GetButton("Fire2")) // Holding right click
+        if (Input.GetButton("Fire2") && player.isDead == false) // Holding right click
         {
             if (fireRate == 1)
             {
@@ -84,6 +88,7 @@ public class Weapon : MonoBehaviour {
                 if (Input.GetButtonDown("Fire1")) // Left click while holding right click
                 {
                     Shoot();
+                    produceSoundTriggerScript.SoundTrigger(soundRadius);
                     audioManager.PlaySound(gunfireSoundName);
                 }
             }
@@ -93,6 +98,7 @@ public class Weapon : MonoBehaviour {
                 {
                     timeToFire = Time.time + 1 / fireRate;
                     Shoot();
+                    produceSoundTriggerScript.SoundTrigger(soundRadius);
                     audioManager.PlaySound(gunfireSoundName);
                 }
             }
@@ -142,6 +148,13 @@ public class Weapon : MonoBehaviour {
             timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
         }
     }
+
+    /*IEnumerator TurnOnSoundTriggerCollider()
+    {
+        soundTriggerCollider.enabled = true;
+        yield return new WaitForSeconds(.5f);
+        soundTriggerCollider.enabled = false;
+    }*/
 
     void Effect(Vector3 hitPos, Vector3 hitNormal)
     {

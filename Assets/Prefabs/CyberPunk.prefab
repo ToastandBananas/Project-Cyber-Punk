@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4035460867070916}
   - component: {fileID: 212762824935828172}
   - component: {fileID: 114022508550960370}
+  - component: {fileID: 58941342874117912}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: EquippedWeapon
@@ -185,6 +186,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58941342874117912
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1278934054765506}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 200
 --- !u!61 &61131533853318998
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -265,6 +281,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b2a1687d107fa45bc8ef51fb63e232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyRotationOffset: 360
+  playerRotationOffset: 360
+  whoIsControlling: 0
 --- !u!114 &114409683771067814
 MonoBehaviour:
   m_ObjectHideFlags: 1

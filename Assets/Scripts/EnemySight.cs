@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class EnemySenses : MonoBehaviour
+public class EnemySight : MonoBehaviour
 {
 
     // Use this for initialization
@@ -13,23 +13,17 @@ public class EnemySenses : MonoBehaviour
     Transform lineOfSightEnd;
     Transform player; // a reference to the player for raycasting
 
-    public static EnemySenses instance;
+    Enemy enemyScript;
+    EnemyMovement enemyMovementScript;
 
-    Enemy enemy;
-    EnemyMovement enemyMovement;
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-    }
+    Transform enemy;
 
     void Start()
     {
-        enemy = Enemy.instance;
-        enemyMovement = EnemyMovement.instance;
+        enemy = transform.root;
+
+        enemyScript = enemy.GetComponent<Enemy>();
+        enemyMovementScript = enemy.GetComponent<EnemyMovement>();
 
         playerInRange = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -41,8 +35,8 @@ public class EnemySenses : MonoBehaviour
         if (CanPlayerBeSeen())
         {
             // spr.color = Color.red;
-            enemyMovement.target = player;
-            enemyMovement.currentState = EnemyMovement.State.Attack;
+            enemyMovementScript.target = player;
+            enemyMovementScript.currentState = EnemyMovement.State.Attack;
         }
         else
         {
@@ -52,7 +46,7 @@ public class EnemySenses : MonoBehaviour
 
     public bool CanPlayerBeSeen()
     {
-        if (enemy.isDead == false)
+        if (enemyScript.isDead == false)
         {
             // we only need to check visibility if the player is within the enemy's visual range
             if (playerInRange)

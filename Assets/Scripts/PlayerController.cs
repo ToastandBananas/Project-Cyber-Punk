@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigidBody;
 
     Player player;
+    Transform arm;
+    ArmRotation armRotationScript;
 
     public static PlayerController instance;
     
@@ -45,6 +47,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         player = Player.instance;
+
+        arm = gameObject.transform.Find("Arm");
+        armRotationScript = arm.GetComponent<ArmRotation>();
 
         playerSpriteRenderer = GetComponent<SpriteRenderer>();
         playerAnim = GetComponent<Animator>();
@@ -152,7 +157,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerLocation.x *= -1;
                 transform.localScale = playerLocation;
-                ArmRotation.rotationOffset = 180;
+                armRotationScript.playerRotationOffset = 180;
                 facingRight = false;
             }
             else if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && facingRight == false)
@@ -160,7 +165,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerLocation.x *= -1;
                 transform.localScale = playerLocation;
-                ArmRotation.rotationOffset = 360;
+                armRotationScript.playerRotationOffset = 360;
                 facingRight = true;
             }
         }

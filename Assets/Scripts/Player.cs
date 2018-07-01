@@ -47,6 +47,9 @@ public class Player : MonoBehaviour {
 
     Animator playerAnim;
 
+    BoxCollider2D boxCollider;
+    Rigidbody2D rb;
+
     void Awake()
     {
         if (instance == null)
@@ -74,6 +77,9 @@ public class Player : MonoBehaviour {
         }*/
 
         GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
+
+        rb = GetComponent<Rigidbody2D>();
+        boxCollider = GetComponent<BoxCollider2D>();
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -119,6 +125,11 @@ public class Player : MonoBehaviour {
             // Kill player
             GameMaster.KillPlayer(this);
             isDead = true;
+
+            rb.drag = 10; // So that the player doesn't slide if they're moving when they die
+
+            boxCollider.offset = new Vector2(-0.13f, -23.6f); // So that if the enemy shoots the player when they're dead, it doesn't produce a blood splatter from empty space
+            boxCollider.size = new Vector2(52.5f, 4.8f);
         }
         else if (playerStats.currentHealth > 0 && isDead == false)
         {

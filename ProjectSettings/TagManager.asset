@@ -11,6 +11,7 @@ TagManager:
   - Arm
   - EnemyArm
   - EnemyWeapon
+  - Door
   layers:
   - Default
   - TransparentFX

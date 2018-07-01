@@ -23,7 +23,6 @@ public class GameMaster : MonoBehaviour {
     public UpgradeMenuCallback onToggleUpgradeMenu;
 
     Player player;
-    Enemy enemy;
 
     Scene currentScene;
 
@@ -41,7 +40,6 @@ public class GameMaster : MonoBehaviour {
     void Start()
     {
         player = Player.instance;
-        enemy = Enemy.instance;
 
         if (cameraShake == null)
         {

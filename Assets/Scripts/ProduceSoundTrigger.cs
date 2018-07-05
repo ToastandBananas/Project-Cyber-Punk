@@ -2,28 +2,29 @@
 
 public class ProduceSoundTrigger : MonoBehaviour {
 
-    GameObject soundTriggerPrefab;
+    public GameObject soundTriggerPrefab;
 
     CircleCollider2D soundTriggerCollider;
 
     Transform parent;
 
+    EnemyHearing enemyHearingScript;
     AudioManager audioManager;
 
     // Use this for initialization
     void Start () {
-        soundTriggerPrefab = (GameObject)Resources.Load("Prefabs/Weapons/SoundTrigger", typeof(GameObject));
-        soundTriggerCollider = soundTriggerPrefab.GetComponent<CircleCollider2D>();
-
         parent = gameObject.transform;
+
+        soundTriggerCollider = soundTriggerPrefab.GetComponent<CircleCollider2D>();
 
         audioManager = AudioManager.instance;
     }
 
     public void SoundTrigger(float soundRadius)
     {
-        soundTriggerCollider.radius = soundRadius;
         GameObject soundTrigger = Instantiate(soundTriggerPrefab, parent) as GameObject;
+        soundTriggerCollider.radius = soundRadius;
+
         Destroy(soundTrigger.gameObject, .5f);
     }
 }

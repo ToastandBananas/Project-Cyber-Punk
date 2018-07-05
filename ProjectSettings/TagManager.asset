@@ -12,6 +12,13 @@ TagManager:
   - EnemyArm
   - EnemyWeapon
   - Door
+  - SoundTrigger
+  - Stairs
+  - StairsDown
+  - Room
+  - StairsUp
+  - Hearing
+  - Sight
   layers:
   - Default
   - TransparentFX
@@ -24,8 +31,8 @@ TagManager:
   - Player
   - Enemy
   - Obstacle
-  - 
-  - 
+  - Sound
+  - Sight
   - 
   - 
   - 

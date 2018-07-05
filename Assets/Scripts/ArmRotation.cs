@@ -11,7 +11,7 @@ public class ArmRotation : MonoBehaviour {
     EnemyMovement enemyMovementScript;
 
     Transform enemy;
-    GameObject enemySight;
+    Transform enemySight;
 
     public enum WhoIsControlling
     {
@@ -24,11 +24,15 @@ public class ArmRotation : MonoBehaviour {
     void Start()
     {
         player = Player.instance;
-        enemy = transform.root;
-        enemySight = GameObject.Find("Sight");
 
-        enemySightScript = enemySight.GetComponent<EnemySight>();
-        enemyMovementScript = enemy.GetComponent<EnemyMovement>();
+        if (whoIsControlling == WhoIsControlling.EnemyControl)
+        {
+            enemy = transform.root;
+            enemySight = enemy.Find("Sight");
+
+            enemySightScript = enemySight.GetComponent<EnemySight>();
+            enemyMovementScript = enemy.GetComponent<EnemyMovement>();
+        }
     }
 
     // Update is called once per frame

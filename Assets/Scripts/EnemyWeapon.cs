@@ -8,7 +8,7 @@ public class EnemyWeapon : MonoBehaviour {
     EnemyMovement enemyMovementScript;
     Player player;
     Transform enemy;
-    GameObject enemySight;
+    Transform enemySight;
 
     public int damage = 1;
     public LayerMask whatToHit;
@@ -59,7 +59,7 @@ public class EnemyWeapon : MonoBehaviour {
     // Use this for initialization
     void Start () {
         enemy = transform.root;
-        enemySight = GameObject.Find("Sight");
+        enemySight = enemy.Find("Sight");
 
         enemySightScript = enemySight.GetComponent<EnemySight>();
         enemyMovementScript = enemy.GetComponent<EnemyMovement>();

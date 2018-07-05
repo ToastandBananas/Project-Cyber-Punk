@@ -16,6 +16,11 @@ public class EnemySight : MonoBehaviour
     Enemy enemyScript;
     EnemyMovement enemyMovementScript;
 
+    GameObject[] sightObjects;
+
+    CircleCollider2D thisSightCollider;
+    CircleCollider2D otherSightCollider;
+
     Transform enemy;
 
     void Start()
@@ -24,6 +29,15 @@ public class EnemySight : MonoBehaviour
 
         enemyScript = enemy.GetComponent<Enemy>();
         enemyMovementScript = enemy.GetComponent<EnemyMovement>();
+
+        sightObjects = GameObject.FindGameObjectsWithTag("Sight");
+
+        thisSightCollider = gameObject.GetComponent<CircleCollider2D>();
+        
+        foreach (GameObject sightObject in sightObjects)
+        {
+            otherSightCollider = sightObject.GetComponent<CircleCollider2D>();
+        }
 
         playerInRange = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -74,6 +88,7 @@ public class EnemySight : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+        // Debug.Log("Sight collider colliding with: " + other);
         // if 'other' is player, the player is seen 
         // note, we don't really need to check the transform tag since the collision matrix is set to only 'see' collisions with the player layer
         if (other.transform.tag == "Player")

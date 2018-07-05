@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4035460867070916}
   - component: {fileID: 212762824935828172}
   - component: {fileID: 114022508550960370}
-  - component: {fileID: 58941342874117912}
+  - component: {fileID: 114636384916097002}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: EquippedWeapon
@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1653873219163994}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 1.11, z: 0}
+  m_LocalPosition: {x: -2.13, y: -0.5, z: 0}
   m_LocalScale: {x: 0.009, y: 0.009, z: 0.009}
   m_Children:
   - {fileID: 4623533662209142}
@@ -186,21 +186,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!58 &58941342874117912
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1278934054765506}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 200
 --- !u!61 &61131533853318998
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -257,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireRate: 1
   damage: 1
+  soundRadius: 10000
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294967035
@@ -306,6 +292,19 @@ MonoBehaviour:
   damageSoundName: DamageVoice
   isDead: 0
   playerLocation: {x: 0, y: 0, z: 0}
+--- !u!114 &114636384916097002
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1278934054765506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202d4ddf7f4615a46b9dd40d5e385e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
+    type: 2}
 --- !u!114 &114853877657023630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -327,6 +326,9 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4294966984
+  currentFloorLevel: 1
+  currentRoomNumber: 0
+  currentRoom: {fileID: 0}
 --- !u!212 &212053647906104960
 SpriteRenderer:
   m_ObjectHideFlags: 1

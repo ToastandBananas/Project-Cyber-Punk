@@ -20,6 +20,10 @@ public class PlayerController : MonoBehaviour
     float groundRadius = 0.1f;
     public LayerMask whatIsGround;
 
+    public int currentFloorLevel = 1;
+    public int currentRoomNumber;
+    public Transform currentRoom;
+
     SpriteRenderer playerSpriteRenderer;
     Animator playerAnim;
     Rigidbody2D rigidBody;

@@ -37,6 +37,8 @@ public class Door : MonoBehaviour {
 
         startDoorState = DoorState.Closed;
         currentDoorState = startDoorState;
+        
+        doorPosition = door.transform.position;
 
         doorAnim = door.GetComponent<Animator>();
     }
@@ -60,12 +62,11 @@ public class Door : MonoBehaviour {
             doorAnim.SetInteger("doorState", 2);
             doorCollider.enabled = false;
         }
-        Debug.Log("Current door state: " + currentDoorState);
+        // Debug.Log("Current door state: " + currentDoorState);
 	}
 
     void OpenOrCloseDoor()
     {
-        doorPosition = door.transform.position;
         playerPosition = player.transform.position;
 
         if (isNearDoor == true)
@@ -100,7 +101,7 @@ public class Door : MonoBehaviour {
 
         if (coll.gameObject.tag == "Enemy" && coll.isTrigger == false)
         {
-            if (currentDoorState == DoorState.Closed)
+            if (currentDoorState == DoorState.Closed && coll.gameObject.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Idle)
             {
                 if (doorPosition.x > coll.gameObject.transform.position.x)
                 {

@@ -65,7 +65,17 @@ public class GameMaster : MonoBehaviour {
             ToggleUpgradeMenu();
         }
 
-        Debug.Log("Player Health: " + player.playerStats.currentHealth);
+        debugPause();
+
+        // Debug.Log("Player Health: " + player.playerStats.currentHealth);
+    }
+
+    void debugPause()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Break();
+        }
     }
 
     private void ToggleUpgradeMenu()

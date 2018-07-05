@@ -12,8 +12,6 @@ public class Enemy : MonoBehaviour {
         [HideInInspector]
         public float actualMaxHealth;
 
-        public float accuracyFactor = 0.4f; // 0 equals 100 percent accurate.
-
         private float _currentHealth;
         public float currentHealth
         {
@@ -21,7 +19,11 @@ public class Enemy : MonoBehaviour {
             set { _currentHealth = Mathf.Clamp(value, 0f, actualMaxHealth); }
         }
 
-        public float damage = 1;
+        public int hearingRadius = 200;
+
+        [Header("Note: 0 equals 100% accurate")] public float accuracyFactor = 0.4f;
+
+        public float onTouchDamage = 0;
 
         public void Init()
         {
@@ -143,7 +145,7 @@ public class Enemy : MonoBehaviour {
 
         if(_player != null)
         {
-            _player.DamagePlayer(enemyStats.damage);
+            _player.DamagePlayer(enemyStats.onTouchDamage);
         }
     }
 }

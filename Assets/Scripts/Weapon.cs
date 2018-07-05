@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Weapon : MonoBehaviour {
 
@@ -7,7 +6,7 @@ public class Weapon : MonoBehaviour {
     
     public float fireRate = 1;
     public int damage = 1;
-    public float soundRadius = 100f;
+    public int soundRadius = 10000;
     public LayerMask whatToHit;
 
     public Transform BulletTrailPrefab;
@@ -84,7 +83,7 @@ public class Weapon : MonoBehaviour {
         {
             if (fireRate == 1)
             {
-                print("fire rate is 1");
+                // print("fire rate is 1");
                 if (Input.GetButtonDown("Fire1")) // Left click while holding right click
                 {
                     Shoot();

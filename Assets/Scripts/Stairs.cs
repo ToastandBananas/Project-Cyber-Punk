@@ -5,8 +5,7 @@ public class Stairs : MonoBehaviour {
     Player player;
 
     public Transform targetDoor;
-
-    BoxCollider2D playerCollider;
+    
     BoxCollider2D stairsTriggerCollider;
 
     bool playerIsNearStairs = false;
@@ -14,8 +13,7 @@ public class Stairs : MonoBehaviour {
     void Start()
     {
         player = Player.instance;
-
-        playerCollider = player.GetComponent<BoxCollider2D>();
+        
         stairsTriggerCollider = GetComponent<BoxCollider2D>();
     }
 
@@ -36,16 +34,16 @@ public class Stairs : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             playerIsNearStairs = true;
             // Debug.Log("Player is near stairs: " + playerIsNearStairs);
         }
-        else if (collision.gameObject.tag == "Enemy")
+        else if (collision.gameObject.tag == "Enemy" && collision.gameObject.GetComponent<EnemyMovement>().currentTarget == gameObject.transform)
         {
-            
+            collision.gameObject.transform.position = new Vector3(targetDoor.transform.position.x, targetDoor.transform.position.y - 0.13f);
         }
     }
 

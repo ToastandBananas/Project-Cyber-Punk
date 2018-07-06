@@ -13,11 +13,11 @@ public class GameMaster : MonoBehaviour {
     public Transform spawnPoint;
     public int spawnDelay = 3;
 
-    public CameraShake cameraShake;
+    // public CameraShake cameraShake;
 
     [SerializeField] private GameObject upgradeMenu;
 
-    [SerializeField] private WaveSpawner waveSpawner;
+    // [SerializeField] private WaveSpawner waveSpawner;
 
     public delegate void UpgradeMenuCallback(bool active);
     public UpgradeMenuCallback onToggleUpgradeMenu;
@@ -41,10 +41,10 @@ public class GameMaster : MonoBehaviour {
     {
         player = Player.instance;
 
-        if (cameraShake == null)
-        {
-            Debug.LogError("No camera shake referenced in GameMaster.");
-        }
+        //if (cameraShake == null)
+        //{
+            //Debug.LogError("No camera shake referenced in GameMaster.");
+        //}
 
         Money = startingMoney;
 
@@ -81,7 +81,7 @@ public class GameMaster : MonoBehaviour {
     private void ToggleUpgradeMenu()
     {
         upgradeMenu.SetActive(!upgradeMenu.activeSelf);
-        waveSpawner.enabled = !upgradeMenu.activeSelf;
+        // waveSpawner.enabled = !upgradeMenu.activeSelf;
         onToggleUpgradeMenu.Invoke(upgradeMenu.activeSelf);
     }
 

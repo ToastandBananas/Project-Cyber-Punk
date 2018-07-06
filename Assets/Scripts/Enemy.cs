@@ -44,8 +44,8 @@ public class Enemy : MonoBehaviour {
 
     private AudioManager audioManager;
 
-    BoxCollider2D boxCollider;
-    BoxCollider2D playerBoxCollider;
+    CapsuleCollider2D capsuleCollider;
+    CapsuleCollider2D playerCapsuleCollider;
 
     Animator anim;
 
@@ -62,10 +62,10 @@ public class Enemy : MonoBehaviour {
         player = Player.instance;
         enemyMovementScript = gameObject.GetComponent<EnemyMovement>();
 
-        boxCollider = GetComponent<BoxCollider2D>();
-        playerBoxCollider = player.GetComponent<BoxCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        playerCapsuleCollider = player.GetComponent<CapsuleCollider2D>();
 
-        Physics2D.IgnoreCollision(boxCollider, playerBoxCollider);
+        Physics2D.IgnoreCollision(capsuleCollider, playerCapsuleCollider);
 
         enemyStats.actualMaxHealth = enemyStats.maxHealth * enemyStats.startHealthPercent;
         enemyStats.Init();
@@ -129,8 +129,9 @@ public class Enemy : MonoBehaviour {
             isDead = true;
             enemyMovementScript.currentState = EnemyMovement.State.Dead;
 
-            boxCollider.offset = new Vector2(-0.13f, -23.6f);
-            boxCollider.size = new Vector2(52.5f, 4.8f);
+            capsuleCollider.direction = CapsuleDirection2D.Horizontal;
+            capsuleCollider.offset = new Vector2(3.43f, -23.89f);
+            capsuleCollider.size = new Vector2(46.55f, 9.1f);
         }
         else if (enemyStats.currentHealth > 0)
         {

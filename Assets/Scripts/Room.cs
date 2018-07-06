@@ -9,6 +9,9 @@ public class Room : MonoBehaviour {
     public Transform nearestStairsUpTo;
     public Transform nearestStairsDownTo;
 
+    public Transform secondNearestStairsUpTo;
+    public Transform secondNearestStairsDownTo;
+
     public int floorLevel;
     public int roomNumber;
 

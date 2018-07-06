@@ -275,10 +275,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d687fb4071bf436478e5d822956151a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stairsUp1: {fileID: 0}
-  stairsUp2: {fileID: 0}
-  stairsDown1: {fileID: 0}
-  stairsDown2: {fileID: 0}
+  stairsUp: {fileID: 0}
+  stairsDown: {fileID: 0}
+  nearestStairsUpTo: {fileID: 0}
+  nearestStairsDownTo: {fileID: 0}
+  secondNearestStairsUpTo: {fileID: 0}
+  secondNearestStairsDownTo: {fileID: 0}
   floorLevel: 3
   roomNumber: 0
 --- !u!212 &212346366781344144

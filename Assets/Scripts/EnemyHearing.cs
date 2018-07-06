@@ -17,10 +17,9 @@ public class EnemyHearing : MonoBehaviour {
 
     GameObject[] hearingObjects;
 
-    BoxCollider2D playerCollider;
-    // BoxCollider2D enemyCollider;
-    CircleCollider2D thisHearingTriggerCollider;
-    CircleCollider2D otherHearingTriggerCollider;
+    CapsuleCollider2D playerCollider;
+    //CircleCollider2D thisHearingTriggerCollider;
+    //CircleCollider2D otherHearingTriggerCollider;
     CircleCollider2D soundTriggerCollider;
 
     ProduceSoundTrigger produceSoundTriggerScript;
@@ -32,29 +31,28 @@ public class EnemyHearing : MonoBehaviour {
         enemy = transform.root;
         enemySight = enemy.Find("Sight");
 
-        hearingObjects = GameObject.FindGameObjectsWithTag("Hearing");
+        //hearingObjects = GameObject.FindGameObjectsWithTag("Hearing");
         
-        foreach(GameObject hearingObject in hearingObjects)
-        {
-            otherHearingTriggerCollider = hearingObject.GetComponent<CircleCollider2D>();
-        }
+        //foreach(GameObject hearingObject in hearingObjects)
+        //{
+            //otherHearingTriggerCollider = hearingObject.GetComponent<CircleCollider2D>();
+        //}
 
         enemySightScript = enemySight.GetComponent<EnemySight>();
         enemyScript = enemy.GetComponent<Enemy>();
         produceSoundTriggerScript = GetComponent<ProduceSoundTrigger>();
         enemyMovementScript = enemy.GetComponent<EnemyMovement>();
 
-        playerCollider = player.GetComponent<BoxCollider2D>();
-        // enemyCollider = gameObject.transform.root.gameObject.GetComponent<BoxCollider2D>();
-        thisHearingTriggerCollider = gameObject.GetComponent<CircleCollider2D>();
-        thisHearingTriggerCollider.radius = enemyScript.enemyStats.hearingRadius;
+        playerCollider = player.GetComponent<CapsuleCollider2D>();
+        //thisHearingTriggerCollider = gameObject.GetComponent<CircleCollider2D>();
+        //thisHearingTriggerCollider.radius = enemyScript.enemyStats.hearingRadius;
 
-        Physics2D.IgnoreCollision(thisHearingTriggerCollider, otherHearingTriggerCollider);
+        //Physics2D.IgnoreCollision(thisHearingTriggerCollider, otherHearingTriggerCollider);
 	}
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Enemy Hearing colliding with: " + collision);
+        // Debug.Log("Enemy Hearing colliding with: " + collision);
 
         if (collision.gameObject.tag == "SoundTrigger" && enemyMovementScript.currentState != EnemyMovement.State.Attack)
         {

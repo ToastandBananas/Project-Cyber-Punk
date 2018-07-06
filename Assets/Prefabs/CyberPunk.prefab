@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 95987008354286166}
   - component: {fileID: 50569104897993880}
   - component: {fileID: 114409683771067814}
-  - component: {fileID: 61131533853318998}
+  - component: {fileID: 70966310843213360}
   m_Layer: 8
   m_Name: CyberPunk
   m_TagString: Player
@@ -186,8 +186,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &61131533853318998
-BoxCollider2D:
+--- !u!70 &70966310843213360
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -198,19 +198,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.5661297, y: -1.9792919}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 21, y: 56}
-    newSize: {x: 22, y: 56}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 24.822342, y: 47.880672}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.56934357, y: -3.1901731}
+  m_Size: {x: 20.621988, y: 45.06991}
+  m_Direction: 0
 --- !u!95 &95987008354286166
 Animator:
   serializedVersion: 3
@@ -316,16 +306,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88e7562fbbb415142b76435b37e9db4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 2.3
-  runSpeed: 5
-  jumpPower: 7
+  runSpeed: 4
+  jumpPower: 5
   landingSoundName: LandingFootsteps
   facingRight: 1
   isAiming: 0
   groundCheck: {fileID: 4623533662209142}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 4294966984
+    m_Bits: 4294959304
   currentFloorLevel: 1
   currentRoomNumber: 0
   currentRoom: {fileID: 0}

@@ -49,7 +49,7 @@ public class EnemySight : MonoBehaviour
         if (CanPlayerBeSeen())
         {
             // spr.color = Color.red;
-            enemyMovementScript.target = player;
+            enemyMovementScript.currentTarget = player;
             enemyMovementScript.currentState = EnemyMovement.State.Attack;
         }
         else

@@ -7,8 +7,7 @@ public class Door : MonoBehaviour {
 
     Vector3 doorPosition;
     Vector3 playerPosition;
-
-    BoxCollider2D playerCollider;
+    
     BoxCollider2D doorTriggerCollider;
     BoxCollider2D doorCollider;
 
@@ -30,8 +29,7 @@ public class Door : MonoBehaviour {
     void Start () {
         player = Player.instance;
         door = transform.parent;
-
-        playerCollider = player.GetComponent<BoxCollider2D>();
+        
         doorTriggerCollider = GetComponent<BoxCollider2D>();
         doorCollider = door.GetComponent<BoxCollider2D>();
 

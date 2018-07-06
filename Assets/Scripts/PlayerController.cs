@@ -2,9 +2,9 @@
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float walkSpeed = 2.3f;
-    [SerializeField] float runSpeed = 5f;
-    [SerializeField] float jumpPower = 7f;
+    //[SerializeField] float walkSpeed = 2.3f;
+    [SerializeField] float runSpeed = 4f;
+    [SerializeField] float jumpPower = 5f;
     [SerializeField] string landingSoundName = "LandingFootsteps";
 
     float speedFactor = 2.3f;
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
         if (onGround && Input.GetButtonDown("Jump") && player.isDead == false)
         {
-            rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpPower);
         }
     }
 
@@ -133,18 +133,21 @@ public class PlayerController : MonoBehaviour
         {
             float x = Input.GetAxisRaw("Horizontal");
 
-            if (Input.GetKeyDown(KeyCode.LeftShift) && onGround == true)
+            //if (Input.GetKeyDown(KeyCode.LeftShift) && onGround == true)
+            // {
+            if (onGround == true)
             {
                 speedFactor = runSpeed;
                 isRunning = true;
                 playerAnim.SetBool("isRunning", isRunning);
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                speedFactor = walkSpeed;
-                isRunning = false;
-                playerAnim.SetBool("isRunning", isRunning);
-            }
+            //}
+           // else if (Input.GetKeyUp(KeyCode.LeftShift))
+           // {
+                //speedFactor = walkSpeed;
+                //isRunning = false;
+                //playerAnim.SetBool("isRunning", isRunning);
+           // }
 
             moveSpeed = x * speedFactor;
             Vector2 move = new Vector2(moveSpeed, rigidBody.velocity.y);

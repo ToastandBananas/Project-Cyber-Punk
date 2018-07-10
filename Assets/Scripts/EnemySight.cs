@@ -138,6 +138,9 @@ public class EnemySight : MonoBehaviour
             // ignore the enemy's own colliders (and other enemies)
             if (hit.transform.tag == "Enemy")
                 continue;
+
+            if (hit.transform.tag == "PatrolPoint")
+                continue;
             
             // if anything other than the player is hit then it must be between the player and the enemy's eyes (since the player can only see as far as the player)
             if (hit.transform.tag != "Player")

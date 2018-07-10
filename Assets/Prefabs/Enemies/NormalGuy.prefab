@@ -341,8 +341,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.46425894, y: -2.4703908}
-  m_Size: {x: 20.138573, y: 42.100796}
+  m_Offset: {x: 0.84765756, y: 0.98016196}
+  m_Size: {x: 19.371775, y: 49.0019}
   m_Direction: 0
 --- !u!95 &95763579391726576
 Animator:
@@ -376,7 +376,7 @@ MonoBehaviour:
   damage: 0
   whatToHit:
     serializedVersion: 2
-    m_Bits: 4294966779
+    m_Bits: 4294960601
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,
@@ -445,8 +445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentTarget: {fileID: 0}
   updateRate: 2
-  runSpeed: 2.8
-  walkSpeed: 1.8
+  runSpeed: 2
+  walkSpeed: 0.75
   moveSpeed: 0
   stoppingDistance: 3
   fMode: 0
@@ -460,12 +460,19 @@ MonoBehaviour:
     m_Bits: 8192
   continueSearchingTime: 3
   enemyLocation: {x: 0, y: 0, z: 0}
+  enemyPatrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  currentPatrolPoint: {fileID: 0}
+  currentPatrolIndex: 0
   currentFloorLevel: 1
   currentRoomNumber: 0
   currentRoom: {fileID: 0}
-  startState: 1
+  startState: 2
   currentState: 0
-  defaultState: 1
+  defaultState: 2
 --- !u!114 &114636224220000560
 MonoBehaviour:
   m_ObjectHideFlags: 1

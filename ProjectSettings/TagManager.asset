@@ -13,12 +13,12 @@ TagManager:
   - EnemyWeapon
   - Door
   - SoundTrigger
-  - Stairs
   - StairsDown
   - Room
   - StairsUp
   - Hearing
   - Sight
+  - PatrolPoint
   layers:
   - Default
   - TransparentFX

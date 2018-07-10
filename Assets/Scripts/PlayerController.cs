@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     float groundRadius = 0.1f;
     public LayerMask whatIsGround;
 
-    public int currentFloorLevel = 1;
+    public int currentFloorLevel;
     public int currentRoomNumber;
     public Transform currentRoom;
 
@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     Player player;
     Transform arm;
     ArmRotation armRotationScript;
+
+    GameObject[] patrolPoints;
 
     public static PlayerController instance;
     
@@ -52,6 +54,13 @@ public class PlayerController : MonoBehaviour
     {
         player = Player.instance;
 
+        patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoint");
+        foreach (GameObject patrolPoint in patrolPoints)
+        {
+            BoxCollider2D patrolPointCollider = patrolPoint.gameObject.GetComponent<BoxCollider2D>();
+            Physics2D.IgnoreCollision(player.gameObject.GetComponent<CapsuleCollider2D>(), patrolPointCollider);
+        }
+
         arm = gameObject.transform.Find("Arm");
         armRotationScript = arm.GetComponent<ArmRotation>();
 
@@ -63,6 +72,10 @@ public class PlayerController : MonoBehaviour
         childSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
         
         playerLocation = transform.localScale;
+
+        currentFloorLevel = 1;
+        currentRoomNumber = 0;
+        currentRoom = GameObject.Find("OutsideLeft").transform;
 
         audioManager = AudioManager.instance;
         if(audioManager == null)

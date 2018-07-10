@@ -18,8 +18,6 @@ public class EnemyHearing : MonoBehaviour {
     GameObject[] hearingObjects;
 
     CapsuleCollider2D playerCollider;
-    //CircleCollider2D thisHearingTriggerCollider;
-    //CircleCollider2D otherHearingTriggerCollider;
     CircleCollider2D soundTriggerCollider;
 
     ProduceSoundTrigger produceSoundTriggerScript;
@@ -31,29 +29,16 @@ public class EnemyHearing : MonoBehaviour {
         enemy = transform.root;
         enemySight = enemy.Find("Sight");
 
-        //hearingObjects = GameObject.FindGameObjectsWithTag("Hearing");
-        
-        //foreach(GameObject hearingObject in hearingObjects)
-        //{
-            //otherHearingTriggerCollider = hearingObject.GetComponent<CircleCollider2D>();
-        //}
-
         enemySightScript = enemySight.GetComponent<EnemySight>();
         enemyScript = enemy.GetComponent<Enemy>();
         produceSoundTriggerScript = GetComponent<ProduceSoundTrigger>();
         enemyMovementScript = enemy.GetComponent<EnemyMovement>();
 
         playerCollider = player.GetComponent<CapsuleCollider2D>();
-        //thisHearingTriggerCollider = gameObject.GetComponent<CircleCollider2D>();
-        //thisHearingTriggerCollider.radius = enemyScript.enemyStats.hearingRadius;
-
-        //Physics2D.IgnoreCollision(thisHearingTriggerCollider, otherHearingTriggerCollider);
 	}
 
     void OnTriggerStay2D(Collider2D collision)
     {
-        // Debug.Log("Enemy Hearing colliding with: " + collision);
-
         if (collision.gameObject.tag == "SoundTrigger" && enemyMovementScript.currentState != EnemyMovement.State.Attack)
         {
             if (enemySightScript.CanPlayerBeSeen() == false && enemyScript.isDead == false)
@@ -64,8 +49,8 @@ public class EnemyHearing : MonoBehaviour {
                 if (soundTriggerColliderParent.tag == "Player")
                 {
                     soundTriggerColliderFloorLevel = soundTriggerColliderParent.gameObject.GetComponent<PlayerController>().currentFloorLevel;
+                    soundTriggerColliderRoomNumber = soundTriggerColliderParent.gameObject.GetComponent<PlayerController>().currentRoomNumber;
                     soundTriggerColliderRoom = soundTriggerColliderParent.gameObject.GetComponent<PlayerController>().currentRoom;
-                    // Debug.Log("Sound Parent: " + soundTriggerColliderParent);
                 }
 
                 enemyMovementScript.currentState = EnemyMovement.State.CheckSound;

@@ -83,6 +83,11 @@ public class EnemyMovement : MonoBehaviour {
     GameObject[] stairwaysGoingUp;
     GameObject[] stairwaysGoingDown;
 
+    GameObject[] patrolPoints;
+    public Transform[] enemyPatrolPoints;
+    public Transform currentPatrolPoint;
+    public int currentPatrolIndex;
+
     CapsuleCollider2D thisCollider;
     CapsuleCollider2D enemyCollider;
 
@@ -117,7 +122,15 @@ public class EnemyMovement : MonoBehaviour {
             enemyCollider = enemy.GetComponent<CapsuleCollider2D>();
         }
 
-        Physics2D.IgnoreCollision(thisCollider, enemyCollider);
+        patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoint");
+        foreach (GameObject patrolPoint in patrolPoints)
+        {
+            BoxCollider2D patrolPointCollider = patrolPoint.gameObject.GetComponent<BoxCollider2D>();
+            Physics2D.IgnoreCollision(gameObject.GetComponent<CapsuleCollider2D>(), patrolPointCollider);
+        }
+
+        currentPatrolIndex = 0;
+        currentPatrolPoint = enemyPatrolPoints[currentPatrolIndex];
 
         stairwaysGoingUp = GameObject.FindGameObjectsWithTag("StairsUp");
         stairwaysGoingDown = GameObject.FindGameObjectsWithTag("StairsDown");
@@ -150,7 +163,11 @@ public class EnemyMovement : MonoBehaviour {
 
     void Update()
     {
-        if (currentState == State.CheckSound)
+        if (currentState == State.Patrol)
+        {
+            PatrolWaypoints();
+        }
+        else if (currentState == State.CheckSound)
         {
             DetermineTargetCheckSoundState();
         }
@@ -162,6 +179,27 @@ public class EnemyMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
+
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy.GetComponent<Enemy>().isDead)
+            {
+                Physics2D.IgnoreCollision(thisCollider, enemyCollider);
+            }
+            else if (!facingRight && enemy.GetComponent<EnemyMovement>().facingRight)
+            {
+                Physics2D.IgnoreCollision(thisCollider, enemyCollider);
+            }
+            else if (facingRight && enemy.GetComponent<EnemyMovement>().facingRight == false)
+            {
+                Physics2D.IgnoreCollision(thisCollider, enemyCollider);
+            }
+            else
+            {
+                Physics2D.IgnoreCollision(thisCollider, enemyCollider, false);
+            }
+        }
+
         if (currentState == State.Dead)
         {
             CheckIfAiming();
@@ -176,10 +214,12 @@ public class EnemyMovement : MonoBehaviour {
         }
         else if (currentState == State.Patrol)
         {
+            anim.SetInteger("currentState", 2);
+
             CheckIfAiming();
             DetermineMoveSpeed();
             Flip();
-            anim.SetInteger("currentState", 2);
+            GroundCheck();
         }
         else if (currentState == State.CheckSound)
         {
@@ -194,28 +234,31 @@ public class EnemyMovement : MonoBehaviour {
         {
             anim.SetInteger("currentState", 4);
 
-            Flip();
-            DetermineMoveSpeed();
             CheckIfAiming();
+            DetermineMoveSpeed();
+            Flip();
             GroundCheck();
         }
     }
 
     void Flip()
     {
-        if (facingRight == true && transform.position.x > currentTarget.transform.position.x)
+        if (currentTarget != null)
         {
-            enemyLocation.x *= -1;
-            transform.localScale = enemyLocation;
-            armRotationScript.enemyRotationOffset = 180;
-            facingRight = false;
-        }
-        else if (facingRight == false && transform.position.x < currentTarget.transform.position.x)
-        {
-            enemyLocation.x *= -1;
-            transform.localScale = enemyLocation;
-            armRotationScript.enemyRotationOffset = 360;
-            facingRight = true;
+            if (facingRight == true && transform.position.x > currentTarget.transform.position.x)
+            {
+                enemyLocation.x *= -1;
+                transform.localScale = enemyLocation;
+                armRotationScript.enemyRotationOffset = 180;
+                facingRight = false;
+            }
+            else if (facingRight == false && transform.position.x < currentTarget.transform.position.x)
+            {
+                enemyLocation.x *= -1;
+                transform.localScale = enemyLocation;
+                armRotationScript.enemyRotationOffset = 360;
+                facingRight = true;
+            }
         }
     }
 
@@ -280,12 +323,86 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (currentTarget == player.transform && (Vector2.Distance(transform.position, currentTarget.position) > stoppingDistance || (enemySightScript.CanPlayerBeSeen() == false && playerPositionKnown == true)))
         {
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x, transform.position.y), moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x, transform.position.y), moveSpeed * Time.fixedDeltaTime);
         }
         else if (currentTarget != player.transform)
         {
-            transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x, transform.position.y), moveSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x, transform.position.y), moveSpeed * Time.fixedDeltaTime);
         }
+    }
+
+    private void PatrolWaypoints()
+    {
+        if (Vector3.Distance (transform.position, currentPatrolPoint.position) < .1f) // Cycles through only the patrol points that are assigned to each enemy in the inspector
+        {
+            if (currentPatrolIndex + 1 < enemyPatrolPoints.Length)
+            {
+                currentPatrolIndex++;
+            }
+            else
+            {
+                currentPatrolIndex = 0;
+            }
+            currentPatrolPoint = enemyPatrolPoints[currentPatrolIndex]; 
+        }
+
+        if (currentFloorLevel == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel)
+        {
+            currentTarget = currentPatrolPoint;
+
+            MoveTowardsTarget();
+        }
+        else if (currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom == null)
+        {
+            Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().nearestRoom;
+            if (currentFloorLevel - 1 > 1)
+            {
+                currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
+            }
+            else if (currentFloorLevel - 1 == 1)
+            {
+                currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
+            }
+            else if (currentFloorLevel + 1 < 0)
+            {
+                currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
+            }
+            else if (currentFloorLevel + 1 == 0)
+            {
+                currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
+            }
+
+            MoveTowardsTarget();
+        }
+        else if (currentFloorLevel + 1 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If sound is one level above enemy
+        {
+            Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom;
+            currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
+
+            MoveTowardsTarget();
+        }
+        else if (currentFloorLevel - 1 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If sound is one level below enemy
+        {
+            Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom;
+            currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
+
+            MoveTowardsTarget();
+        }
+        else if (currentFloorLevel + 2 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If sound is two levels above enemy
+        {
+            Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom;
+            currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
+
+            MoveTowardsTarget();
+        }
+        else if (currentFloorLevel - 2 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If sound is two levels below enemy
+        {
+            Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom;
+            currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
+
+            MoveTowardsTarget();
+        }
+
     }
 
     private void DetermineTargetCheckSoundState()
@@ -295,6 +412,28 @@ public class EnemyMovement : MonoBehaviour {
             if (currentFloorLevel == enemyHearingScript.soundTriggerColliderFloorLevel)
             {
                 currentTarget = enemyHearingScript.soundTriggerColliderRoom;
+
+                MoveTowardsTarget();
+            }
+            else if (enemyHearingScript.soundTriggerColliderRoomNumber == 0)
+            {
+                Transform targetRoomName = enemyHearingScript.soundTriggerColliderRoom.gameObject.GetComponent<Room>().nearestRoom;
+                if (currentFloorLevel - 1 > 1)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
+                }
+                else if (currentFloorLevel - 1 == 1)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
+                }
+                else if (currentFloorLevel + 1 < 0)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
+                }
+                else if (currentFloorLevel + 1 == 0)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
+                }
 
                 MoveTowardsTarget();
             }
@@ -336,6 +475,28 @@ public class EnemyMovement : MonoBehaviour {
             if ((enemySightScript.CanPlayerBeSeen() == true || playerPositionKnown == true) && currentFloorLevel == playerControllerScript.currentFloorLevel)
             {
                 currentTarget = player.transform;
+
+                MoveTowardsTarget();
+            }
+            else if (playerControllerScript.currentRoomNumber == 0)
+            {
+                Transform targetRoomName = playerControllerScript.currentRoom.gameObject.GetComponent<Room>().nearestRoom;
+                if (currentFloorLevel - 1 > 1)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
+                }
+                else if (currentFloorLevel - 1 == 1)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
+                }
+                else if (currentFloorLevel + 1 < 0)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
+                }
+                else if (currentFloorLevel + 1 == 0)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
+                }
 
                 MoveTowardsTarget();
             }

@@ -12,6 +12,9 @@ public class Room : MonoBehaviour {
     public Transform secondNearestStairsUpTo;
     public Transform secondNearestStairsDownTo;
 
+    [Header("Only use if this 'room' is outside:")]
+    public Transform nearestRoom;
+
     public int floorLevel;
     public int roomNumber;
 
@@ -27,6 +30,16 @@ public class Room : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.tag == "PatrolPoint")
+        {
+            collision.GetComponent<PatrolPoint>().currentFloorLevel = floorLevel;
+            collision.GetComponent<PatrolPoint>().currentRoomNumber = roomNumber;
+            collision.GetComponent<PatrolPoint>().currentRoom = gameObject.transform;
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
         if (collision.gameObject.tag == "Player")
         {
             collision.GetComponent<PlayerController>().currentFloorLevel = floorLevel;
@@ -40,4 +53,20 @@ public class Room : MonoBehaviour {
             collision.GetComponent<EnemyMovement>().currentRoom = gameObject.transform;
         }
     }
+
+    /*void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            collision.GetComponent<PlayerController>().currentFloorLevel = 1;
+            collision.GetComponent<PlayerController>().currentRoomNumber = 0;
+            collision.GetComponent<PlayerController>().currentRoom = null;
+        }
+        else if (collision.gameObject.tag == "Enemy")
+        {
+            collision.GetComponent<EnemyMovement>().currentFloorLevel = 1;
+            collision.GetComponent<EnemyMovement>().currentRoomNumber = 0;
+            collision.GetComponent<EnemyMovement>().currentRoom = null;
+        }
+    }*/
 }

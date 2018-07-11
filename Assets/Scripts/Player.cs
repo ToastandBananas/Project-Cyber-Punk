@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
         [HideInInspector]
         public float actualMaxHealth;
 
-        public float accuracyFactor = 0.4f; // 0 equals 100 percent accurate.
+        public float accuracyFactor = 0.15f; // 0 equals 100 percent accurate.
 
         [SerializeField] private float _currentHealth;
         public float currentHealth

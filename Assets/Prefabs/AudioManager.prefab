@@ -59,7 +59,7 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0
     loop: 1
-  - soundName: PistolGunfire
+  - soundName: Glock
     clip: {fileID: 8300000, guid: 21c74128d2462f24896a37c89808b3ea, type: 3}
     volume: 0.6
     pitch: 1
@@ -127,5 +127,26 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     randomVolume: 0
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Uzi
+    clip: {fileID: 8300000, guid: 6009bdc194323b8439412a7c172e335f, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Taurus
+    clip: {fileID: 8300000, guid: 21c74128d2462f24896a37c89808b3ea, type: 3}
+    volume: 1
+    pitch: 0.7
+    randomVolume: 0
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Five-Seven
+    clip: {fileID: 8300000, guid: 21c74128d2462f24896a37c89808b3ea, type: 3}
+    volume: 1
+    pitch: 0.8
+    randomVolume: 0.1
     randomPitch: 0.1
     loop: 0

@@ -3,35 +3,36 @@
 public class Weapon : MonoBehaviour {
 
     public static Weapon instance;
-    
-    public float fireRate = 1;
-    public int damage = 1;
-    public int soundRadius = 10000;
+
     public LayerMask whatToHit;
 
+    [Header("Stats:")]
+    public float fireRate = 1;
+    public int damage = 1;
+    public string ammoType;
+    public int clipSize;
+
+    [Header("Actual size will depend on parent object size:")]
+    public int soundRadius = 10000;
+
+    [Header("Effects:")]
     public Transform BulletTrailPrefab;
     public Transform MuzzleFlashPrefab;
     public Transform HitEffectPrefab;
 
     float timeToFire = 0;
     float timeToSpawnEffect = 0;
-    public float effectSpawnRate = 10;
+    [HideInInspector]public float effectSpawnRate = 10;
     Transform firePoint;
-
-    // Handle camera shaking
-    public float camShakeAmt = 0.05f;
-    public float camShakeLength = 0.1f;
-    CameraShake camShake;
-
-    // Cache
+    
+    // Sound
     private AudioManager audioManager;
-    public string gunfireSoundName;
+    string gunfireSoundName;
 
     PlayerController playerController;
     Player player;
     ProduceSoundTrigger produceSoundTriggerScript;
-
-    // Use this for initialization
+    
     void Awake () {
         if (instance != null)
         {
@@ -44,6 +45,8 @@ public class Weapon : MonoBehaviour {
         {
             instance = this;
         }
+
+        gunfireSoundName = this.name;
 
         firePoint = transform.Find("FirePoint");
         if (firePoint == null)
@@ -58,21 +61,14 @@ public class Weapon : MonoBehaviour {
         player = Player.instance;
         produceSoundTriggerScript = gameObject.GetComponent<ProduceSoundTrigger>();
 
-        camShake = GameMaster.gm.GetComponent<CameraShake>();
-        if (camShake == null)
-        {
-            Debug.LogError("No CameraShake script found on GM object.");
-        }
-
-        // Caching
+        // Sound
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {
             Debug.LogError("No AudioManager found in the scene");
         }
     }
-
-    // Update is called once per frame
+    
     void Update () {
         PlayerCheckIfShooting();
     }
@@ -81,24 +77,28 @@ public class Weapon : MonoBehaviour {
     {
         if (Input.GetButton("Fire2") && player.isDead == false) // Holding right click
         {
-            if (fireRate == 1)
+            Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+            if (Vector2.Distance(mousePosition, player.transform.position) > 0.4)
             {
-                // print("fire rate is 1");
-                if (Input.GetButtonDown("Fire1")) // Left click while holding right click
+                if (fireRate == 1)
                 {
-                    Shoot();
-                    produceSoundTriggerScript.SoundTrigger(soundRadius);
-                    audioManager.PlaySound(gunfireSoundName);
+                    // print("fire rate is 1");
+                    if (Input.GetButtonDown("Fire1")) // Left click while holding right click
+                    {
+                        Shoot();
+                        produceSoundTriggerScript.SoundTrigger(soundRadius);
+                        audioManager.PlaySound(gunfireSoundName);
+                    }
                 }
-            }
-            else
-            {
-                if (Input.GetButton("Fire1") && Time.time > timeToFire) // For automatic guns
+                else
                 {
-                    timeToFire = Time.time + 1 / fireRate;
-                    Shoot();
-                    produceSoundTriggerScript.SoundTrigger(soundRadius);
-                    audioManager.PlaySound(gunfireSoundName);
+                    if (Input.GetButton("Fire1") && Time.time > timeToFire) // For automatic guns
+                    {
+                        timeToFire = Time.time + 1 / fireRate;
+                        Shoot();
+                        produceSoundTriggerScript.SoundTrigger(soundRadius);
+                        audioManager.PlaySound(gunfireSoundName);
+                    }
                 }
             }
         }
@@ -108,18 +108,18 @@ public class Weapon : MonoBehaviour {
     {
         Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
-        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, (mousePosition - firePointPosition) + new Vector2(0, Random.Range(-player.playerStats.accuracyFactor, player.playerStats.accuracyFactor)), 100f, whatToHit);
+        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, (mousePosition - firePointPosition) + new Vector2(0, Random.Range(-player.playerStats.accuracyFactor, player.playerStats.accuracyFactor) * Vector2.Distance(mousePosition, firePointPosition)), 100f, whatToHit);
 
         Vector3 hitPos;
         Vector3 hitNormal;
 
         // Debug.DrawLine(firePointPosition, (mousePosition - firePointPosition) * 100, Color.cyan);
-
+        
         if (hit.collider != null)
         {
             // Debug.DrawLine(firePointPosition, hit.point, Color.red);
             Enemy enemyCollider = hit.collider.GetComponent<Enemy>();
-            if(enemyCollider != null)
+            if (enemyCollider != null)
             {
                 hitPos = hit.point;
                 hitNormal = hit.normal;
@@ -147,13 +147,6 @@ public class Weapon : MonoBehaviour {
             timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
         }
     }
-
-    /*IEnumerator TurnOnSoundTriggerCollider()
-    {
-        soundTriggerCollider.enabled = true;
-        yield return new WaitForSeconds(.5f);
-        soundTriggerCollider.enabled = false;
-    }*/
 
     void Effect(Vector3 hitPos, Vector3 hitNormal)
     {
@@ -188,7 +181,6 @@ public class Weapon : MonoBehaviour {
         {
             Transform hitParticle = Instantiate(HitEffectPrefab, hitPos, Quaternion.FromToRotation(Vector3.right, hitNormal)) as Transform;
             Destroy(hitParticle.gameObject, 1f);
-            // camShake.Shake(camShakeAmt, camShakeLength); // Creates cam shake on enemy hit (apply with heavy weapons such as rocket launchers, grenades, etc.)
         }
     }
 }

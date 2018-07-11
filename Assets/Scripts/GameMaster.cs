@@ -13,8 +13,6 @@ public class GameMaster : MonoBehaviour {
     public Transform spawnPoint;
     public int spawnDelay = 3;
 
-    // public CameraShake cameraShake;
-
     [SerializeField] private GameObject upgradeMenu;
 
     // [SerializeField] private WaveSpawner waveSpawner;
@@ -41,14 +39,9 @@ public class GameMaster : MonoBehaviour {
     {
         player = Player.instance;
 
-        //if (cameraShake == null)
-        //{
-            //Debug.LogError("No camera shake referenced in GameMaster.");
-        //}
-
         Money = startingMoney;
 
-        // Caching
+        // Sound
         audioManager = AudioManager.instance;
         if (audioManager == null)
         {

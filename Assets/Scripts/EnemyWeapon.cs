@@ -10,9 +10,24 @@ public class EnemyWeapon : MonoBehaviour {
     Transform enemy;
     Transform enemySight;
 
-    public int damage = 1;
     public LayerMask whatToHit;
 
+    [Header("Stats:")]
+    public int damage = 1;
+    public string ammoType;
+    public int clipSize;
+
+    private float initialWaitToShootTime;
+
+    [Header("Time between each shot for semi-auto or single shot guns:")]
+    public float semiAutoCoolDownTime = 0.75f;
+
+    [Header("Time between each shot for automatic or burst-fire guns:")]
+    public bool isAutomatic = false;
+    public float autoCoolDownTime = .2f;
+    private float coolDownTime;
+
+    [Header("Effects:")]
     public Transform BulletTrailPrefab;
     public Transform MuzzleFlashPrefab;
     public Transform HitEffectPrefab;
@@ -21,26 +36,16 @@ public class EnemyWeapon : MonoBehaviour {
     float timeToSpawnEffect = 0;
     public float effectSpawnRate = 10;
     Transform firePoint;
-
-    // Handle camera shaking
-    public float camShakeAmt = 0.05f;
-    public float camShakeLength = 0.1f;
-    CameraShake camShake;
-
-    // Cache
+    
+    // Sound
     private AudioManager audioManager;
-    public string gunfireSoundName;
+    string gunfireSoundName;
 
-    public float maxShootDistance = 5.5f;
-
-    public bool isAutomatic = false;
+    [Header("Max distance that the enemy will shoot the player from:")]
+    public float maxShootDistance = 5f;
+    
     bool isAbleToShoot = false;
     bool isCoolingDown = false;
-
-    public float initialWaitToShootTime;
-    public float semiAutoCoolDownTime = 0.75f;
-    public float autoCoolDownTime = .2f;
-    float coolDownTime;
 
     Rigidbody2D rb;
 
@@ -54,6 +59,7 @@ public class EnemyWeapon : MonoBehaviour {
         {
             Debug.LogError("No fire point...Please make an empty object named FirePoint and attach to end of gun. :)");
         }
+        gunfireSoundName = this.name;
     }
 
     // Use this for initialization
@@ -71,8 +77,6 @@ public class EnemyWeapon : MonoBehaviour {
         {
             Debug.LogError("No AudioManager found in the scene");
         }
-
-        // bulletMoveDirection = (target.position - transform.position).normalized * bulletMoveSpeed;
 	}
 	
 	// Update is called once per frame

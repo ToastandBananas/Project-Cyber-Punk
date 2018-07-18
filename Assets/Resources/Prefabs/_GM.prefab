@@ -34,10 +34,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4734394138903572}
-  - component: {fileID: 114065641153834954}
-  - component: {fileID: 114119529712417298}
   - component: {fileID: 114962056705339610}
-  - component: {fileID: 114988643932116718}
+  - component: {fileID: 114507762314808680}
   m_Layer: 0
   m_Name: _GM
   m_TagString: GM
@@ -135,8 +133,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1339053200500200}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.4114094, y: -0.3757674, z: -4.950486}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.4114094, y: -0.37576723, z: -4.950486}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4867696471067078}
@@ -159,7 +157,7 @@ Transform:
   m_Father: {fileID: 4734394138903572}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114065641153834954
+--- !u!114 &114507762314808680
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -175,21 +173,7 @@ MonoBehaviour:
     type: 2}
   spawnPoint: {fileID: 4867696471067078}
   spawnDelay: 3
-  cameraShake: {fileID: 114119529712417298}
   upgradeMenu: {fileID: 0}
-  waveSpawner: {fileID: 114962056705339610}
---- !u!114 &114119529712417298
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1339053200500200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a425764a2652f214b850b6f982fbbed1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCam: {fileID: 0}
 --- !u!114 &114962056705339610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,14 +195,3 @@ MonoBehaviour:
   - {fileID: 4322041187564840}
   - {fileID: 4457172738183912}
   timeBetweenWaves: 5
---- !u!114 &114988643932116718
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1339053200500200}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1476c8e9fef7f4c43be0763d41375db2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

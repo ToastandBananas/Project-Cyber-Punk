@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         PlayLandingSoundUponLanding();
         Jump();
-        GetPlayerVelocity();
+        GetPlayerVerticalVelocity();
     }
 
     private void PlayLandingSoundUponLanding()
@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void GetPlayerVelocity()
+    void GetPlayerVerticalVelocity()
     {
         playerAnim.SetFloat("verticalSpeed", rigidBody.velocity.y);
     }

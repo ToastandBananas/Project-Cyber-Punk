@@ -76,6 +76,15 @@ public class GameMaster : MonoBehaviour {
         upgradeMenu.SetActive(!upgradeMenu.activeSelf);
         // waveSpawner.enabled = !upgradeMenu.activeSelf;
         onToggleUpgradeMenu.Invoke(upgradeMenu.activeSelf);
+
+        if (upgradeMenu.activeSelf == true)
+        {
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.visible = false;
+        }
     }
 
     public IEnumerator _RespawnPlayer()
@@ -83,8 +92,6 @@ public class GameMaster : MonoBehaviour {
         yield return new WaitForSeconds(spawnDelay);
 
         SceneManager.LoadScene(currentScene.buildIndex);
-
-        //Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
     public static void KillPlayer(Player player)

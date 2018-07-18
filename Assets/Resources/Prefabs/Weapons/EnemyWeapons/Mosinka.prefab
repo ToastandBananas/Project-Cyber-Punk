@@ -88,8 +88,8 @@ MonoBehaviour:
   ammoType: 7.62mm
   clipSize: 5
   isTwoHanded: 1
-  isShotgunOrBoltAction: 1
-  semiAutoCoolDownTime: 1.1
+  isShotgun: 0
+  semiAutoCoolDownTime: 1
   isAutomatic: 0
   autoCoolDownTime: 0.15
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,

@@ -7,10 +7,7 @@ public class Player : MonoBehaviour {
     public class PlayerStats
     {
         public float maxHealth = 5f;
-        [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent;
-
-        [HideInInspector]
-        public float actualMaxHealth;
+        [Header("Note: 1.0 = 100%")] [Range(0.1f, 1.0f)] public float startHealthPercent = 1f;
 
         public float accuracyFactor = 0.15f; // 0 equals 100 percent accurate.
 
@@ -18,12 +15,12 @@ public class Player : MonoBehaviour {
         public float currentHealth
         {
             get { return _currentHealth; }
-            set { _currentHealth = Mathf.Clamp(value, 0f, actualMaxHealth); }
+            set { _currentHealth = Mathf.Clamp(value, 0f, maxHealth); }
         }
 
         public void Init()
         {
-            currentHealth = actualMaxHealth;
+            currentHealth = maxHealth * startHealthPercent;
         }
     }
 
@@ -60,7 +57,6 @@ public class Player : MonoBehaviour {
 
     void Start()
     {
-        playerStats.actualMaxHealth = playerStats.maxHealth * playerStats.startHealthPercent;
         playerStats.Init();
 
         playerAnim = GetComponent<Animator>();

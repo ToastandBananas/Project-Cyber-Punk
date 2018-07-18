@@ -130,4 +130,6 @@ MonoBehaviour:
   lookAheadFactor: 0.5
   lookAheadReturnSpeed: 0.25
   lookAheadMoveThreshold: 0.1
-  yPosRestriction: 2
+  yPosRestrictionMin: 2
+  yPosRestrictionMax: 5
+  xPosRestriction: 10

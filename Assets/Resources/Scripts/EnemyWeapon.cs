@@ -89,7 +89,7 @@ public class EnemyWeapon : MonoBehaviour {
 
         if (enemyMovementScript.stillSearching == false)
         {
-            initialWaitToShootTime = 2f;
+            initialWaitToShootTime = 1.5f;
         }
     }
 

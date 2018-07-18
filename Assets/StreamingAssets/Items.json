@@ -1,0 +1,12 @@
+[
+	{
+		"itemID": 0,
+		"itemName": "AWD",
+		"itemDescription": "The weakest sniper rifle."
+	},
+	{
+		"itemID": 1,
+		"itemName": "Big Daddy",
+		"itemDescription": "The most powerful sniper rifle."
+	}
+]

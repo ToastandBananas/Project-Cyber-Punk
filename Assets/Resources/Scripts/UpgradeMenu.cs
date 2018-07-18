@@ -7,13 +7,13 @@ public class UpgradeMenu : MonoBehaviour {
 
     [SerializeField] private int upgradeCost = 50;
 
-    StatusIndicator statusIndicator;
+    // StatusIndicator statusIndicator;
 
     Player player;
 
     void OnEnable()
     {
-        statusIndicator = StatusIndicator.instance;
+        //statusIndicator = StatusIndicator.instance;
         player = Player.instance;
         UpdateValues();
     }

@@ -321,7 +321,7 @@ MonoBehaviour:
   - soundName: Mosinka
     clip: {fileID: 8300000, guid: 0f6bcb1ac919136439bc5be6b2312808, type: 3}
     volume: 1
-    pitch: 1
+    pitch: 1.2
     randomVolume: 0.1
     randomPitch: 0.1
     loop: 0
@@ -329,6 +329,34 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 0f6bcb1ac919136439bc5be6b2312808, type: 3}
     volume: 1
     pitch: 0.8
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Black Mamba
+    clip: {fileID: 8300000, guid: 0f6bcb1ac919136439bc5be6b2312808, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Dragon Rifle
+    clip: {fileID: 8300000, guid: c44df5618d190ca4b8455f1225ee87ce, type: 3}
+    volume: 1.2
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Big Daddy
+    clip: {fileID: 8300000, guid: c44df5618d190ca4b8455f1225ee87ce, type: 3}
+    volume: 1.4
+    pitch: 0.8
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Old Service Rifle
+    clip: {fileID: 8300000, guid: c44df5618d190ca4b8455f1225ee87ce, type: 3}
+    volume: 0.8
+    pitch: 1.1
     randomVolume: 0.1
     randomPitch: 0.1
     loop: 0

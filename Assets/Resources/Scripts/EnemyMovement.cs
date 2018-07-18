@@ -59,7 +59,7 @@ public class EnemyMovement : MonoBehaviour {
 
     float timer = 0f;
 
-    public float continueSearchingTime = 15f;
+    public float continueSearchingTime = 5f;
 
     [HideInInspector]
     public Vector3 enemyLocation;
@@ -478,7 +478,7 @@ public class EnemyMovement : MonoBehaviour {
 
                 MoveTowardsTarget();
             }
-            else if (playerControllerScript.currentRoomNumber == 0)
+            else if (playerControllerScript.currentRoomNumber == 0) // Room 0 means the player is outside
             {
                 Transform targetRoomName = playerControllerScript.currentRoom.gameObject.GetComponent<Room>().nearestRoom;
                 if (currentFloorLevel - 1 > 1)
@@ -500,28 +500,28 @@ public class EnemyMovement : MonoBehaviour {
 
                 MoveTowardsTarget();
             }
-            else if (currentFloorLevel + 1 == playerControllerScript.currentFloorLevel) // If target is one level above enemy
+            else if (currentFloorLevel + 1 == playerControllerScript.currentFloorLevel) // If player is one level above enemy
             {
                 Transform targetRoomName = playerControllerScript.currentRoom;
                 currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
 
                 MoveTowardsTarget();
             }
-            else if (currentFloorLevel - 1 == playerControllerScript.currentFloorLevel) // If target is one level below enemy
+            else if (currentFloorLevel - 1 == playerControllerScript.currentFloorLevel) // If player is one level below enemy
             {
                 Transform targetRoomName = playerControllerScript.currentRoom;
                 currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
 
                 MoveTowardsTarget();
             }
-            else if (currentFloorLevel + 2 == playerControllerScript.currentFloorLevel) // If target is two levels above enemy
+            else if (currentFloorLevel + 2 == playerControllerScript.currentFloorLevel) // If player is two levels above enemy
             {
                 Transform targetRoomName = playerControllerScript.currentRoom;
                 currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
 
                 MoveTowardsTarget();
             }
-            else if (currentFloorLevel - 2 == playerControllerScript.currentFloorLevel) // If target is two levels below enemy
+            else if (currentFloorLevel - 2 == playerControllerScript.currentFloorLevel) // If player is two levels below enemy
             {
                 Transform targetRoomName = playerControllerScript.currentRoom;
                 currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;

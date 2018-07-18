@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
@@ -10,7 +7,9 @@ public class CameraController : MonoBehaviour {
     public float lookAheadFactor = 3;
     public float lookAheadReturnSpeed = 0.5f;
     public float lookAheadMoveThreshold = 0.1f;
-    public float yPosRestriction = -1;
+    public float yPosRestrictionMin = 0.3f;
+    public int yPosRestrictionMax = 10;
+    public int xPosRestriction = 10;
 
     float offsetZ;
     Vector3 lastTargetPosition;
@@ -19,8 +18,20 @@ public class CameraController : MonoBehaviour {
 
     float nextTimeToSearch = 0;
 
-	// Use this for initialization
-	void Start () {
+    Player player;
+
+    Weapon weaponScript;
+    PlayerController playerControllerScript;
+    MouseCursor mouseCursorScript;
+
+    // Use this for initialization
+    void Start () {
+        player = Player.instance;
+        
+        weaponScript = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
+        playerControllerScript = player.GetComponent<PlayerController>();
+        mouseCursorScript = GameObject.Find("Crosshair").GetComponent<MouseCursor>();
+
         lastTargetPosition = target.position;
         offsetZ = (transform.position = target.position).z - 1;
         transform.parent = null;
@@ -32,6 +43,16 @@ public class CameraController : MonoBehaviour {
         {
             FindPlayer();
             return;
+        }
+        else if (weaponScript.isSniper && playerControllerScript.isAiming)
+        {
+            target = mouseCursorScript.transform;
+            damping = 1.2f;
+        }
+        else
+        {
+            target = player.transform;
+            damping = 0.3f;
         }
 
         float xMoveDelta = (target.position - lastTargetPosition).x;
@@ -49,8 +70,9 @@ public class CameraController : MonoBehaviour {
 
         Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward * offsetZ;
         Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
-
-        newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, yPosRestriction, Mathf.Infinity), newPos.z);
+        
+        newPos = new Vector3(Mathf.Clamp(newPos.x, player.transform.position.x - xPosRestriction, player.transform.position.x + xPosRestriction), Mathf.Clamp(newPos.y, yPosRestrictionMin, player.transform.position.y + yPosRestrictionMax), newPos.z);
+       
 
         transform.position = newPos;
 
@@ -61,7 +83,7 @@ public class CameraController : MonoBehaviour {
     {
         if (nextTimeToSearch <= Time.time)
         {
-            GameObject searchResult = GameObject.FindGameObjectWithTag("Player"); // Finds player
+            GameObject searchResult = player.gameObject; // Finds player
             if (searchResult != null)
             {
                 target = searchResult.transform;

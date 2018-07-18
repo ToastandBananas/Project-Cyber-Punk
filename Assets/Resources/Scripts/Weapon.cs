@@ -14,6 +14,7 @@ public class Weapon : MonoBehaviour {
     public bool isTwoHanded = false;
     public bool isShotgun = false;
     public bool isBoltAction = false;
+    public bool isSniper = false;
     private bool canShoot = true;
     [Tooltip("Only for use with shotgun, rpg, and grenade launcher.")]
     public float coolDownTime = 1f; // For shotgun, rpg, and grenade launcher
@@ -25,6 +26,7 @@ public class Weapon : MonoBehaviour {
     public Transform BulletTrailPrefab;
     public Transform MuzzleFlashPrefab;
     public Transform HitEffectPrefab;
+    public Sprite aimCursorSprite;
     public int muzzleFlashMinSize = 7;
     public int muzzleFlashMaxSize = 10;
 
@@ -142,28 +144,33 @@ public class Weapon : MonoBehaviour {
                 hitPos = hit.point;
                 hitNormal = hit.normal;
 
-                if (isShotgun)
+                if (hit.transform.GetComponent<Enemy>().isDead == false) // If enemy is alive
                 {
-                    if (Vector2.Distance(firePointPosition, hitPos) >= 3.2 && Vector2.Distance(firePointPosition, hitPos) < 5)
+                    if (isShotgun)
                     {
-                        enemyCollider.DamageEnemy(damage / 2);
-                        // Debug.Log("We hit " + hit.collider.name + " and did " + damage / 2 + " damage.");
-                    }
-                    else if (Vector2.Distance(firePointPosition, hitPos) >= 5)
-                    {
-                        enemyCollider.DamageEnemy(1);
-                        // Debug.Log("We hit " + hit.collider.name + " and did " + 1 + " damage.");
+                        hit.transform.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Attack;
+                        if (Vector2.Distance(firePointPosition, hitPos) >= 3.2 && Vector2.Distance(firePointPosition, hitPos) < 5)
+                        {
+                            enemyCollider.DamageEnemy(damage / 2);
+                            // Debug.Log("We hit " + hit.collider.name + " and did " + damage / 2 + " damage.");
+                        }
+                        else if (Vector2.Distance(firePointPosition, hitPos) >= 5)
+                        {
+                            enemyCollider.DamageEnemy(1);
+                            // Debug.Log("We hit " + hit.collider.name + " and did " + 1 + " damage.");
+                        }
+                        else
+                        {
+                            enemyCollider.DamageEnemy(damage);
+                            // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
+                        }
                     }
                     else
                     {
+                        hit.transform.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Attack;
                         enemyCollider.DamageEnemy(damage);
                         // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                     }
-                }
-                else
-                {
-                    enemyCollider.DamageEnemy(damage);
-                    // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                 }
                 
                 CreateHitParticle(hitPos, hitNormal);

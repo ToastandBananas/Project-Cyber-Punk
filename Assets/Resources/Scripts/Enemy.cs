@@ -51,6 +51,7 @@ public class Enemy : MonoBehaviour {
 
     Player player;
     EnemyMovement enemyMovementScript;
+    LootDrop lootDropScript;
 
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;
@@ -61,6 +62,7 @@ public class Enemy : MonoBehaviour {
     {
         player = Player.instance;
         enemyMovementScript = gameObject.GetComponent<EnemyMovement>();
+        lootDropScript = GetComponent<LootDrop>();
 
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         playerCapsuleCollider = player.GetComponent<CapsuleCollider2D>();
@@ -137,6 +139,11 @@ public class Enemy : MonoBehaviour {
         {
             // Play damage sound
             audioManager.PlaySound(damageSoundName);
+        }
+
+        if (enemyStats.currentHealth <= 0)
+        {
+            lootDropScript.DropWeapon();
         }
     }
 

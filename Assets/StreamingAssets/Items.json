@@ -2,11 +2,31 @@
 	{
 		"itemID": 0,
 		"itemName": "AWD",
-		"itemDescription": "The weakest sniper rifle."
+		"itemDescription": "The weakest sniper rifle.",
+		"damage": 6,
+		"clipSize": 10,
+		"ammoType": "7.62mm",
+		"stackable": false,
+		"type": "Gun"
 	},
 	{
 		"itemID": 1,
 		"itemName": "Big Daddy",
-		"itemDescription": "The most powerful sniper rifle."
+		"itemDescription": "The most powerful sniper rifle.",
+		"damage": 10,
+		"clipSize": 10,
+		"ammoType": ".50cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 11,
+		"itemName": "Gleck",
+		"itemDescription": "Cheap pistol.",
+		"damage": 2,
+		"clipSize": 15,
+		"ammoType": "9mm",
+		"stackable": false,
+		"type": "Gun"
 	}
 ]

@@ -70,12 +70,12 @@ public class PlayerController : MonoBehaviour
         rigidBody.freezeRotation = true;
 
         childSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
-        
+
         playerLocation = transform.localScale;
 
         currentFloorLevel = 1;
         currentRoomNumber = 0;
-        currentRoom = GameObject.Find("OutsideLeft").transform;
+        currentRoom = GameObject.Find("OutsideLeftCollider").transform;
 
         audioManager = AudioManager.instance;
         if(audioManager == null)
@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour
         Flip();
         CheckIfAiming();
         MoveHorizontally();
+        childSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
     }
 
     void FixedUpdate()
@@ -199,7 +200,10 @@ public class PlayerController : MonoBehaviour
 
             for (int i = 1; i < childSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
-                childSpriteRenderer[i].enabled = true;
+                if (childSpriteRenderer[i] != null)
+                {
+                    childSpriteRenderer[i].enabled = true;
+                }
             }
 
             playerAnim.SetBool("isAiming", isAiming);
@@ -210,7 +214,10 @@ public class PlayerController : MonoBehaviour
 
             for (int i = 1; i < childSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
-                childSpriteRenderer[i].enabled = false;
+                if (childSpriteRenderer[i] != null)
+                {
+                    childSpriteRenderer[i].enabled = false;
+                }
             }
 
             playerAnim.SetBool("isAiming", isAiming);

@@ -25,10 +25,13 @@ public class CameraController : MonoBehaviour {
     MouseCursor mouseCursorScript;
 
     // Use this for initialization
-    void Start () {
+    void Start() {
         player = Player.instance;
-        
-        weaponScript = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
+
+        if (GameObject.Find("Hotbar").GetComponent<Hotbar>().currentlyEquippedWeapon != null)
+        {
+            weaponScript = GameObject.Find("Hotbar").GetComponent<Hotbar>().currentlyEquippedWeapon.GetComponent<Weapon>();
+        }
         playerControllerScript = player.GetComponent<PlayerController>();
         mouseCursorScript = GameObject.Find("Crosshair").GetComponent<MouseCursor>();
 
@@ -39,20 +42,23 @@ public class CameraController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (target == null)
+        if (weaponScript != null)
         {
-            FindPlayer();
-            return;
-        }
-        else if (weaponScript.isSniper && playerControllerScript.isAiming)
-        {
-            target = mouseCursorScript.transform;
-            damping = 1.2f;
-        }
-        else
-        {
-            target = player.transform;
-            damping = 0.3f;
+            if (target == null)
+            {
+                FindPlayer();
+                return;
+            }
+            else if (weaponScript.isSniper && playerControllerScript.isAiming)
+            {
+                target = mouseCursorScript.transform;
+                damping = 1.2f;
+            }
+            else
+            {
+                target = player.transform;
+                damping = 0.3f;
+            }
         }
 
         float xMoveDelta = (target.position - lastTargetPosition).x;

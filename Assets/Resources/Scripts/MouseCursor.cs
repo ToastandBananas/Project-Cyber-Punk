@@ -5,33 +5,59 @@ public class MouseCursor : MonoBehaviour {
     public Sprite defaultCursorSprite;
     public Sprite defaultCrosshairSprite;
 
+    GameObject inventory;
+    GameObject upgradeMenu;
+
+    SpriteRenderer spriteRenderer;
+
     Weapon weaponScript;
     PlayerController playerControllerScript;
 
 	// Use this for initialization
 	void Start () {
-        Cursor.visible = false;
+        //Cursor.visible = false;
+        inventory = GameObject.Find("Inventory");
+        upgradeMenu = GameObject.Find("UpgradeMenu");
 
-        weaponScript = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
+        spriteRenderer = transform.GetComponent<SpriteRenderer>();
+
+        if (GameObject.Find("Hotbar").GetComponent<Hotbar>().currentlyEquippedWeapon != null)
+        {
+            weaponScript = GameObject.Find("Hotbar").GetComponent<Hotbar>().currentlyEquippedWeapon.GetComponent<Weapon>();
+        }
         playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (weaponScript.isSniper && playerControllerScript.isAiming)
+        if (inventory.activeSelf || upgradeMenu.activeSelf)
         {
-            transform.GetComponent<SpriteRenderer>().sprite = weaponScript.aimCursorSprite;
-            transform.localScale = new Vector2(.0004f, .0004f);
-        }
-        else if (playerControllerScript.isAiming)
-        {
-            transform.GetComponent<SpriteRenderer>().sprite = defaultCrosshairSprite;
-            transform.localScale = new Vector2(.0001f + (Vector2.Distance(transform.position, playerControllerScript.transform.position) * .00002f), .0001f + (Vector2.Distance(transform.position, playerControllerScript.transform.position) * .00002f));
+            Cursor.visible = true;
+            spriteRenderer.enabled = false;
         }
         else
         {
-            transform.GetComponent<SpriteRenderer>().sprite = defaultCursorSprite;
-            transform.localScale = new Vector2(.11f, .11f);
+            Cursor.visible = false;
+            spriteRenderer.enabled = true;
+        }
+
+        if (weaponScript != null)
+        {
+            if (weaponScript.isSniper && playerControllerScript.isAiming)
+            {
+                spriteRenderer.sprite = weaponScript.aimCursorSprite;
+                transform.localScale = new Vector2(.0004f, .0004f);
+            }
+            else if (playerControllerScript.isAiming)
+            {
+                spriteRenderer.sprite = defaultCrosshairSprite;
+                transform.localScale = new Vector2(.0001f + (Vector2.Distance(transform.position, playerControllerScript.transform.position) * .00002f), .0001f + (Vector2.Distance(transform.position, playerControllerScript.transform.position) * .00002f));
+            }
+            else
+            {
+                spriteRenderer.sprite = defaultCursorSprite;
+                transform.localScale = new Vector2(.11f, .11f);
+            }
         }
 
         Vector2 cursorPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

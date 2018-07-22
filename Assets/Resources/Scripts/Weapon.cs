@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 
-public class Weapon : MonoBehaviour {
-
-    public static Weapon instance;
-
+public class Weapon : MonoBehaviour 
+{
+    public int weaponID;
     public LayerMask whatToHit;
 
     [Header("Stats:")]
@@ -17,7 +16,7 @@ public class Weapon : MonoBehaviour {
     public bool isSniper = false;
     private bool canShoot = true;
     [Tooltip("Only for use with shotgun, rpg, and grenade launcher.")]
-    public float coolDownTime = 1f; // For shotgun, rpg, and grenade launcher
+    public float coolDownTime = 1f; // For shotgun
 
     [Header("Actual size will depend on parent object size:")]
     public int soundRadius = 10000;
@@ -44,20 +43,6 @@ public class Weapon : MonoBehaviour {
     ProduceSoundTrigger produceSoundTriggerScript;
     
     void Awake () {
-        if (instance != null)
-        {
-            if (instance != this)
-            {
-                Destroy(this.gameObject);
-            }
-        }
-        else
-        {
-            instance = this;
-        }
-
-        gunfireSoundName = this.name;
-
         firePoint = transform.Find("FirePoint");
         if (firePoint == null)
         {
@@ -81,6 +66,7 @@ public class Weapon : MonoBehaviour {
     
     void Update () {
         PlayerCheckIfShooting();
+        gunfireSoundName = name;
     }
 
     void PlayerCheckIfShooting()
@@ -172,7 +158,6 @@ public class Weapon : MonoBehaviour {
                         // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                     }
                 }
-                
                 CreateHitParticle(hitPos, hitNormal);
             }
         }

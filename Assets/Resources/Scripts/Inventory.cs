@@ -1,8 +1,100 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Inventory : MonoBehaviour {
-    public int slotsX, slotsY;
+public class Inventory : MonoBehaviour
+{
+    ItemDatabase itemDatabase;
+    GameObject inventoryPanel;
+    GameObject slotPanel;
+    public GameObject inventorySlot;
+    public GameObject gadgetItem;
+    public GameObject weaponItem;
+
+    int amountOfSlots = 6;
+
+    public List<Item> items = new List<Item>();
+    public List<GameObject> slots = new List<GameObject>();
+
+    void Start()
+    {
+        itemDatabase = GetComponent<ItemDatabase>();
+        inventoryPanel = GameObject.Find("InventoryPanel");
+        slotPanel = GameObject.Find("SlotPanel");
+        
+        for(int i = 0; i < amountOfSlots; i++) // Create a number of slots equal to amountOfSlots
+        {
+            items.Add(new Item());
+            slots.Add(Instantiate(inventorySlot));
+            slots[i].GetComponent<InventorySlot>().slotID = i;
+            slots[i].transform.SetParent(slotPanel.transform); // Set each slot to be a child of SlotPanel
+            slots[i].GetComponent<InventorySlot>().isOccupied = false;
+        }
+
+        inventoryPanel.SetActive(false);
+
+        AddItemToInventory(1);
+        AddItemToInventory(1);
+        AddItemToInventory(0);
+        AddItemToInventory(0);
+
+    }
+
+    public void AddItemToInventory(int id)
+    {
+        Item itemToAdd = itemDatabase.FetchItemByID(id);
+
+        if (itemToAdd.Stackable && CheckIfItemIsInInventory(itemToAdd) == true) // Stack items if stackable
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].ItemID == id)
+                {
+                    ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+                    data.amount++;
+                    data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < items.Count; i++) // Else find first empty slot
+            {
+                if (items[i].ItemID == -1)
+                {
+                    items[i] = itemToAdd;
+                    
+                    GameObject itemObject = Instantiate(gadgetItem);
+                    itemObject.GetComponent<ItemData>().item = itemToAdd;
+                    itemObject.GetComponent<ItemData>().amount = 1;
+                    itemObject.GetComponent<ItemData>().slot = i;
+                    slots[i].GetComponent<InventorySlot>().isOccupied = true;
+
+                    itemObject.transform.SetParent(slots[i].transform); // Set item object to be a child of the first empty slot
+                    itemObject.transform.position = slots[i].transform.position; // Set item object's position to be the center (0, 0) of the slot it was assigned to
+                    itemObject.GetComponent<Image>().sprite = itemToAdd.Sprite;
+                    itemObject.name = itemToAdd.ItemName; // Set the name of item object in the hierarchy to the name of the item that was added
+                    // print("i = " + i);
+                    break;
+                }
+            }
+        }
+    }
+
+    bool CheckIfItemIsInInventory(Item item)
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].ItemID == item.ItemID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*public int slotsX, slotsY;
     public GUISkin skin;
 
     public List<Item> inventory = new List<Item>();
@@ -19,7 +111,7 @@ public class Inventory : MonoBehaviour {
     private ItemDatabase database;
 
     // Use this for initialization
-    /*void Start () {
+    void Start () {
         for (int i = 0; i < (slotsX * slotsY); i++)
         {
             slot.Add(new Item());

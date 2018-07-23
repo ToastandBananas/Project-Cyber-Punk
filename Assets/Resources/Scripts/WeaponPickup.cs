@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponPickup : MonoBehaviour
 {
@@ -39,7 +40,21 @@ public class WeaponPickup : MonoBehaviour
             {
                 hotbarScript.EquipWeapon(weaponID);
                 hotbarScript.AddItemToInventory(weaponID);
+
                 hotbarScript.currentlyEquippedWeapon = Resources.Load("Prefabs/Items/PlayerWeapons/" + gameObject.name) as GameObject;
+                if (hotbarScript.currentlyEquippedWeapon.name == weaponSlot1.transform.GetChild(2).name)
+                {
+                    hotbarScript.currentlyEquippedWeaponSlot = 1;
+                    hotbarScript.weaponSlot1.GetComponent<Image>().color = hotbarScript.equippedColor;
+                    hotbarScript.weaponSlot2.GetComponent<Image>().color = hotbarScript.unequippedColor;
+                }
+                else if (hotbarScript.currentlyEquippedWeapon.name == weaponSlot2.transform.GetChild(2).name)
+                {
+                    hotbarScript.currentlyEquippedWeaponSlot = 2;
+                    hotbarScript.weaponSlot1.GetComponent<Image>().color = hotbarScript.unequippedColor;
+                    hotbarScript.weaponSlot2.GetComponent<Image>().color = hotbarScript.equippedColor;
+                }
+
                 Destroy(gameObject);
             }
         }

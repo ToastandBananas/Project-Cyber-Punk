@@ -950,11 +950,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4729009420403666, guid: 70fde9db49520c242910f80d9afe329b,
     type: 2}
   m_PrefabInternal: {fileID: 660035668}
---- !u!4 &396636657 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4312478496497072, guid: bf2de79753adacc4a823eaa8700fa2fe,
-    type: 2}
-  m_PrefabInternal: {fileID: 1721836429}
 --- !u!1 &413673296
 GameObject:
   m_ObjectHideFlags: 0
@@ -2535,11 +2530,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114000110954738592, guid: 7cbd63f922493f64ab12621320c5ac94,
-        type: 2}
-      propertyPath: playerArm
-      value: 
-      objectReference: {fileID: 396636657}
     - target: {fileID: 224334542049802754, guid: 7cbd63f922493f64ab12621320c5ac94,
         type: 2}
       propertyPath: m_AnchorMin.y

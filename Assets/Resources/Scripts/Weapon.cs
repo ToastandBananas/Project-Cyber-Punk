@@ -10,6 +10,7 @@ public class Weapon : MonoBehaviour
     public int damage = 1;
     public string ammoType;
     public int clipSize;
+    public int currentAmmoAmount;
     public bool isTwoHanded = false;
     public bool isShotgun = false;
     public bool isBoltAction = false;
@@ -55,6 +56,8 @@ public class Weapon : MonoBehaviour
         playerController = PlayerController.instance;
         player = Player.instance;
         produceSoundTriggerScript = gameObject.GetComponent<ProduceSoundTrigger>();
+
+        currentAmmoAmount = clipSize;
 
         // Sound
         audioManager = AudioManager.instance;

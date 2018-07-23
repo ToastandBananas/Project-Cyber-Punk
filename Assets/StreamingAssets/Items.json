@@ -1,8 +1,18 @@
 [
 	{
 		"itemID": 0,
+		"itemName": "Assault Rifle",
+		"itemDescription": "Extremely reliable and it kicks like a son of a bitch.",
+		"damage": 3,
+		"clipSize": 30,
+		"ammoType": "7.62mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 1,
 		"itemName": "AWD",
-		"itemDescription": "The weakest sniper rifle.",
+		"itemDescription": "The weakest sniper rifle I've ever laid my eyes on.",
 		"damage": 6,
 		"clipSize": 10,
 		"ammoType": "7.62mm",
@@ -10,21 +20,321 @@
 		"type": "Gun"
 	},
 	{
-		"itemID": 1,
+		"itemID": 2,
 		"itemName": "Big Daddy",
-		"itemDescription": "The most powerful sniper rifle.",
+		"itemDescription": "Ouch.",
 		"damage": 10,
 		"clipSize": 10,
-		"ammoType": ".50cal",
+		"ammoType": ".50 cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 3,
+		"itemName": "Black Mamba",
+		"itemDescription": "More dangerous than a snake.",
+		"damage": 7,
+		"clipSize": 10,
+		"ammoType": ".308 cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 4,
+		"itemName": "Bozonne",
+		"itemDescription": "Pea shooter with a large clip size and fire rate.",
+		"damage": 1,
+		"clipSize": 64,
+		"ammoType": "9mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 5,
+		"itemName": "Combat Shotgun",
+		"itemDescription": "Will make mincemeat out of faces.",
+		"damage": 10,
+		"clipSize": 8,
+		"ammoType": "12 gauge",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 6,
+		"itemName": "Dragon Rifle",
+		"itemDescription": "Rawr!",
+		"damage": 7,
+		"clipSize": 10,
+		"ammoType": "7.62mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 7,
+		"itemName": "Duzi",
+		"itemDescription": "Wish I could say this one's a doozy.",
+		"damage": 1,
+		"clipSize": 25,
+		"ammoType": "9mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 8,
+		"itemName": "Dying Eagle",
+		"itemDescription": "The most powerful pistol ever made...I think.",
+		"damage": 7,
+		"clipSize": 7,
+		"ammoType": ".50 cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 9,
+		"itemName": "El Toro",
+		"itemDescription": "Powerful little revolver that packs a punch.",
+		"damage": 5,
+		"clipSize": 5,
+		"ammoType": ".45 cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 10,
+		"itemName": "Famaz",
+		"itemDescription": "Very High fire rate. I'll blow through the whole clip if I'm not careful.",
+		"damage": 2,
+		"clipSize": 25,
+		"ammoType": "5.56mm",
 		"stackable": false,
 		"type": "Gun"
 	},
 	{
 		"itemID": 11,
+		"itemName": "Fifty-Seven",
+		"itemDescription": "Cute little peashooter. Pew pew!",
+		"damage": 1,
+		"clipSize": 20,
+		"ammoType": "5.7mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 12,
 		"itemName": "Gleck",
-		"itemDescription": "Cheap pistol.",
+		"itemDescription": "Cheapo pistol, but it does the job.",
 		"damage": 2,
 		"clipSize": 15,
+		"ammoType": "9mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 13,
+		"itemName": "Halther",
+		"itemDescription": "For halting...?",
+		"damage": 2,
+		"clipSize": 8,
+		"ammoType": "9mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 14,
+		"itemName": "Heavy Submachine Gun",
+		"itemDescription": "This will make short work of anyone.",
+		"damage": 3,
+		"clipSize": 25,
+		"ammoType": ".45cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 15,
+		"itemName": "Lawnmower",
+		"itemDescription": "Disclaimer: Not acutally a lawnmower.",
+		"damage": 2,
+		"clipSize": 20,
+		"ammoType": ".45cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 16,
+		"itemName": "Light Submachine Gun",
+		"itemDescription": "May require many bullets to kill.",
+		"damage": 1,
+		"clipSize": 30,
+		"ammoType": "10mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 17,
+		"itemName": "M4",
+		"itemDescription": "Lightweight military carbine.",
+		"damage": 2,
+		"clipSize": 30,
+		"ammoType": "5.56mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 18,
+		"itemName": "Mac-Mac",
+		"itemDescription": "Popular with old world gangsters.",
+		"damage": 2,
+		"clipSize": 20,
+		"ammoType": ".45cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 19,
+		"itemName": "Machine Pistol",
+		"itemDescription": "This is what you get when you make a pistol full automatic.",
+		"damage": 1,
+		"clipSize": 32,
+		"ammoType": "9mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 20,
+		"itemName": "Mosinka",
+		"itemDescription": "Old school bolt action miliary rifle.",
+		"damage": 5,
+		"clipSize": 5,
+		"ammoType": "7.62mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 21,
+		"itemName": "Old Service Rifle",
+		"itemDescription": "Standard issue in the military in the days of old.",
+		"damage": 4,
+		"clipSize": 20,
+		"ammoType": "7.62mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 22,
+		"itemName": "Pump Shotgun",
+		"itemDescription": "Maybe I could use this for hunting synthetics...",
+		"damage": 8,
+		"clipSize": 7,
+		"ammoType": "12 gauge",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 23,
+		"itemName": "Revatok",
+		"itemDescription": "This is one baller pistol.",
+		"damage": 4,
+		"clipSize": 9,
+		"ammoType": "7.62mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 24,
+		"itemName": "Revolver",
+		"itemDescription": "This makes me feel like I'm in an old western flick.",
+		"damage": 3,
+		"clipSize": 7,
+		"ammoType": "7.62mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 25,
+		"itemName": "Rovamac",
+		"itemDescription": "Great for personal protection.",
+		"damage": 3,
+		"clipSize": 8,
+		"ammoType": "9mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 26,
+		"itemName": "Sidewinder",
+		"itemDescription": "Bullpup rifle that packs a punch.",
+		"damage": 2,
+		"clipSize": 30,
+		"ammoType": "5.56mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 27,
+		"itemName": "STAGG",
+		"itemDescription": "Special-Forces Tactical Assault Gas-operated Gun.",
+		"damage": 4,
+		"clipSize": 30,
+		"ammoType": "7.62mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 28,
+		"itemName": "Stiglitz",
+		"itemDescription": "Named after a Germany born Nazi killer.",
+		"damage": 2,
+		"clipSize": 32,
+		"ammoType": "9mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 29,
+		"itemName": "Submachine Gun",
+		"itemDescription": "Just your standard torso blaster.",
+		"damage": 2,
+		"clipSize": 20,
+		"ammoType": "5.45mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 30,
+		"itemName": "Tactical Shotgun",
+		"itemDescription": "Use this to systematically clear a room.",
+		"damage": 8,
+		"clipSize": 6,
+		"ammoType": "12 gauge",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 31,
+		"itemName": "Tammy Gun",
+		"itemDescription": "What, am I in the Mafia?",
+		"damage": 3,
+		"clipSize": 20,
+		"ammoType": ".45 cal",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 32,
+		"itemName": "The Hangman",
+		"itemDescription": "Great alternative to hanging someone.",
+		"damage": 2,
+		"clipSize": 30,
+		"ammoType": "5.45mm",
+		"stackable": false,
+		"type": "Gun"
+	},
+	{
+		"itemID": 33,
+		"itemName": "WWII Pistol",
+		"itemDescription": "Powerful little pistol popular with German officers in WWII.",
+		"damage": 3,
+		"clipSize": 7,
 		"ammoType": "9mm",
 		"stackable": false,
 		"type": "Gun"

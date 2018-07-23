@@ -129,7 +129,7 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0.1
     loop: 0
-  - soundName: Doozy
+  - soundName: Duzi
     clip: {fileID: 8300000, guid: 6009bdc194323b8439412a7c172e335f, type: 3}
     volume: 1
     pitch: 1
@@ -297,7 +297,7 @@ MonoBehaviour:
     randomVolume: 0.1
     randomPitch: 0.1
     loop: 0
-  - soundName: Winnfield
+  - soundName: Assault Rifle
     clip: {fileID: 8300000, guid: 9b11e92dca07fe742a79c0c4786c43d0, type: 3}
     volume: 1
     pitch: 0.8

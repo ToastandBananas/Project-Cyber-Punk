@@ -95,13 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd15141c12e2aae4e9e3ba5a47485f2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponID: 1
+  weaponID: 2
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294960857
   fireRate: 1
   damage: 10
-  ammoType: .50cal
+  ammoType: .50 cal
   clipSize: 10
   isTwoHanded: 1
   isShotgun: 0

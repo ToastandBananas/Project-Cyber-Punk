@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightMaterial: {fileID: 2100000, guid: 82be8d44dc028c34b8a1f72b134981ee, type: 2}
   defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  weaponID: 0
+  weaponID: 2
 --- !u!212 &212416598919810540
 SpriteRenderer:
   m_ObjectHideFlags: 1

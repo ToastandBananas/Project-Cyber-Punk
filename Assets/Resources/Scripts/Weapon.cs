@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour
 
     [Header("Stats:")]
     public float fireRate = 1;
-    public int damage = 1;
+    public float damage = 1;
     public string ammoType;
     public int clipSize;
     public int currentAmmoAmount;
@@ -42,6 +42,7 @@ public class Weapon : MonoBehaviour
     PlayerController playerController;
     Player player;
     ProduceSoundTrigger produceSoundTriggerScript;
+    ItemDatabase itemDatabase;
     
     void Awake () {
         firePoint = transform.Find("FirePoint");
@@ -56,8 +57,7 @@ public class Weapon : MonoBehaviour
         playerController = PlayerController.instance;
         player = Player.instance;
         produceSoundTriggerScript = gameObject.GetComponent<ProduceSoundTrigger>();
-
-        currentAmmoAmount = clipSize;
+        itemDatabase = GameObject.Find("Hotbar").GetComponent<ItemDatabase>();
 
         // Sound
         audioManager = AudioManager.instance;
@@ -65,6 +65,14 @@ public class Weapon : MonoBehaviour
         {
             Debug.LogError("No AudioManager found in the scene");
         }
+
+        Item weaponItem = itemDatabase.FetchItemByID(weaponID);
+        name = weaponItem.ItemName;
+        damage = weaponItem.Damage;
+        clipSize = weaponItem.ClipSize;
+        ammoType = weaponItem.AmmoType;
+
+        currentAmmoAmount = clipSize;
     }
     
     void Update () {
@@ -82,9 +90,10 @@ public class Weapon : MonoBehaviour
                 if (fireRate == 1)
                 {
                     // print("fire rate is 1");
-                    if (Input.GetButtonDown("Fire1") && canShoot) // Left click while holding right click
+                    if (Input.GetButtonDown("Fire1") && canShoot && currentAmmoAmount > 0) // Left click while holding right click
                     {
                         Shoot();
+                        DecreaseAmmo();
                         if (isShotgun || isBoltAction)
                         {
                             canShoot = false;
@@ -96,10 +105,11 @@ public class Weapon : MonoBehaviour
                 }
                 else
                 {
-                    if (Input.GetButton("Fire1") && Time.time > timeToFire) // For automatic guns
+                    if (Input.GetButton("Fire1") && Time.time > timeToFire && currentAmmoAmount > 0) // For automatic guns
                     {
                         timeToFire = Time.time + 1 / fireRate;
                         Shoot();
+                        DecreaseAmmo();
                         produceSoundTriggerScript.SoundTrigger(soundRadius);
                         audioManager.PlaySound(gunfireSoundName);
                     }
@@ -217,5 +227,19 @@ public class Weapon : MonoBehaviour
             Transform hitParticle = Instantiate(HitEffectPrefab, hitPos, Quaternion.FromToRotation(Vector3.right, hitNormal)) as Transform;
             Destroy(hitParticle.gameObject, 1f);
         }
+    }
+
+    public void IncreaseAmmo(int amountToAdd)
+    {
+        currentAmmoAmount += amountToAdd;
+        if (currentAmmoAmount > clipSize)
+        {
+            currentAmmoAmount = clipSize;
+        }
+    }
+
+    public void DecreaseAmmo()
+    {
+        currentAmmoAmount--;
     }
 }

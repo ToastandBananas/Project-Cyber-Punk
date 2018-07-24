@@ -19,10 +19,13 @@ public class LootDrop : MonoBehaviour
         weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + enemyWeapon.name + " Item Drop") as GameObject;
 	}
 
-    public void DropWeapon()
+    public void DropWeapon(int currentAmmoAmount, string ammoType)
     {
         GameObject droppedWeapon = Instantiate(weaponToDrop);
         droppedWeapon.transform.position = enemy.position + new Vector3(0, .2f);
+        currentAmmoAmount = enemyWeapon.GetComponent<EnemyWeapon>().currentAmmoAmount;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().currentAmmoAmount = currentAmmoAmount;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().ammoType = ammoType;
     }
 
     //To Do: Randomize cash drop

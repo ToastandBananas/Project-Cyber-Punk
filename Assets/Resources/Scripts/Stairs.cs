@@ -26,7 +26,7 @@ public class Stairs : MonoBehaviour {
     {
         if (playerIsNearStairs == true)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 // Debug.Log("Attempting to use stairway door named: " + targetDoor);
                 player.transform.position = new Vector3(targetDoor.transform.position.x, targetDoor.transform.position.y - 0.13f);

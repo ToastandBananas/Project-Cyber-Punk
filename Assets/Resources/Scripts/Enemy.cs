@@ -36,22 +36,35 @@ public class Enemy : MonoBehaviour {
     public string deathSoundName = "DeathVoice";
     public string damageSoundName = "DamageVoice";
 
-    public int moneyDrop = 10;
+    public int minMoneyDrop = 2;
+    public int maxMoneyDrop = 10;
+    public int actualMoney;
 
     public float distanceToPlayer;
 
     public bool isDead = false;
 
+    public Material highlightMaterial;
+    public Material defaultMaterial;
+
     private AudioManager audioManager;
 
-    CapsuleCollider2D capsuleCollider;
     CapsuleCollider2D playerCapsuleCollider;
+    CapsuleCollider2D capsuleCollider;
+    CircleCollider2D hearingCollider;
+    CircleCollider2D sightCollider;
+    BoxCollider2D lootBoxCollider;
+
+    SpriteRenderer spriteRenderer;
 
     Animator anim;
 
     Player player;
     EnemyMovement enemyMovementScript;
     LootDrop lootDropScript;
+
+    GameObject enemyWeapon;
+    GameObject enemyArm;
 
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;
@@ -64,13 +77,23 @@ public class Enemy : MonoBehaviour {
         enemyMovementScript = gameObject.GetComponent<EnemyMovement>();
         lootDropScript = GetComponent<LootDrop>();
 
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        enemyArm = transform.Find("EnemyArm").gameObject;
+        enemyWeapon = enemyArm.transform.GetChild(0).gameObject;
+
         playerCapsuleCollider = player.GetComponent<CapsuleCollider2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        hearingCollider = transform.Find("Hearing").GetComponent<CircleCollider2D>();
+        sightCollider = transform.Find("Sight").GetComponent<CircleCollider2D>();
+        lootBoxCollider = GetComponent<BoxCollider2D>();
+        lootBoxCollider.enabled = false;
 
         Physics2D.IgnoreCollision(capsuleCollider, playerCapsuleCollider);
 
         enemyStats.actualMaxHealth = enemyStats.maxHealth * enemyStats.startHealthPercent;
         enemyStats.Init();
+        actualMoney = Mathf.RoundToInt(Random.Range(minMoneyDrop, maxMoneyDrop));
 
         anim = GetComponent<Animator>();
 
@@ -121,10 +144,6 @@ public class Enemy : MonoBehaviour {
             // Death sound
             audioManager.PlaySound(deathSoundName);
 
-            // Drop money on death
-            GameMaster.Money += moneyDrop;
-            audioManager.PlaySound("Money");
-
             // Camera Shake
             // cameraShake.Shake(_enemy.shakeAmt, _enemy.shakeLength);
             
@@ -141,19 +160,50 @@ public class Enemy : MonoBehaviour {
             audioManager.PlaySound(damageSoundName);
         }
 
-        if (enemyStats.currentHealth <= 0)
+        if (enemyStats.currentHealth <= 0) // If enemy is dead
         {
-            lootDropScript.DropWeapon();
+            // Drop held weapon with current amount of ammo and specify the ammo type (so that it can be accessed when the player tries to pick up ammo in the WeaponPickup script)
+            lootDropScript.DropWeapon(enemyWeapon.GetComponent<EnemyWeapon>().currentAmmoAmount, enemyWeapon.GetComponent<EnemyWeapon>().ammoType);
+            lootBoxCollider.enabled = true;
+            sightCollider.enabled = false;
+            hearingCollider.enabled = false;
         }
     }
 
-    void OnCollisionEnter2D(Collision2D _colliderInfo) // Damage player on collision with enemy
+    void OnCollisionEnter2D(Collision2D collision) // Damage player on collision with enemy
     {
-        Player _player = _colliderInfo.collider.GetComponent<Player>();
+        Player _player = collision.collider.GetComponent<Player>();
 
         if(_player != null)
         {
             _player.DamagePlayer(enemyStats.onTouchDamage);
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Player" && isDead == true)
+        {
+            if (actualMoney > 0)
+            {
+                spriteRenderer.material = highlightMaterial;
+
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    GameMaster.Money += actualMoney; // Loot money from enemy
+                    actualMoney = 0;
+                    audioManager.PlaySound("Money");
+                    spriteRenderer.material = defaultMaterial;
+                }
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Player" && isDead == true)
+        {
+            spriteRenderer.material = defaultMaterial;
         }
     }
 }

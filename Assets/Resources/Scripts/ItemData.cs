@@ -6,13 +6,15 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 {
     public Item item;
     public int amount;
-    public int slot;
     
     private Tooltip tooltip;
+
+    MouseCursor mouseCursor;
 
     void Start()
     {
         tooltip = GameObject.Find("Hotbar").GetComponent<Tooltip>();
+        mouseCursor = GameObject.Find("Crosshair").GetComponent<MouseCursor>();
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -39,18 +41,20 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        //transform.SetParent(inventory.slots[slot].transform);
-        //transform.position = inventory.slots[slot].transform.position;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         tooltip.Activate(item);
+        Cursor.visible = true;
+        mouseCursor.spriteRenderer.enabled = false;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         tooltip.Deactivate();
+        Cursor.visible = false;
+        mouseCursor.spriteRenderer.enabled = true;
     }
 }

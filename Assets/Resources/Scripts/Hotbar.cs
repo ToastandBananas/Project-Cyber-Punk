@@ -12,7 +12,14 @@ public class Hotbar : MonoBehaviour {
     public GameObject weaponItem;
 
     public GameObject currentlyEquippedWeapon;
+    public GameObject secondaryWeapon;
     public int currentlyEquippedWeaponSlot = 1;
+    public int secondaryWeaponAmmoAmount;
+    public int secondaryWeaponClipSize;
+    public string secondaryWeaponAmmoType;
+
+    public GameObject ammoText1;
+    public GameObject ammoText2;
 
     GameObject infoPanel;
     GameObject weaponToDrop;
@@ -21,7 +28,7 @@ public class Hotbar : MonoBehaviour {
 
     public int startingWeaponID;
 
-    GameObject[] weaponObjects;
+    public GameObject[] weaponObjects;
 
     ItemDatabase itemDatabase;
     LootDrop lootDropScript;
@@ -47,6 +54,7 @@ public class Hotbar : MonoBehaviour {
             if (weaponObject.name == weaponSlot1.transform.GetChild(2).name)
             {
                 weaponObject.SetActive(true);
+                weaponObject.tag = "EquippedWeapon";
                 currentlyEquippedWeapon = weaponObject;
                 currentlyEquippedWeaponSlot = 1;
                 weaponSlot1.GetComponent<Image>().color = equippedColor;
@@ -54,6 +62,7 @@ public class Hotbar : MonoBehaviour {
             else
             {
                 weaponObject.SetActive(false);
+                weaponObject.tag = "InactiveWeapon";
             }
         }
     }
@@ -61,7 +70,10 @@ public class Hotbar : MonoBehaviour {
     void FixedUpdate()
     {
         SwapWeapon();
+        DisplayAmmo();
         print("Currently equipped weapon: " + currentlyEquippedWeapon);
+        print("Secondary weapon: " + secondaryWeapon);
+        print("Current weapon slot: " + currentlyEquippedWeaponSlot);
     }
 
     public void AddItemToInventory(int id)
@@ -176,17 +188,20 @@ public class Hotbar : MonoBehaviour {
             if (weaponObject.name == itemToAdd.ItemName)
             {
                 weaponObject.SetActive(true);
+                weaponObject.tag = "EquippedWeapon";
+
                 if (weaponSlot1.GetComponent<Slot>().isEmpty == false && weaponSlot2.GetComponent<Slot>().isEmpty == false)
                 {
                     print("Currently equipped weapon: " + currentlyEquippedWeapon.name);
                     weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + currentlyEquippedWeapon.name + " Item Drop") as GameObject;
-                    // Currently equipped weapon and slot are set in the WeaponPickup script
+                    // Currently equipped weapon and slot and secondary weapon ammo amount are set in the WeaponPickup script
                     DropWeapon(weaponToDrop);
                 }
             }
             else
             {
                 weaponObject.SetActive(false);
+                weaponObject.tag = "InactiveWeapon";
             }
         }
     }
@@ -201,16 +216,23 @@ public class Hotbar : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
-            if (weaponSlot1.transform.childCount == 2) // If weapon slot 1 isn't empty
+            if (weaponSlot1.transform.childCount == 3 && currentlyEquippedWeaponSlot != 1) // If weapon slot 1 isn't empty
             {
                 foreach (GameObject weaponObject in weaponObjects)
                 {
                     // if the weapon in the object pool equals the weapon in slot 1
                     if (weaponObject.name == weaponSlot1.transform.GetChild(2).name)
                     {
-                        weaponObject.SetActive(true);
-                        currentlyEquippedWeapon = weaponObject;
                         currentlyEquippedWeaponSlot = 1;
+                        secondaryWeaponAmmoAmount = currentlyEquippedWeapon.GetComponent<Weapon>().currentAmmoAmount;
+                        secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
+                        secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
+                        secondaryWeapon = currentlyEquippedWeapon;
+                        
+                        weaponObject.SetActive(true);
+                        weaponObject.tag = "EquippedWeapon";
+                        currentlyEquippedWeapon = weaponObject;
+                        
                         weaponSlot1.GetComponent<Image>().color = equippedColor;
                         weaponSlot2.GetComponent<Image>().color = unequippedColor;
                     }
@@ -222,22 +244,31 @@ public class Hotbar : MonoBehaviour {
                     else
                     {
                         weaponObject.SetActive(false);
+                        weaponObject.tag = "InactiveWeapon";
                     }
                 }
             }
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
         {
-            if (weaponSlot2.transform.childCount == 2) // If weapon slot 2 isn't empty
+            if (weaponSlot2.transform.childCount == 3 && currentlyEquippedWeaponSlot != 2) // If weapon slot 2 isn't empty
             {
                 foreach (GameObject weaponObject in weaponObjects)
                 {
                     // if the weapon in the object pool equals the weapon in slot 2 
                     if (weaponObject.name == weaponSlot2.transform.GetChild(2).name)
                     {
-                        weaponObject.SetActive(true);
-                        currentlyEquippedWeapon = weaponObject;
                         currentlyEquippedWeaponSlot = 2;
+                        secondaryWeaponAmmoAmount = currentlyEquippedWeapon.GetComponent<Weapon>().currentAmmoAmount;
+                        secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
+                        secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
+                        secondaryWeapon = currentlyEquippedWeapon;
+                        
+                        weaponObject.SetActive(true);
+                        weaponObject.tag = "EquippedWeapon";
+                        
+                        currentlyEquippedWeapon = weaponObject;
+
                         weaponSlot1.GetComponent<Image>().color = unequippedColor;
                         weaponSlot2.GetComponent<Image>().color = equippedColor;
                     }
@@ -249,13 +280,14 @@ public class Hotbar : MonoBehaviour {
                     else
                     {
                         weaponObject.SetActive(false);
+                        weaponObject.tag = "InactiveWeapon";
                     }
                 }
             }
         }
         else if (Input.GetAxis("Mouse ScrollWheel") > 0 || Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (weaponSlot1.transform.childCount == 2 && weaponSlot2.transform.childCount == 2) // If both weapon slots are occupied
+            if (weaponSlot1.transform.childCount == 3 && weaponSlot2.transform.childCount == 3) // If both weapon slots are occupied
             {
                 if (currentlyEquippedWeaponSlot == 1) // If currently equipped weapon is in weapon slot 1
                 {
@@ -263,15 +295,23 @@ public class Hotbar : MonoBehaviour {
                     {
                         if (weaponObject.name == weaponSlot2.transform.GetChild(2).name) // If the weapon in the object pool equals the weapon in weapon slot 2
                         {
-                            weaponObject.SetActive(true);
-                            currentlyEquippedWeapon = weaponObject;
                             currentlyEquippedWeaponSlot = 2;
+                            secondaryWeaponAmmoAmount = currentlyEquippedWeapon.GetComponent<Weapon>().currentAmmoAmount;
+                            secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
+                            secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
+                            secondaryWeapon = currentlyEquippedWeapon;
+                            
+                            weaponObject.SetActive(true);
+                            weaponObject.tag = "EquippedWeapon";
+                            currentlyEquippedWeapon = weaponObject;
+                            
                             weaponSlot1.GetComponent<Image>().color = unequippedColor;
                             weaponSlot2.GetComponent<Image>().color = equippedColor;
                         }
                         else
                         {
                             weaponObject.SetActive(false);
+                            weaponObject.tag = "InactiveWeapon";
                         }
                     }
                 }
@@ -281,15 +321,23 @@ public class Hotbar : MonoBehaviour {
                     {
                         if (weaponObject.name == weaponSlot1.transform.GetChild(2).name)  // If the weapon in the object pool equals the weapon in weapon slot 1
                         {
-                            weaponObject.SetActive(true);
-                            currentlyEquippedWeapon = weaponObject;
                             currentlyEquippedWeaponSlot = 1;
+                            secondaryWeaponAmmoAmount = currentlyEquippedWeapon.GetComponent<Weapon>().currentAmmoAmount;
+                            secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
+                            secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
+                            secondaryWeapon = currentlyEquippedWeapon;
+                            
+                            weaponObject.SetActive(true);
+                            weaponObject.tag = "EquippedWeapon";
+                            currentlyEquippedWeapon = weaponObject;
+                            
                             weaponSlot1.GetComponent<Image>().color = equippedColor;
                             weaponSlot2.GetComponent<Image>().color = unequippedColor;
                         }
                         else
                         {
                             weaponObject.SetActive(false);
+                            weaponObject.tag = "InactiveWeapon";
                         }
                     }
                 }
@@ -297,13 +345,23 @@ public class Hotbar : MonoBehaviour {
         }
     }
 
-    public void IncreaseAmmo()
+    void DisplayAmmo()
     {
-        // To Do: Call these two functions when appropriate...
-    }
-
-    public void DecreaseAmmo()
-    {
-
+        if (currentlyEquippedWeaponSlot == 1)
+        {
+            ammoText1.GetComponent<Text>().text = currentlyEquippedWeapon.GetComponent<Weapon>().currentAmmoAmount + "/" + currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
+            if (secondaryWeapon != null)
+            {
+                ammoText2.GetComponent<Text>().text = secondaryWeapon.GetComponent<Weapon>().currentAmmoAmount + "/" + secondaryWeapon.GetComponent<Weapon>().clipSize;
+            }
+        }
+        else if (currentlyEquippedWeaponSlot == 2)
+        {
+            ammoText2.GetComponent<Text>().text = currentlyEquippedWeapon.GetComponent<Weapon>().currentAmmoAmount + "/" + currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
+            if (secondaryWeapon != null)
+            {
+                ammoText1.GetComponent<Text>().text = secondaryWeapon.GetComponent<Weapon>().currentAmmoAmount + "/" + secondaryWeapon.GetComponent<Weapon>().clipSize;
+            }
+        }
     }
 }

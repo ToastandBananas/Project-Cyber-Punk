@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 95763579391726576}
   - component: {fileID: 70068032494779684}
   - component: {fileID: 114337510329887630}
+  - component: {fileID: 61776278880375528}
   m_Layer: 9
   m_Name: NormalGuy
   m_TagString: Enemy
@@ -331,6 +332,31 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 600
+--- !u!61 &61776278880375528
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1019179602100098}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.25113583, y: -14.31532}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 32, y: 49}
+    newSize: {x: 2.3, y: 1.6}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 65, y: 20.36936}
+  m_EdgeRadius: 0
 --- !u!70 &70068032494779684
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
@@ -392,9 +418,11 @@ MonoBehaviour:
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294960601
+  weaponID: 1
   damage: 6
   ammoType: 7.62mm
   clipSize: 10
+  currentAmmoAmount: 0
   isTwoHanded: 1
   isShotgun: 0
   semiAutoCoolDownTime: 1.3
@@ -550,9 +578,13 @@ MonoBehaviour:
     onTouchDamage: 0
   deathSoundName: DeathVoice
   damageSoundName: DamageVoice
-  moneyDrop: 10
+  minMoneyDrop: 2
+  maxMoneyDrop: 10
+  actualMoney: 0
   distanceToPlayer: 0
   isDead: 0
+  highlightMaterial: {fileID: 2100000, guid: 82be8d44dc028c34b8a1f72b134981ee, type: 2}
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   statusIndicator: {fileID: 0}
 --- !u!212 &212776679307365574
 SpriteRenderer:

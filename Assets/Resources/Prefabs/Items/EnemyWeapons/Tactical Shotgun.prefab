@@ -84,9 +84,11 @@ MonoBehaviour:
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294960601
+  weaponID: 30
   damage: 8
   ammoType: 12 gauge
   clipSize: 6
+  currentAmmoAmount: 0
   isTwoHanded: 1
   isShotgun: 1
   semiAutoCoolDownTime: 0.75

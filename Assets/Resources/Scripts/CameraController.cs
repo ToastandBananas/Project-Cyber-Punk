@@ -23,15 +23,14 @@ public class CameraController : MonoBehaviour {
     Weapon weaponScript;
     PlayerController playerControllerScript;
     MouseCursor mouseCursorScript;
+    Hotbar hotbarScript;
 
     // Use this for initialization
     void Start() {
         player = Player.instance;
 
-        if (GameObject.Find("Hotbar").GetComponent<Hotbar>().currentlyEquippedWeapon != null)
-        {
-            weaponScript = GameObject.Find("Hotbar").GetComponent<Hotbar>().currentlyEquippedWeapon.GetComponent<Weapon>();
-        }
+        hotbarScript = GameObject.Find("Hotbar").GetComponent<Hotbar>();
+        
         playerControllerScript = player.GetComponent<PlayerController>();
         mouseCursorScript = GameObject.Find("Crosshair").GetComponent<MouseCursor>();
 
@@ -42,6 +41,11 @@ public class CameraController : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        if (hotbarScript.currentlyEquippedWeapon != null)
+        {
+            weaponScript = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>();
+        }
+
         if (weaponScript != null)
         {
             if (target == null)

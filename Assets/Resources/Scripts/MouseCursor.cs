@@ -4,11 +4,11 @@ public class MouseCursor : MonoBehaviour {
 
     public Sprite defaultCursorSprite;
     public Sprite defaultCrosshairSprite;
-
-    GameObject inventory;
+    
     GameObject upgradeMenu;
+    Hotbar hotbar;
 
-    SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     Weapon weaponScript;
     PlayerController playerControllerScript;
@@ -16,29 +16,21 @@ public class MouseCursor : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         //Cursor.visible = false;
-        inventory = GameObject.Find("Inventory");
+        hotbar = GameObject.Find("Hotbar").GetComponent<Hotbar>();
         upgradeMenu = GameObject.Find("UpgradeMenu");
 
         spriteRenderer = transform.GetComponent<SpriteRenderer>();
 
-        if (GameObject.Find("Hotbar").GetComponent<Hotbar>().currentlyEquippedWeapon != null)
-        {
-            weaponScript = GameObject.Find("Hotbar").GetComponent<Hotbar>().currentlyEquippedWeapon.GetComponent<Weapon>();
-        }
+        Cursor.visible = false;
+
         playerControllerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (inventory.activeSelf || upgradeMenu.activeSelf)
+        if (hotbar.currentlyEquippedWeapon != null)
         {
-            Cursor.visible = true;
-            spriteRenderer.enabled = false;
-        }
-        else
-        {
-            Cursor.visible = false;
-            spriteRenderer.enabled = true;
+            weaponScript = hotbar.currentlyEquippedWeapon.GetComponent<Weapon>();
         }
 
         if (weaponScript != null)

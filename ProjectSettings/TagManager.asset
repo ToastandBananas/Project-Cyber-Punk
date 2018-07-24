@@ -21,6 +21,7 @@ TagManager:
   - PatrolPoint
   - ItemDatabase
   - WeaponDrop
+  - InactiveWeapon
   layers:
   - Default
   - TransparentFX

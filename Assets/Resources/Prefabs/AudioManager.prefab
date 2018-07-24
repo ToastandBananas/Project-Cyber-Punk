@@ -360,3 +360,10 @@ MonoBehaviour:
     randomVolume: 0.1
     randomPitch: 0.1
     loop: 0
+  - soundName: Reload1
+    clip: {fileID: 8300000, guid: 913967a9da3a5ea47a6d94a3352d4e80, type: 3}
+    volume: 1.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0.1
+    loop: 0

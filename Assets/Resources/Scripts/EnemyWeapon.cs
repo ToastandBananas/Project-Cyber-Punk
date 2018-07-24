@@ -11,11 +11,13 @@ public class EnemyWeapon : MonoBehaviour {
     Transform enemySight;
 
     public LayerMask whatToHit;
+    public int weaponID;
 
     [Header("Stats:")]
-    public int damage = 1;
+    public float damage = 1;
     public string ammoType;
     public int clipSize;
+    public int currentAmmoAmount;
     public bool isTwoHanded = false;
 
     private float initialWaitToShootTime;
@@ -56,8 +58,12 @@ public class EnemyWeapon : MonoBehaviour {
     RaycastHit2D hit;
     Vector2 bulletMoveDirection;
 
+    ItemDatabase itemDatabase;
+
     void Awake()
     {
+        itemDatabase = GameObject.Find("Hotbar").GetComponent<ItemDatabase>();
+
         firePoint = transform.Find("FirePoint");
         if (firePoint == null)
         {
@@ -81,7 +87,15 @@ public class EnemyWeapon : MonoBehaviour {
         {
             Debug.LogError("No AudioManager found in the scene");
         }
-	}
+
+        Item weaponItem = itemDatabase.FetchItemByID(weaponID);
+        name = weaponItem.ItemName;
+        damage = weaponItem.Damage;
+        clipSize = weaponItem.ClipSize;
+        ammoType = weaponItem.AmmoType;
+
+        currentAmmoAmount = clipSize;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -90,6 +104,11 @@ public class EnemyWeapon : MonoBehaviour {
         if (enemyMovementScript.stillSearching == false)
         {
             initialWaitToShootTime = 1.5f;
+        }
+
+        if (currentAmmoAmount <= 0)
+        {
+            Invoke("Reload", 2f); // Enemy has infinite ammo, but will only drop what is currently loaded in their gun when they die
         }
     }
 
@@ -106,7 +125,7 @@ public class EnemyWeapon : MonoBehaviour {
                 isAbleToShoot = false;
             }
 
-            if (isCoolingDown == false && isAbleToShoot == true)
+            if (isCoolingDown == false && isAbleToShoot == true && currentAmmoAmount > 0)
             {
                 if (isAutomatic == false) // For semi-auto guns
                 {
@@ -198,6 +217,8 @@ public class EnemyWeapon : MonoBehaviour {
 
             audioManager.PlaySound(gunfireSoundName);
 
+            DecreaseAmmo();
+
             isCoolingDown = true;
             yield return new WaitForSeconds(coolDownTime);
             isCoolingDown = false;
@@ -245,5 +266,15 @@ public class EnemyWeapon : MonoBehaviour {
             Destroy(hitParticle.gameObject, 1f);
             // camShake.Shake(camShakeAmt, camShakeLength); // Creates cam shake on enemy hit (apply with heavy weapons such as rocket launchers, grenades, etc.)
         }
+    }
+
+    public void Reload()
+    {
+        currentAmmoAmount = clipSize;
+    }
+
+    public void DecreaseAmmo()
+    {
+        currentAmmoAmount--;
     }
 }

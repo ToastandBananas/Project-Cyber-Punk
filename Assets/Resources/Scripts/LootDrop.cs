@@ -19,13 +19,15 @@ public class LootDrop : MonoBehaviour
         weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + enemyWeapon.name + " Item Drop") as GameObject;
 	}
 
-    public void DropWeapon(int currentAmmoAmount, string ammoType)
+    public void DropWeapon(int currentAmmoAmount, string ammoType, float damage, float fireRate)
     {
         GameObject droppedWeapon = Instantiate(weaponToDrop);
         droppedWeapon.transform.position = enemy.position + new Vector3(0, .2f);
         currentAmmoAmount = enemyWeapon.GetComponent<EnemyWeapon>().currentAmmoAmount;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().currentAmmoAmount = currentAmmoAmount;
-        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().ammoType = ammoType;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().ammoType = ammoType; // Need to know ammo type and amount for when player picks up ammo
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().damage = damage;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().fireRate = fireRate; // Need to know damage and fire rate so that the values are the same when player picks the weapon up
     }
 
     //To Do: Randomize cash drop

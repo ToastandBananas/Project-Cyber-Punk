@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class EnemyWeapon : MonoBehaviour {
 
@@ -14,10 +15,11 @@ public class EnemyWeapon : MonoBehaviour {
     public int weaponID;
 
     [Header("Stats:")]
-    public float damage = 1;
+    public float damage;
     public string ammoType;
     public int clipSize;
     public int currentAmmoAmount;
+    public string actionType;
     public bool isTwoHanded = false;
 
     private float initialWaitToShootTime;
@@ -42,6 +44,7 @@ public class EnemyWeapon : MonoBehaviour {
     float timeToSpawnEffect = 0;
     float effectSpawnRate = 10;
     Transform firePoint;
+    public float playerFireRate;
     
     // Sound
     private AudioManager audioManager;
@@ -69,7 +72,6 @@ public class EnemyWeapon : MonoBehaviour {
         {
             Debug.LogError("No fire point...Please make an empty object named FirePoint and attach to end of gun. :)");
         }
-        gunfireSoundName = this.name;
     }
 
     // Use this for initialization
@@ -90,11 +92,16 @@ public class EnemyWeapon : MonoBehaviour {
 
         Item weaponItem = itemDatabase.FetchItemByID(weaponID);
         name = weaponItem.ItemName;
-        damage = weaponItem.Damage;
+        damage = Mathf.Round(Random.Range(weaponItem.MinDamage, weaponItem.MaxDamage) * 100.0f) / 100.0f;
         clipSize = weaponItem.ClipSize;
         ammoType = weaponItem.AmmoType;
+        playerFireRate = Mathf.Round(Random.Range(weaponItem.MinFireRate, weaponItem.MaxFireRate) * 100.0f) / 100.0f;
+        autoCoolDownTime = Mathf.Round((1 / playerFireRate) * 100.0f) / 100.0f;
+        actionType = weaponItem.ActionType;
 
         currentAmmoAmount = clipSize;
+
+        gunfireSoundName = name;
     }
 	
 	// Update is called once per frame

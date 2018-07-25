@@ -131,7 +131,6 @@ public class EnemySight : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, player.position - transform.position, distanceToPlayer);
         Debug.DrawRay(transform.position, player.position - transform.position, Color.blue); // draw line in the Scene window to show where the raycast is looking
-        List<float> distances = new List<float>();
      
         foreach (RaycastHit2D hit in hits)
         {           

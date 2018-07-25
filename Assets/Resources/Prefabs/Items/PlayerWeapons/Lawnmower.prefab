@@ -51,8 +51,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837594396971210}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 14.57, y: 4.02, z: 0}
-  m_LocalScale: {x: 0.20405208, y: 0.20405175, z: 0.20405178}
+  m_LocalPosition: {x: 13.97, y: 4.09, z: 0}
+  m_LocalScale: {x: 0.2515752, y: 0.2515752, z: 0.2515752}
   m_Children:
   - {fileID: 4112167654567196}
   m_Father: {fileID: 0}
@@ -90,6 +90,7 @@ MonoBehaviour:
   damage: 2
   ammoType: .45 cal
   clipSize: 20
+  currentAmmoAmount: 0
   isTwoHanded: 0
   isShotgun: 0
   isBoltAction: 0

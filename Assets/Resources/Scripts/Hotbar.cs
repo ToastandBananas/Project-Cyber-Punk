@@ -71,9 +71,13 @@ public class Hotbar : MonoBehaviour {
     {
         SwapWeapon();
         DisplayAmmo();
-        print("Currently equipped weapon: " + currentlyEquippedWeapon);
-        print("Secondary weapon: " + secondaryWeapon);
-        print("Current weapon slot: " + currentlyEquippedWeaponSlot);
+        if (secondaryWeapon != null)
+        {
+            secondaryWeapon.tag = "SecondaryWeapon";
+        }
+        // print("Currently equipped weapon: " + currentlyEquippedWeapon);
+        // print("Secondary weapon: " + secondaryWeapon);
+        // print("Current weapon slot: " + currentlyEquippedWeaponSlot);
     }
 
     public void AddItemToInventory(int id)
@@ -192,10 +196,9 @@ public class Hotbar : MonoBehaviour {
 
                 if (weaponSlot1.GetComponent<Slot>().isEmpty == false && weaponSlot2.GetComponent<Slot>().isEmpty == false)
                 {
-                    print("Currently equipped weapon: " + currentlyEquippedWeapon.name);
                     weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + currentlyEquippedWeapon.name + " Item Drop") as GameObject;
                     // Currently equipped weapon and slot and secondary weapon ammo amount are set in the WeaponPickup script
-                    DropWeapon(weaponToDrop);
+                    DropWeapon(weaponToDrop, currentlyEquippedWeapon.GetComponent<Weapon>().damage, currentlyEquippedWeapon.GetComponent<Weapon>().fireRate);
                 }
             }
             else
@@ -206,10 +209,12 @@ public class Hotbar : MonoBehaviour {
         }
     }
 
-    private void DropWeapon(GameObject weaponToDrop)
+    public void DropWeapon(GameObject weaponToDrop, float damage, float fireRate)
     {
         GameObject droppedWeapon = Instantiate(weaponToDrop);
         droppedWeapon.transform.position = player.transform.position + new Vector3(0, .2f);
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().damage = damage;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().fireRate = fireRate;
     }
 
     void SwapWeapon()
@@ -228,6 +233,7 @@ public class Hotbar : MonoBehaviour {
                         secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
                         secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
                         secondaryWeapon = currentlyEquippedWeapon;
+                        secondaryWeapon.tag = "SecondaryWeapon";
                         
                         weaponObject.SetActive(true);
                         weaponObject.tag = "EquippedWeapon";
@@ -263,6 +269,7 @@ public class Hotbar : MonoBehaviour {
                         secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
                         secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
                         secondaryWeapon = currentlyEquippedWeapon;
+                        secondaryWeapon.tag = "SecondaryWeapon";
                         
                         weaponObject.SetActive(true);
                         weaponObject.tag = "EquippedWeapon";
@@ -300,6 +307,7 @@ public class Hotbar : MonoBehaviour {
                             secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
                             secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
                             secondaryWeapon = currentlyEquippedWeapon;
+                            secondaryWeapon.tag = "SecondaryWeapon";
                             
                             weaponObject.SetActive(true);
                             weaponObject.tag = "EquippedWeapon";
@@ -326,7 +334,7 @@ public class Hotbar : MonoBehaviour {
                             secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
                             secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
                             secondaryWeapon = currentlyEquippedWeapon;
-                            
+
                             weaponObject.SetActive(true);
                             weaponObject.tag = "EquippedWeapon";
                             currentlyEquippedWeapon = weaponObject;

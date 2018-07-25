@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Random = UnityEngine.Random;
+using System;
 
 public class Weapon : MonoBehaviour 
 {
@@ -6,11 +8,12 @@ public class Weapon : MonoBehaviour
     public LayerMask whatToHit;
 
     [Header("Stats:")]
-    public float fireRate = 1;
-    public float damage = 1;
+    public float fireRate;
+    public float damage;
     public string ammoType;
     public int clipSize;
     public int currentAmmoAmount;
+    public string actionType;
     public bool isTwoHanded = false;
     public bool isShotgun = false;
     public bool isBoltAction = false;
@@ -68,16 +71,19 @@ public class Weapon : MonoBehaviour
 
         Item weaponItem = itemDatabase.FetchItemByID(weaponID);
         name = weaponItem.ItemName;
-        damage = weaponItem.Damage;
+        damage = Mathf.Round(Random.Range(weaponItem.MinDamage, weaponItem.MaxDamage) * 100.0f) / 100.0f;
         clipSize = weaponItem.ClipSize;
         ammoType = weaponItem.AmmoType;
+        fireRate = Mathf.Round(Random.Range(weaponItem.MinFireRate, weaponItem.MaxFireRate) * 100.0f) / 100.0f;
+        actionType = weaponItem.ActionType;
 
         currentAmmoAmount = clipSize;
+
+        gunfireSoundName = name;
     }
     
     void Update () {
         PlayerCheckIfShooting();
-        gunfireSoundName = name;
     }
 
     void PlayerCheckIfShooting()

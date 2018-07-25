@@ -163,7 +163,7 @@ public class Enemy : MonoBehaviour {
         if (enemyStats.currentHealth <= 0) // If enemy is dead
         {
             // Drop held weapon with current amount of ammo and specify the ammo type (so that it can be accessed when the player tries to pick up ammo in the WeaponPickup script)
-            lootDropScript.DropWeapon(enemyWeapon.GetComponent<EnemyWeapon>().currentAmmoAmount, enemyWeapon.GetComponent<EnemyWeapon>().ammoType);
+            lootDropScript.DropWeapon(enemyWeapon.GetComponent<EnemyWeapon>().currentAmmoAmount, enemyWeapon.GetComponent<EnemyWeapon>().ammoType, enemyWeapon.GetComponent<EnemyWeapon>().damage, enemyWeapon.GetComponent<EnemyWeapon>().playerFireRate);
             lootBoxCollider.enabled = true;
             sightCollider.enabled = false;
             hearingCollider.enabled = false;

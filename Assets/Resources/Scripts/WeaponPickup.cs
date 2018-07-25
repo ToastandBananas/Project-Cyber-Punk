@@ -23,6 +23,9 @@ public class WeaponPickup : MonoBehaviour
 
     public string ammoType;
     public int currentAmmoAmount;
+    public float damage;
+    public float fireRate;
+
     int roomInPlayersEquippedWeaponClip;
     int roomInPlayersSecondaryWeaponClip;
 
@@ -78,10 +81,13 @@ public class WeaponPickup : MonoBehaviour
             {
                 if (playerEquippedWeapon.name != this.name && (playerSecondaryWeapon == null || playerSecondaryWeapon.name != this.name)) // The player may not have two of the same weapon
                 {
-                    hotbarScript.secondaryWeaponAmmoAmount = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().currentAmmoAmount;
-                    hotbarScript.secondaryWeaponClipSize = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
-                    hotbarScript.secondaryWeaponAmmoType = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
-                    hotbarScript.secondaryWeapon = hotbarScript.currentlyEquippedWeapon;
+                    if (hotbarScript.weaponSlot1.GetComponent<Slot>().isEmpty || hotbarScript.weaponSlot2.GetComponent<Slot>().isEmpty)
+                    {
+                        hotbarScript.secondaryWeaponAmmoAmount = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().currentAmmoAmount;
+                        hotbarScript.secondaryWeaponClipSize = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
+                        hotbarScript.secondaryWeaponAmmoType = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
+                        hotbarScript.secondaryWeapon = hotbarScript.currentlyEquippedWeapon;
+                    }
 
                     hotbarScript.EquipWeapon(weaponID);
                     hotbarScript.AddItemToInventory(weaponID);
@@ -91,6 +97,8 @@ public class WeaponPickup : MonoBehaviour
                         if (weaponObject.name == this.name)
                         {
                             hotbarScript.currentlyEquippedWeapon = weaponObject;
+                            hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().damage = damage;
+                            hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().fireRate = fireRate;
                         }
                     }
 

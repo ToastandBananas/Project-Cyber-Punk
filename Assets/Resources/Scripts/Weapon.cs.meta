@@ -7,7 +7,7 @@ MonoImporter:
   - BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
       type: 2}
   - MuzzleFlashPrefab: {instanceID: 0}
-  executionOrder: 0
+  executionOrder: 900
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

@@ -23,7 +23,12 @@ public class Weapon : MonoBehaviour
     public float coolDownTime = 1f; // For shotgun
 
     [Header("Actual size will depend on parent object size:")]
-    public int soundRadius = 10000;
+    public int soundRadius;
+
+    [Header("Perk Variables:")]
+    public bool isSilenced = false;
+    public bool hasIncreasedClipSize = false;
+    public float clipSizeMultiplier;
 
     [Header("Effects:")]
     public Transform BulletTrailPrefab;
@@ -46,6 +51,7 @@ public class Weapon : MonoBehaviour
     Player player;
     ProduceSoundTrigger produceSoundTriggerScript;
     ItemDatabase itemDatabase;
+    WeaponPerks weaponPerksScript;
     
     void Awake () {
         firePoint = transform.Find("FirePoint");
@@ -59,8 +65,9 @@ public class Weapon : MonoBehaviour
     {
         playerController = PlayerController.instance;
         player = Player.instance;
-        produceSoundTriggerScript = gameObject.GetComponent<ProduceSoundTrigger>();
+        produceSoundTriggerScript = GetComponent<ProduceSoundTrigger>();
         itemDatabase = GameObject.Find("Hotbar").GetComponent<ItemDatabase>();
+        weaponPerksScript = GetComponent<WeaponPerks>();
 
         // Sound
         audioManager = AudioManager.instance;
@@ -71,17 +78,23 @@ public class Weapon : MonoBehaviour
 
         Item weaponItem = itemDatabase.FetchItemByID(weaponID);
         name = weaponItem.ItemName;
-        damage = Mathf.Round(Random.Range(weaponItem.MinDamage, weaponItem.MaxDamage) * 100.0f) / 100.0f;
-        clipSize = weaponItem.ClipSize;
         ammoType = weaponItem.AmmoType;
-        fireRate = Mathf.Round(Random.Range(weaponItem.MinFireRate, weaponItem.MaxFireRate) * 100.0f) / 100.0f;
         actionType = weaponItem.ActionType;
+        soundRadius = weaponItem.SoundRadius;
 
-        currentAmmoAmount = clipSize;
+        if (player.hasEquippedStartingWeapon == false)
+        {
+            weaponPerksScript.RandomizePerks(weaponID);
+            damage = Mathf.Round(Random.Range(weaponItem.MinDamage, weaponItem.MaxDamage) * 100.0f) / 100.0f;
+            fireRate = Mathf.Round(Random.Range(weaponItem.MinFireRate, weaponItem.MaxFireRate) * 100.0f) / 100.0f;
+            //clipSize is set in the WeaponPerks script
+            currentAmmoAmount = clipSize;
+            player.hasEquippedStartingWeapon = true;
+        }
 
-        gunfireSoundName = name;
+        DetermineSoundName();
     }
-    
+
     void Update () {
         PlayerCheckIfShooting();
     }
@@ -238,14 +251,38 @@ public class Weapon : MonoBehaviour
     public void IncreaseAmmo(int amountToAdd)
     {
         currentAmmoAmount += amountToAdd;
-        if (currentAmmoAmount > clipSize)
-        {
-            currentAmmoAmount = clipSize;
-        }
     }
 
     public void DecreaseAmmo()
     {
         currentAmmoAmount--;
+    }
+
+    public void DetermineSoundName()
+    {
+        if (!isSilenced)
+        {
+            gunfireSoundName = name;
+        }
+        else if (isBoltAction)
+        {
+            gunfireSoundName = "Silenced Bolt-Action";
+        }
+        else if (isSniper)
+        {
+            gunfireSoundName = "Silenced Sniper";
+        }
+        else if (isShotgun && coolDownTime > 0)
+        {
+            gunfireSoundName = "Silenced Pump Shotgun";
+        }
+        else if (isShotgun)
+        {
+            gunfireSoundName = "Silenced Shotgun";
+        }
+        else
+        {
+            gunfireSoundName = "Silenced Gun";
+        }
     }
 }

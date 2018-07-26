@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212486856740772672}
   - component: {fileID: 114802908503819060}
   - component: {fileID: 114357508758110174}
+  - component: {fileID: 114365869188046256}
   m_Layer: 0
   m_Name: Combat Shotgun
   m_TagString: EquippedWeapon
@@ -84,6 +85,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
     type: 2}
+--- !u!114 &114365869188046256
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1070522852377238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114802908503819060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,12 +115,17 @@ MonoBehaviour:
   damage: 10
   ammoType: 12 gauge
   clipSize: 8
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
   isShotgun: 1
   isBoltAction: 0
   isSniper: 0
+  isSilenced: 0
   coolDownTime: 0
   soundRadius: 60000
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 9075b505bc73c84469b21c93cfa2fe34,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,

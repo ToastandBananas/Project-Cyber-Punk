@@ -36,6 +36,8 @@ GameObject:
   - component: {fileID: 4836822026699372}
   - component: {fileID: 212512366803926450}
   - component: {fileID: 114563647621058620}
+  - component: {fileID: 114157355868185228}
+  - component: {fileID: 114075558340592332}
   m_Layer: 0
   m_Name: Black Mamba
   m_TagString: EnemyWeapon
@@ -70,6 +72,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114075558340592332
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1837659859065052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202d4ddf7f4615a46b9dd40d5e385e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
+    type: 2}
+--- !u!114 &114157355868185228
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1837659859065052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114563647621058620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,7 +115,14 @@ MonoBehaviour:
   ammoType: .308 cal
   clipSize: 10
   currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
+  isBoltAction: 1
+  isSniper: 1
+  isSilenced: 0
+  soundRadius: 0
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   isShotgun: 0
   semiAutoCoolDownTime: 1.1
   isAutomatic: 0
@@ -102,6 +135,7 @@ MonoBehaviour:
     type: 2}
   muzzleFlashMinSize: 25
   muzzleFlashMaxSize: 35
+  playerFireRate: 0
   maxShootDistance: 5
 --- !u!212 &212512366803926450
 SpriteRenderer:

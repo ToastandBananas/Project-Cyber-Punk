@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 212193985985288384}
   - component: {fileID: 114608371192395208}
   - component: {fileID: 114037876795066154}
+  - component: {fileID: 114443257586711356}
   m_Layer: 0
   m_Name: Fifty-Seven
   m_TagString: EquippedWeapon
@@ -84,6 +85,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
     type: 2}
+--- !u!114 &114443257586711356
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1863370801325838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114608371192395208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,12 +115,17 @@ MonoBehaviour:
   damage: 1
   ammoType: 5.7mm
   clipSize: 20
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 0
   isShotgun: 0
   isBoltAction: 0
   isSniper: 0
+  isSilenced: 0
   coolDownTime: 1
   soundRadius: 100000
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,

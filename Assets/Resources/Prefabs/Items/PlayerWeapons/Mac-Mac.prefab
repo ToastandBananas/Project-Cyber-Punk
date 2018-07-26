@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 212256329982867206}
   - component: {fileID: 114941696672937356}
   - component: {fileID: 114930510511036708}
+  - component: {fileID: 114455699750871740}
   m_Layer: 0
   m_Name: Mac-Mac
   m_TagString: EquippedWeapon
@@ -71,6 +72,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114455699750871740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1533791070493354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114930510511036708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,12 +115,17 @@ MonoBehaviour:
   damage: 2
   ammoType: .45 cal
   clipSize: 20
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 0
   isShotgun: 0
   isBoltAction: 0
   isSniper: 0
+  isSilenced: 0
   coolDownTime: 0
   soundRadius: 110000
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,

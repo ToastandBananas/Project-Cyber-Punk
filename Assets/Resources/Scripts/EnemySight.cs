@@ -134,7 +134,7 @@ public class EnemySight : MonoBehaviour
      
         foreach (RaycastHit2D hit in hits)
         {           
-            // ignore the enemy's own colliders (and other enemies)
+            // ignore the enemy's own colliders (and other enemies) and patrol points
             if (hit.transform.tag == "Enemy")
                 continue;
 

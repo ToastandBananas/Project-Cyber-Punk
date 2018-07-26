@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4315487668307326}
   - component: {fileID: 212336485306863826}
   - component: {fileID: 114936719375123878}
+  - component: {fileID: 114057119454352578}
+  - component: {fileID: 114236942295602592}
   m_Layer: 0
   m_Name: Dying Eagle
   m_TagString: EnemyWeapon
@@ -70,6 +72,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114057119454352578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1126623090068050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114236942295602592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1126623090068050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202d4ddf7f4615a46b9dd40d5e385e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
+    type: 2}
 --- !u!114 &114936719375123878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,7 +115,14 @@ MonoBehaviour:
   ammoType: .50 cal
   clipSize: 7
   currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 0
+  isBoltAction: 0
+  isSniper: 0
+  isSilenced: 0
+  soundRadius: 0
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   isShotgun: 0
   semiAutoCoolDownTime: 0.65
   isAutomatic: 0
@@ -102,6 +135,7 @@ MonoBehaviour:
     type: 2}
   muzzleFlashMinSize: 25
   muzzleFlashMaxSize: 40
+  playerFireRate: 0
   maxShootDistance: 5
 --- !u!212 &212336485306863826
 SpriteRenderer:

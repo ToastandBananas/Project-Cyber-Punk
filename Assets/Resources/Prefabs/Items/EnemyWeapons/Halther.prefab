@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4659328237396234}
   - component: {fileID: 212735213227876318}
   - component: {fileID: 114470775738433794}
+  - component: {fileID: 114744621830412540}
+  - component: {fileID: 114755947812579072}
   m_Layer: 0
   m_Name: Halther
   m_TagString: EnemyWeapon
@@ -89,7 +91,14 @@ MonoBehaviour:
   ammoType: 9mm
   clipSize: 8
   currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 0
+  isBoltAction: 0
+  isSniper: 0
+  isSilenced: 0
+  soundRadius: 0
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   isShotgun: 0
   semiAutoCoolDownTime: 0.65
   isAutomatic: 0
@@ -102,7 +111,32 @@ MonoBehaviour:
     type: 2}
   muzzleFlashMinSize: 20
   muzzleFlashMaxSize: 30
+  playerFireRate: 0
   maxShootDistance: 5
+--- !u!114 &114744621830412540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1577056489912862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114755947812579072
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1577056489912862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202d4ddf7f4615a46b9dd40d5e385e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
+    type: 2}
 --- !u!212 &212735213227876318
 SpriteRenderer:
   m_ObjectHideFlags: 1

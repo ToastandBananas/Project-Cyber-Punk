@@ -9,15 +9,12 @@ public class ProduceSoundTrigger : MonoBehaviour {
     Transform parent;
 
     EnemyHearing enemyHearingScript;
-    AudioManager audioManager;
 
     // Use this for initialization
     void Start () {
         parent = gameObject.transform;
 
         soundTriggerCollider = soundTriggerPrefab.GetComponent<CircleCollider2D>();
-
-        audioManager = AudioManager.instance;
     }
 
     public void SoundTrigger(float soundRadius)

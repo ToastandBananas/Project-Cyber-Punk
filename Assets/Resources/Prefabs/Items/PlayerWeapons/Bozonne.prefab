@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212740097884619278}
   - component: {fileID: 114771592850956804}
   - component: {fileID: 114569926466938774}
+  - component: {fileID: 114220832413242604}
   m_Layer: 0
   m_Name: Bozonne
   m_TagString: EquippedWeapon
@@ -71,6 +72,17 @@ Transform:
   m_Father: {fileID: 4111602150775920}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114220832413242604
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1706695719049012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114569926466938774
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,12 +115,17 @@ MonoBehaviour:
   damage: 1
   ammoType: 9mm
   clipSize: 64
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
   isShotgun: 0
   isBoltAction: 0
   isSniper: 0
+  isSilenced: 0
   coolDownTime: 0
   soundRadius: 50000
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,

@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4602328984495288}
   - component: {fileID: 212071333120569070}
   - component: {fileID: 114670608101057858}
+  - component: {fileID: 114169018419234598}
+  - component: {fileID: 114618175010896448}
   m_Layer: 0
   m_Name: Combat Shotgun
   m_TagString: EnemyWeapon
@@ -70,6 +72,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114169018419234598
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1362357938844684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114618175010896448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1362357938844684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202d4ddf7f4615a46b9dd40d5e385e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
+    type: 2}
 --- !u!114 &114670608101057858
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,7 +115,14 @@ MonoBehaviour:
   ammoType: 12 gauge
   clipSize: 8
   currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
+  isBoltAction: 0
+  isSniper: 0
+  isSilenced: 0
+  soundRadius: 0
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   isShotgun: 1
   semiAutoCoolDownTime: 0.75
   isAutomatic: 0
@@ -102,6 +135,7 @@ MonoBehaviour:
     type: 2}
   muzzleFlashMinSize: 40
   muzzleFlashMaxSize: 50
+  playerFireRate: 0
   maxShootDistance: 5
 --- !u!212 &212071333120569070
 SpriteRenderer:

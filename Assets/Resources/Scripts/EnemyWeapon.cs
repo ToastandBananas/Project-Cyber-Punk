@@ -21,6 +21,16 @@ public class EnemyWeapon : MonoBehaviour {
     public int currentAmmoAmount;
     public string actionType;
     public bool isTwoHanded = false;
+    public bool isBoltAction = false;
+    public bool isSniper = false;
+
+    [Header("Actual size will depend on parent object size:")]
+    public int soundRadius;
+
+    [Header("Perk Variables:")]
+    public bool isSilenced = false;
+    public bool hasIncreasedClipSize = false;
+    public float clipSizeMultiplier;
 
     private float initialWaitToShootTime;
 
@@ -61,11 +71,14 @@ public class EnemyWeapon : MonoBehaviour {
     RaycastHit2D hit;
     Vector2 bulletMoveDirection;
 
+    ProduceSoundTrigger produceSoundTriggerScript;
     ItemDatabase itemDatabase;
+    WeaponPerks weaponPerksScript;
 
     void Awake()
     {
         itemDatabase = GameObject.Find("Hotbar").GetComponent<ItemDatabase>();
+        produceSoundTriggerScript = gameObject.GetComponent<ProduceSoundTrigger>();
 
         firePoint = transform.Find("FirePoint");
         if (firePoint == null)
@@ -81,6 +94,7 @@ public class EnemyWeapon : MonoBehaviour {
 
         enemySightScript = enemySight.GetComponent<EnemySight>();
         enemyMovementScript = enemy.GetComponent<EnemyMovement>();
+        weaponPerksScript = GetComponent<WeaponPerks>();
         enemyScript = enemy.GetComponent<Enemy>();
         player = Player.instance;
 
@@ -98,10 +112,13 @@ public class EnemyWeapon : MonoBehaviour {
         playerFireRate = Mathf.Round(Random.Range(weaponItem.MinFireRate, weaponItem.MaxFireRate) * 100.0f) / 100.0f;
         autoCoolDownTime = Mathf.Round((1 / playerFireRate) * 100.0f) / 100.0f;
         actionType = weaponItem.ActionType;
+        soundRadius = weaponItem.SoundRadius;
+
+        weaponPerksScript.RandomizePerks(weaponID);
 
         currentAmmoAmount = clipSize;
 
-        gunfireSoundName = name;
+        DetermineSoundName();
     }
 	
 	// Update is called once per frame
@@ -222,6 +239,7 @@ public class EnemyWeapon : MonoBehaviour {
                 timeToSpawnEffect = Time.time + 1 / effectSpawnRate;
             }
 
+            produceSoundTriggerScript.SoundTrigger(soundRadius);
             audioManager.PlaySound(gunfireSoundName);
 
             DecreaseAmmo();
@@ -283,5 +301,33 @@ public class EnemyWeapon : MonoBehaviour {
     public void DecreaseAmmo()
     {
         currentAmmoAmount--;
+    }
+
+    public void DetermineSoundName()
+    {
+        if (!isSilenced)
+        {
+            gunfireSoundName = name;
+        }
+        else if (isBoltAction)
+        {
+            gunfireSoundName = "Silenced Bolt-Action";
+        }
+        else if (isSniper)
+        {
+            gunfireSoundName = "Silenced Sniper"; // Same as silenced bolt-action sound, minus the reloading
+        }
+        else if (isShotgun && name == "Pump Shotgun")
+        {
+            gunfireSoundName = "Silenced Pump Shotgun";
+        }
+        else if (isShotgun)
+        {
+            gunfireSoundName = "Silenced Shotgun";
+        }
+        else
+        {
+            gunfireSoundName = "Silenced Gun";
+        }
     }
 }

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212655614579088978}
   - component: {fileID: 114181792697209524}
   - component: {fileID: 114883518530747676}
+  - component: {fileID: 114446036999303076}
   m_Layer: 0
   m_Name: Assault Rifle
   m_TagString: EquippedWeapon
@@ -90,12 +91,17 @@ MonoBehaviour:
   damage: 3
   ammoType: 7.62mm
   clipSize: 30
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
   isShotgun: 0
   isBoltAction: 0
   isSniper: 0
+  isSilenced: 0
   coolDownTime: 0
   soundRadius: 45000
+  increasedClipSize: 0
+  clipSizeMultiplier: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,
@@ -106,6 +112,17 @@ MonoBehaviour:
   muzzleFlashMinSize: 20
   muzzleFlashMaxSize: 30
   effectSpawnRate: 10
+--- !u!114 &114446036999303076
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1456881303406384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114883518530747676
 MonoBehaviour:
   m_ObjectHideFlags: 1

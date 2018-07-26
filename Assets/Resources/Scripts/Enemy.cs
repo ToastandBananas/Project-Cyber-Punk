@@ -65,6 +65,7 @@ public class Enemy : MonoBehaviour {
 
     GameObject enemyWeapon;
     GameObject enemyArm;
+    EnemyWeapon enemyWeaponScript;
 
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;
@@ -81,6 +82,7 @@ public class Enemy : MonoBehaviour {
 
         enemyArm = transform.Find("EnemyArm").gameObject;
         enemyWeapon = enemyArm.transform.GetChild(0).gameObject;
+        enemyWeaponScript = enemyWeapon.GetComponent<EnemyWeapon>();
 
         playerCapsuleCollider = player.GetComponent<CapsuleCollider2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
@@ -163,7 +165,9 @@ public class Enemy : MonoBehaviour {
         if (enemyStats.currentHealth <= 0) // If enemy is dead
         {
             // Drop held weapon with current amount of ammo and specify the ammo type (so that it can be accessed when the player tries to pick up ammo in the WeaponPickup script)
-            lootDropScript.DropWeapon(enemyWeapon.GetComponent<EnemyWeapon>().currentAmmoAmount, enemyWeapon.GetComponent<EnemyWeapon>().ammoType, enemyWeapon.GetComponent<EnemyWeapon>().damage, enemyWeapon.GetComponent<EnemyWeapon>().playerFireRate);
+            lootDropScript.DropWeapon(enemyWeaponScript.currentAmmoAmount, enemyWeaponScript.clipSize, enemyWeaponScript.ammoType, enemyWeaponScript.damage, 
+                enemyWeaponScript.playerFireRate, enemyWeaponScript.isSilenced, enemyWeaponScript.hasIncreasedClipSize, enemyWeaponScript.clipSizeMultiplier);
+
             lootBoxCollider.enabled = true;
             sightCollider.enabled = false;
             hearingCollider.enabled = false;

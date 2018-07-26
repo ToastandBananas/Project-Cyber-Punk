@@ -33,6 +33,8 @@ public class Player : MonoBehaviour {
 
     public bool isDead = false;
 
+    public bool hasEquippedStartingWeapon = false;
+
     private AudioManager audioManager;
 
     public static Player instance;

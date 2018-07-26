@@ -36,6 +36,8 @@ GameObject:
   - component: {fileID: 4441312604746826}
   - component: {fileID: 212578591658189830}
   - component: {fileID: 114912740128433500}
+  - component: {fileID: 114306371398905540}
+  - component: {fileID: 114666321343615012}
   m_Layer: 0
   m_Name: Duzi
   m_TagString: EnemyWeapon
@@ -70,6 +72,30 @@ Transform:
   m_Father: {fileID: 4441312604746826}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114306371398905540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1994849692749576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114666321343615012
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1994849692749576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202d4ddf7f4615a46b9dd40d5e385e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
+    type: 2}
 --- !u!114 &114912740128433500
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,7 +115,14 @@ MonoBehaviour:
   ammoType: 9mm
   clipSize: 25
   currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 0
+  isBoltAction: 0
+  isSniper: 0
+  isSilenced: 0
+  soundRadius: 0
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   isShotgun: 0
   semiAutoCoolDownTime: 0.75
   isAutomatic: 1
@@ -102,6 +135,7 @@ MonoBehaviour:
     type: 2}
   muzzleFlashMinSize: 20
   muzzleFlashMaxSize: 30
+  playerFireRate: 0
   maxShootDistance: 5
 --- !u!212 &212578591658189830
 SpriteRenderer:

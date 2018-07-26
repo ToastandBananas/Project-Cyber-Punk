@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 212664217084841870}
   - component: {fileID: 114541480399149858}
   - component: {fileID: 114136257440327094}
+  - component: {fileID: 114084217515738732}
   m_Layer: 0
   m_Name: Old Service Rifle
   m_TagString: EquippedWeapon
@@ -71,6 +72,17 @@ Transform:
   m_Father: {fileID: 4184374946368992}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114084217515738732
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1504840173047746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114136257440327094
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,10 +115,13 @@ MonoBehaviour:
   damage: 4
   ammoType: 7.62mm
   clipSize: 20
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
   isShotgun: 0
   isBoltAction: 0
   isSniper: 0
+  isSilenced: 0
   coolDownTime: 0
   soundRadius: 38000
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,

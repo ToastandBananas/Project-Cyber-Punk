@@ -119,6 +119,14 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 82be8d44dc028c34b8a1f72b134981ee, type: 2}
   defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   weaponID: 1
+  ammoType: 
+  currentAmmoAmount: 0
+  clipSize: 0
+  damage: 0
+  fireRate: 0
+  isSilenced: 0
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
 --- !u!212 &212416598919810540
 SpriteRenderer:
   m_ObjectHideFlags: 1

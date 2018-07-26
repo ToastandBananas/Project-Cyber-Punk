@@ -10,6 +10,7 @@
 		"minFireRate": 6,
 		"maxFireRate": 10,
 		"actionType": "Automatic",
+		"soundRadius": 45000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -24,6 +25,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Bolt-Action",
+		"soundRadius": 35000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -38,6 +40,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 17000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -52,6 +55,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Bolt-Action",
+		"soundRadius": 38000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -66,6 +70,7 @@
 		"minFireRate": 10,
 		"maxFireRate": 16,
 		"actionType": "Automatic",
+		"soundRadius": 50000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -80,6 +85,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 60000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -94,6 +100,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 38000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -108,6 +115,7 @@
 		"minFireRate": 8,
 		"maxFireRate": 12,
 		"actionType": "Automatic",
+		"soundRadius": 70000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -122,6 +130,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 135000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -136,6 +145,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 160000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -150,6 +160,7 @@
 		"minFireRate": 12,
 		"maxFireRate": 16,
 		"actionType": "Automatic",
+		"soundRadius": 45000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -164,6 +175,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 100000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -178,6 +190,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 120000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -192,6 +205,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 120000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -206,6 +220,7 @@
 		"minFireRate": 4,
 		"maxFireRate": 6.5,
 		"actionType": "Automatic",
+		"soundRadius": 60000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -220,6 +235,7 @@
 		"minFireRate": 4,
 		"maxFireRate": 8,
 		"actionType": "Automatic",
+		"soundRadius": 110000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -234,6 +250,7 @@
 		"minFireRate": 7,
 		"maxFireRate": 12.5,
 		"actionType": "Automatic",
+		"soundRadius": 80000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -248,6 +265,7 @@
 		"minFireRate": 8,
 		"maxFireRate": 13,
 		"actionType": "Automatic",
+		"soundRadius": 45000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -262,6 +280,7 @@
 		"minFireRate": 5,
 		"maxFireRate": 7.5,
 		"actionType": "Automatic",
+		"soundRadius": 110000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -276,6 +295,7 @@
 		"minFireRate": 6,
 		"maxFireRate": 10,
 		"actionType": "Automatic",
+		"soundRadius": 55000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -290,6 +310,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Bolt-Action",
+		"soundRadius": 45000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -304,6 +325,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 38000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -318,6 +340,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Pump-Action",
+		"soundRadius": 45000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -332,6 +355,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 125000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -346,6 +370,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 120000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -360,6 +385,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 130000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -374,6 +400,7 @@
 		"minFireRate": 7,
 		"maxFireRate": 11,
 		"actionType": "Automatic",
+		"soundRadius": 55000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -388,6 +415,7 @@
 		"minFireRate": 5,
 		"maxFireRate": 7,
 		"actionType": "Automatic",
+		"soundRadius": 45000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -402,6 +430,7 @@
 		"minFireRate": 8,
 		"maxFireRate": 11,
 		"actionType": "Automatic",
+		"soundRadius": 50000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -416,6 +445,7 @@
 		"minFireRate": 4,
 		"maxFireRate": 8,
 		"actionType": "Automatic",
+		"soundRadius": 70000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -430,6 +460,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 45000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -444,6 +475,7 @@
 		"minFireRate": 5,
 		"maxFireRate": 9,
 		"actionType": "Automatic",
+		"soundRadius": 55000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -458,6 +490,7 @@
 		"minFireRate": 7,
 		"maxFireRate": 11,
 		"actionType": "Automatic",
+		"soundRadius": 55000,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -472,6 +505,7 @@
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
+		"soundRadius": 125000,
 		"stackable": false,
 		"type": "Gun"
 	}

@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 212459269324888874}
   - component: {fileID: 114907447391498906}
   - component: {fileID: 114709404459332602}
+  - component: {fileID: 114072758810609472}
   m_Layer: 0
   m_Name: Pump Shotgun
   m_TagString: EquippedWeapon
@@ -71,6 +72,17 @@ Transform:
   m_Father: {fileID: 4589745519395606}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114072758810609472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1893891918347500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114709404459332602
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -103,12 +115,17 @@ MonoBehaviour:
   damage: 8
   ammoType: 12 gauge
   clipSize: 7
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
   isShotgun: 1
   isBoltAction: 0
   isSniper: 0
+  isSilenced: 0
   coolDownTime: 1.1
   soundRadius: 45000
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 9075b505bc73c84469b21c93cfa2fe34,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,

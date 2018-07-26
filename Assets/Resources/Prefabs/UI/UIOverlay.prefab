@@ -668,7 +668,7 @@ MonoBehaviour:
   secondaryWeaponAmmoType: 
   ammoText1: {fileID: 1253556047132038}
   ammoText2: {fileID: 1315969471279982}
-  startingWeaponID: 11
+  startingWeaponID: 4
   weaponObjects: []
   equippedColor:
     serializedVersion: 2
@@ -1103,7 +1103,7 @@ MonoBehaviour:
     m_Left: 14
     m_Right: 14
     m_Top: 14
-    m_Bottom: 14
+    m_Bottom: 15
   m_ChildAlignment: 0
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
@@ -1650,6 +1650,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795b0274b06667648a10bf89956a0e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  perkColor: 
+  equippedHasActivePerks: 0
+  secondaryHasActivePerks: 0
 --- !u!114 &114866416541348284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2806,7 +2809,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 251.1, y: 406.69998}
-  m_SizeDelta: {x: 220, y: 0}
+  m_SizeDelta: {x: 250, y: 0}
   m_Pivot: {x: -0.05, y: 1}
 --- !u!225 &225440812954130026
 CanvasGroup:

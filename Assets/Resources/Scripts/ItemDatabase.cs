@@ -8,8 +8,15 @@ public class ItemDatabase : MonoBehaviour
     private List<Item> itemDatabase = new List<Item>();
     private JsonData itemData;
 
+    public static ItemDatabase instance;
+
     private void Awake()
     {
+        if (instance == null)
+        {
+            instance = this;
+        }
+
         //items.Add(new Item("AWD", Item.ItemType.Gun, 0, "The weakest sniper rifle.", 6, 10, "7.62mm"));
         //items.Add(new Item("Big Daddy", Item.ItemType.Gun, 1, "The most powerful sniper rifle.", 10, 10, ".50cal"));
         itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Items.json"));
@@ -42,6 +49,7 @@ public class ItemDatabase : MonoBehaviour
                 itemData[i]["ammoType"].ToString(),
                 (float)itemData[i]["minFireRate"],
                 (float)itemData[i]["maxFireRate"],
+                (int)itemData[i]["soundRadius"],
                 (bool)itemData[i]["stackable"],
                 itemData[i]["actionType"].ToString(),
                 (Item.ItemType)System.Enum.Parse(typeof(Item.ItemType), itemData[i]["type"].ToString())
@@ -61,6 +69,7 @@ public class Item
     public string AmmoType { get; set; }
     public float MinFireRate { get; set; }
     public float MaxFireRate { get; set; }
+    public int SoundRadius { get; set; }
     public bool Stackable { get; set; }
     public string ActionType { get; set; }
     public Sprite Sprite { get; set; }
@@ -75,7 +84,7 @@ public class Item
     }
     public ItemType Type { get; set; }
 
-    public Item(int id, string name, string description, float minDamage, float maxDamage, int clipSize, string ammoType, float minFireRate, float maxFireRate, bool stackable, string actionType, ItemType type) // For guns
+    public Item(int id, string name, string description, float minDamage, float maxDamage, int clipSize, string ammoType, float minFireRate, float maxFireRate, int soundRadius, bool stackable, string actionType, ItemType type) // For guns
     {
         ItemID = id;
         ItemName = name;
@@ -86,6 +95,7 @@ public class Item
         AmmoType = ammoType;
         MinFireRate = minFireRate;
         MaxFireRate = maxFireRate;
+        SoundRadius = soundRadius;
         Stackable = stackable;
         ActionType = actionType;
         Sprite = Resources.Load<Sprite>("Prefabs/UI/ItemIcons/" + name);

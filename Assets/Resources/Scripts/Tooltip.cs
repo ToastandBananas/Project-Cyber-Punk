@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,32 +14,44 @@ public class Tooltip : MonoBehaviour
     Weapon currentWeapon;
     Weapon secondaryWeapon;
 
-    string equippedWeaponFireRateText;
-    string secondaryWeaponFireRateText;
+    Color32 greenColor = new Color32(66, 255, 66, 255); // Green
+    string greenText;
 
-    string equippedWeaponFireRateNameAddOn = "";
-    string secondaryWeaponFireRateNameAddOn = "";
+    public bool equippedHasActivePerks;
+    public bool secondaryHasActivePerks;
 
-    string equippedWeaponDamageNameAddOn = "";
-    string secondaryWeaponDamageNameAddOn = "";
+    string equippedFireRateText;
+    string secondaryFireRateText;
 
-    string equippedWeaponAverageNameAddOn = "";
-    string secondaryWeaponAverageNameAddOn = "";
+    string equippedFireRateNameAddOn = "";
+    string secondaryFireRateNameAddOn = "";
 
-    string equippedWeaponTaintedNameAddOn = "";
-    string secondaryWeaponTaintedNameAddOn = "";
+    string equippedDamageNameAddOn = "";
+    string secondaryDamageNameAddOn = "";
 
-    string equippedWeaponPerfectNameAddOn = "";
-    string secondaryWeaponPerfectNameAddOn = "";
+    string equippedAverageNameAddOn = "";
+    string secondaryAverageNameAddOn = "";
 
-    string equippedWeaponNearPerfectNameAddOn = "";
-    string secondaryWeaponNearPerfectNameAddOn = "";
+    string equippedTaintedNameAddOn = "";
+    string secondaryTaintedNameAddOn = "";
 
-    string equippedWeaponUselessNameAddOn = "";
-    string secondaryWeaponUselessNameAddOn = "";
+    string equippedPerfectNameAddOn = "";
+    string secondaryPerfectNameAddOn = "";
 
-    string equippedWeaponBasicallyUselessNameAddOn = "";
-    string secondaryWeaponBasicallyUselessNameAddOn = "";
+    string equippedNearPerfectNameAddOn = "";
+    string secondaryNearPerfectNameAddOn = "";
+
+    string equippedUselessNameAddOn = "";
+    string secondaryUselessNameAddOn = "";
+
+    string equippedBasicallyUselessNameAddOn = "";
+    string secondaryBasicallyUselessNameAddOn = "";
+
+    string equippedSilencedText = "";
+    string secondarySilencedText = "";
+
+    string equippedClipSizeText = "";
+    string secondaryClipSizeText = "";
 
     void Start()
     {
@@ -46,6 +59,8 @@ public class Tooltip : MonoBehaviour
         tooltip.SetActive(false);
 
         hotbar = GameObject.Find("Hotbar").GetComponent<Hotbar>();
+
+        greenText = ColorUtility.ToHtmlStringRGBA(greenColor);
     }
 
     void Update () {
@@ -53,11 +68,11 @@ public class Tooltip : MonoBehaviour
         {
             if (hotbar.weaponSlot1.transform.childCount == 3 && item.ItemName == hotbar.weaponSlot1.transform.GetChild(2).name)
             {
-                tooltip.transform.position = hotbar.weaponSlot1.transform.position + new Vector3(-123, 330);
+                tooltip.transform.position = hotbar.weaponSlot1.transform.position + new Vector3(-138, 360);
             }
             else if (hotbar.weaponSlot2.transform.childCount == 3 && item.ItemName == hotbar.weaponSlot2.transform.GetChild(2).name)
             {
-                tooltip.transform.position = hotbar.weaponSlot2.transform.position + new Vector3(-123, 330);
+                tooltip.transform.position = hotbar.weaponSlot2.transform.position + new Vector3(-138, 360);
             }
             else
             {
@@ -68,7 +83,8 @@ public class Tooltip : MonoBehaviour
 
     public void Activate(Item item)
     {
-        currentWeapon = hotbar.currentlyEquippedWeapon.GetComponent<Weapon>();
+        //currentWeapon = hotbar.currentlyEquippedWeapon.GetComponent<Weapon>();
+        currentWeapon = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
         if (hotbar.secondaryWeapon != null)
         {
             secondaryWeapon = hotbar.secondaryWeapon.GetComponent<Weapon>();
@@ -88,33 +104,43 @@ public class Tooltip : MonoBehaviour
     {
         DetermineFireRateText();
         DetermineNameAddOns();
+        DeterminePerkText();
 
         if (item.Type == Item.ItemType.Gun)
         {
-            if ((hotbar.currentlyEquippedWeaponSlot == 1 && hotbar.weaponSlot1.transform.GetChild(2).name == item.ItemName) || (hotbar.currentlyEquippedWeaponSlot == 2 && hotbar.weaponSlot2.transform.GetChild(2).name == item.ItemName))
+            if ((hotbar.currentlyEquippedWeaponSlot == 1 && hotbar.weaponSlot1.transform.GetChild(2).name == item.ItemName) 
+                || (hotbar.currentlyEquippedWeaponSlot == 2 && hotbar.weaponSlot2.transform.GetChild(2).name == item.ItemName))
             {
                 data = "<size=22px>"
-                    + equippedWeaponBasicallyUselessNameAddOn + equippedWeaponNearPerfectNameAddOn + equippedWeaponPerfectNameAddOn 
-                    + equippedWeaponTaintedNameAddOn + equippedWeaponFireRateNameAddOn + equippedWeaponDamageNameAddOn + equippedWeaponAverageNameAddOn
+                    + equippedBasicallyUselessNameAddOn + equippedNearPerfectNameAddOn + equippedPerfectNameAddOn 
+                    + equippedTaintedNameAddOn + equippedFireRateNameAddOn + equippedDamageNameAddOn + equippedAverageNameAddOn
                     + currentWeapon.name + "</size>\n\n"
-                    + item.ItemDescription
-                    + "\n\n" + currentWeapon.actionType
+                    + item.ItemDescription + "\n"
+                    + "<color=#" + greenText + ">"
+                    + equippedSilencedText
+                    + equippedClipSizeText
+                    + "</color>"
+                    + "\n" + currentWeapon.actionType
                     + "\n\nDamage: " + currentWeapon.damage
-                    + equippedWeaponFireRateText
-                    + "\n\nClip Size: " + item.ClipSize
+                    + equippedFireRateText
+                    + "\n\nClip Size: " + currentWeapon.clipSize
                     + "\n\nAmmo Type: " + item.AmmoType;
             }
             else
             {
                 data = "<size=22px>"
-                    + secondaryWeaponBasicallyUselessNameAddOn + secondaryWeaponNearPerfectNameAddOn + secondaryWeaponPerfectNameAddOn 
-                    + secondaryWeaponTaintedNameAddOn + secondaryWeaponFireRateNameAddOn + secondaryWeaponDamageNameAddOn + secondaryWeaponAverageNameAddOn
+                    + secondaryBasicallyUselessNameAddOn + secondaryNearPerfectNameAddOn + secondaryPerfectNameAddOn 
+                    + secondaryTaintedNameAddOn + secondaryFireRateNameAddOn + secondaryDamageNameAddOn + secondaryAverageNameAddOn
                     + hotbar.secondaryWeapon.name + "</size>\n\n"
-                    + item.ItemDescription
-                    + "\n\n" + secondaryWeapon.actionType
+                    + item.ItemDescription + "\n"
+                    + "<color=#" + greenText + ">"
+                    + secondarySilencedText
+                    + secondaryClipSizeText
+                    + "</color>"
+                    + "\n" + secondaryWeapon.actionType
                     + "\n\nDamage: " + secondaryWeapon.damage
-                    + secondaryWeaponFireRateText
-                    + "\n\nClip Size: " + item.ClipSize
+                    + secondaryFireRateText
+                    + "\n\nClip Size: " + secondaryWeapon.clipSize
                     + "\n\nAmmo Type: " + item.AmmoType;
             }
         }
@@ -125,20 +151,81 @@ public class Tooltip : MonoBehaviour
         tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
     }
 
+    private void DeterminePerkText()
+    {
+        if (currentWeapon.isSilenced)
+        {
+            equippedHasActivePerks = true;
+            equippedSilencedText = " + Silenced\n";
+        }
+        else
+            equippedSilencedText = "";
+
+        if (hotbar.secondaryWeapon != null)
+        {
+            if (secondaryWeapon.isSilenced)
+            {
+                secondaryHasActivePerks = true;
+                secondarySilencedText = " + Silenced\n";
+            }
+            else
+                secondarySilencedText = "";
+        }
+
+        if (currentWeapon.hasIncreasedClipSize)
+        {
+            equippedHasActivePerks = true;
+            if (currentWeapon.clipSizeMultiplier == 1.2f)
+                equippedClipSizeText = " + Barely Increased Clip Size\n";
+            else if (currentWeapon.clipSizeMultiplier == 1.4f)
+                equippedClipSizeText = " + Slightly Increased Clip Size\n";
+            else if (currentWeapon.clipSizeMultiplier == 1.6f)
+                equippedClipSizeText = " + Moderately Increased Clip\n"
+                                        + "   Size\n";
+            else if (currentWeapon.clipSizeMultiplier == 1.8f)
+                equippedClipSizeText = " + Greatly Increased Clip Size\n";
+            else
+                equippedClipSizeText = " + Doubled Clip Size\n";
+        }
+        else
+            equippedClipSizeText = "";
+
+        if (hotbar.secondaryWeapon != null)
+        {
+            if (secondaryWeapon.hasIncreasedClipSize)
+            {
+                secondaryHasActivePerks = true;
+                if (secondaryWeapon.clipSizeMultiplier == 1.2f)
+                    secondaryClipSizeText = " + Barely Increased Clip Size\n";
+                else if (secondaryWeapon.clipSizeMultiplier == 1.4f)
+                    secondaryClipSizeText = " + Slightly Increased Clip Size\n";
+                else if (secondaryWeapon.clipSizeMultiplier == 1.6f)
+                    secondaryClipSizeText = " + Moderately Increased Clip\n"
+                                        + "   Size\n";
+                else if (secondaryWeapon.clipSizeMultiplier == 1.8f)
+                    secondaryClipSizeText = " + Greatly Increased Clip Size\n";
+                else
+                    secondaryClipSizeText = " + Doubled Clip Size\n";
+            }
+            else
+                secondaryClipSizeText = "";
+        }
+    }
+
     private void DetermineFireRateText()
     {
         if (item.MaxFireRate != 1)
         {
-            equippedWeaponFireRateText = "\n\nFire Rate: " + currentWeapon.fireRate + " rounds per second";
+            equippedFireRateText = "\n\nFire Rate: " + currentWeapon.fireRate + " rounds/second";
             if (hotbar.secondaryWeapon != null)
             {
-                secondaryWeaponFireRateText = "\n\nFire Rate: " + secondaryWeapon.fireRate + " rounds per second";
+                secondaryFireRateText = "\n\nFire Rate: " + secondaryWeapon.fireRate + " rounds/second";
             }
         }
         else
         {
-            equippedWeaponFireRateText = "";
-            secondaryWeaponFireRateText = "";
+            equippedFireRateText = "";
+            secondaryFireRateText = "";
         }
     }
 
@@ -146,60 +233,54 @@ public class Tooltip : MonoBehaviour
     {
         if (currentWeapon.fireRate >= item.MaxFireRate - ((item.MaxFireRate - item.MinFireRate) * 0.20f) && item.MaxFireRate != 1)
         {
-            equippedWeaponFireRateNameAddOn = "Rapid ";
+            equippedFireRateNameAddOn = "Rapid ";
         }
         else if (currentWeapon.fireRate <= item.MinFireRate + ((item.MaxFireRate - item.MinFireRate) * 0.20f) && item.MaxFireRate != 1)
         {
-            equippedWeaponFireRateNameAddOn = "Sluggish ";
+            equippedFireRateNameAddOn = "Sluggish ";
         }
         else
-        {
-            equippedWeaponFireRateNameAddOn = "";
-        }
+            equippedFireRateNameAddOn = "";
 
         if (hotbar.secondaryWeapon != null)
         {
             if (secondaryWeapon.fireRate >= item.MaxFireRate - ((item.MaxFireRate - item.MinFireRate) * 0.20f) && item.MaxFireRate != 1)
             {
-                secondaryWeaponFireRateNameAddOn = "Rapid ";
+                secondaryFireRateNameAddOn = "Rapid ";
             }
             else if (secondaryWeapon.fireRate <= item.MinFireRate + ((item.MaxFireRate - item.MinFireRate) * 0.20f) && item.MaxFireRate != 1)
             {
-                secondaryWeaponFireRateNameAddOn = "Sluggish ";
+                secondaryFireRateNameAddOn = "Sluggish ";
             }
             else
             {
-                secondaryWeaponFireRateNameAddOn = "";
+                secondaryFireRateNameAddOn = "";
             }
         }
 
         if (currentWeapon.damage >= item.MaxDamage - ((item.MaxDamage - item.MinDamage) * 0.20f))
         {
-            equippedWeaponDamageNameAddOn = "Heavy-Hitting ";
+            equippedDamageNameAddOn = "Heavy-Hitting ";
         }
         else if (currentWeapon.damage <= item.MinDamage + ((item.MaxDamage - item.MinDamage) * 0.20f))
         {
-            equippedWeaponDamageNameAddOn = "Weak ";
+            equippedDamageNameAddOn = "Weak ";
         }
         else
-        {
-            equippedWeaponDamageNameAddOn = "";
-        }
+            equippedDamageNameAddOn = "";
 
         if (hotbar.secondaryWeapon != null)
         {
             if (secondaryWeapon.damage >= item.MaxDamage - ((item.MaxDamage - item.MinDamage) * 0.20f))
             {
-                secondaryWeaponDamageNameAddOn = "Heavy-Hitting ";
+                secondaryDamageNameAddOn = "Heavy-Hitting ";
             }
             else if (secondaryWeapon.damage <= item.MinDamage + ((item.MaxDamage - item.MinDamage) * 0.20f))
             {
-                secondaryWeaponDamageNameAddOn = "Weak ";
+                secondaryDamageNameAddOn = "Weak ";
             }
             else
-            {
-                secondaryWeaponDamageNameAddOn = "";
-            }
+                secondaryDamageNameAddOn = "";
         }
 
         if (currentWeapon.fireRate >= ((item.MaxFireRate + item.MinFireRate) / 2) - ((item.MaxFireRate - item.MinFireRate) * 0.05f)
@@ -207,14 +288,12 @@ public class Tooltip : MonoBehaviour
             && currentWeapon.damage >= ((item.MaxDamage + item.MinDamage) / 2) - ((item.MaxDamage - item.MaxDamage) * 0.05f)
             && currentWeapon.damage <= ((item.MaxDamage + item.MinDamage) / 2) + ((item.MaxDamage - item.MaxDamage) * 0.05f))
         {
-            equippedWeaponFireRateNameAddOn = "";
-            equippedWeaponDamageNameAddOn = "";
-            equippedWeaponAverageNameAddOn = "Painfully Average ";
+            equippedFireRateNameAddOn = "";
+            equippedDamageNameAddOn = "";
+            equippedAverageNameAddOn = "Painfully Average ";
         }
         else
-        {
-            equippedWeaponAverageNameAddOn = "";
-        }
+            equippedAverageNameAddOn = "";
 
         if (hotbar.secondaryWeapon != null)
         {
@@ -223,60 +302,46 @@ public class Tooltip : MonoBehaviour
                 && secondaryWeapon.damage >= ((item.MaxDamage + item.MinDamage) / 2) - ((item.MaxDamage - item.MinDamage) * 0.05f)
                 && secondaryWeapon.damage <= ((item.MaxDamage + item.MinDamage) / 2) + ((item.MaxDamage - item.MinDamage) * 0.05f))
             {
-                secondaryWeaponFireRateNameAddOn = "";
-                secondaryWeaponDamageNameAddOn = "";
-                secondaryWeaponAverageNameAddOn = "Painfully Average ";
+                secondaryFireRateNameAddOn = "";
+                secondaryDamageNameAddOn = "";
+                secondaryAverageNameAddOn = "Painfully Average ";
             }
             else
-            {
-                secondaryWeaponAverageNameAddOn = "";
-            }
+                secondaryAverageNameAddOn = "";
         }
 
         if (currentWeapon.fireRate == 6.66f || currentWeapon.damage == 6.66f)
-        {
-            equippedWeaponTaintedNameAddOn = "Tainted ";
-        }
+            equippedTaintedNameAddOn = "Tainted ";
         else
-        {
-            equippedWeaponTaintedNameAddOn = "";
-        }
+            equippedTaintedNameAddOn = "";
 
         if (hotbar.secondaryWeapon != null)
         {
             if (secondaryWeapon.fireRate == 6.66f || secondaryWeapon.damage == 6.66f)
-            {
-                secondaryWeaponTaintedNameAddOn = "Tainted ";
-            }
+                secondaryTaintedNameAddOn = "Tainted ";
             else
-            {
-                secondaryWeaponTaintedNameAddOn = "";
-            }
+                secondaryTaintedNameAddOn = "";
         }
 
         if (currentWeapon.fireRate == item.MaxFireRate && currentWeapon.damage == item.MaxDamage)
         {
-            equippedWeaponFireRateNameAddOn = "";
-            equippedWeaponDamageNameAddOn = "";
-            equippedWeaponPerfectNameAddOn = "Perfect ";
+            equippedFireRateNameAddOn = "";
+            equippedDamageNameAddOn = "";
+            equippedPerfectNameAddOn = "Perfect ";
         }
         else
-        {
-            equippedWeaponPerfectNameAddOn = "";
-        }
+            equippedPerfectNameAddOn = "";
 
         if (hotbar.secondaryWeapon != null)
         {
             if (secondaryWeapon.fireRate == item.MaxFireRate && currentWeapon.damage == item.MaxDamage)
             {
-                secondaryWeaponFireRateNameAddOn = "";
-                secondaryWeaponDamageNameAddOn = "";
-                secondaryWeaponPerfectNameAddOn = "Perfect ";
+                secondaryFireRateNameAddOn = "";
+                secondaryDamageNameAddOn = "";
+                secondaryPerfectNameAddOn = "Perfect ";
             }
             else
-            {
-                secondaryWeaponPerfectNameAddOn = "";
-            }
+                secondaryPerfectNameAddOn = "";
         }
         
         if (currentWeapon.fireRate >= item.MaxFireRate - ((item.MaxFireRate - item.MinFireRate) * 0.05f)
@@ -284,14 +349,12 @@ public class Tooltip : MonoBehaviour
             && currentWeapon.damage >= item.MaxDamage - ((item.MaxDamage - item.MinDamage) * 0.05f)
             && currentWeapon.damage < item.MaxDamage)
         {
-            equippedWeaponFireRateNameAddOn = "";
-            equippedWeaponDamageNameAddOn = "";
-            equippedWeaponNearPerfectNameAddOn = "Nearly Perfect ";
+            equippedFireRateNameAddOn = "";
+            equippedDamageNameAddOn = "";
+            equippedNearPerfectNameAddOn = "Nearly Perfect ";
         }
         else
-        {
-            equippedWeaponNearPerfectNameAddOn = "";
-        }
+            equippedNearPerfectNameAddOn = "";
 
         if (hotbar.secondaryWeapon != null)
         {
@@ -300,39 +363,33 @@ public class Tooltip : MonoBehaviour
                 && secondaryWeapon.damage >= item.MaxDamage - ((item.MaxDamage - item.MinDamage) * 0.05f)
                 && secondaryWeapon.damage < item.MaxDamage)
             {
-                secondaryWeaponFireRateNameAddOn = "";
-                secondaryWeaponDamageNameAddOn = "";
-                secondaryWeaponNearPerfectNameAddOn = "Nearly Perfect ";
+                secondaryFireRateNameAddOn = "";
+                secondaryDamageNameAddOn = "";
+                secondaryNearPerfectNameAddOn = "Nearly Perfect ";
             }
             else
-            {
-                secondaryWeaponNearPerfectNameAddOn = "";
-            }
+                secondaryNearPerfectNameAddOn = "";
         }
 
         if (currentWeapon.fireRate == item.MinFireRate && currentWeapon.damage == item.MinDamage)
         {
-            equippedWeaponFireRateNameAddOn = "";
-            equippedWeaponDamageNameAddOn = "";
-            equippedWeaponUselessNameAddOn = "Useless ";
+            equippedFireRateNameAddOn = "";
+            equippedDamageNameAddOn = "";
+            equippedUselessNameAddOn = "Useless ";
         }
         else
-        {
-            equippedWeaponUselessNameAddOn = "";
-        }
+            equippedUselessNameAddOn = "";
 
         if (hotbar.secondaryWeapon != null)
         {
             if (secondaryWeapon.fireRate == item.MinFireRate && secondaryWeapon.damage == item.MinDamage)
             {
-                secondaryWeaponFireRateNameAddOn = "";
-                secondaryWeaponDamageNameAddOn = "";
-                secondaryWeaponUselessNameAddOn = "Useless ";
+                secondaryFireRateNameAddOn = "";
+                secondaryDamageNameAddOn = "";
+                secondaryUselessNameAddOn = "Useless ";
             }
             else
-            {
-                secondaryWeaponUselessNameAddOn = "";
-            }
+                secondaryUselessNameAddOn = "";
         }
 
         if (currentWeapon.fireRate > item.MinFireRate
@@ -340,14 +397,12 @@ public class Tooltip : MonoBehaviour
             && currentWeapon.damage > item.MinDamage
             && currentWeapon.damage <= item.MinDamage + ((item.MaxDamage - item.MinDamage) * 0.05f))
         {
-            equippedWeaponFireRateNameAddOn = "";
-            equippedWeaponDamageNameAddOn = "";
-            equippedWeaponBasicallyUselessNameAddOn = "Basically Useless: ";
+            equippedFireRateNameAddOn = "";
+            equippedDamageNameAddOn = "";
+            equippedBasicallyUselessNameAddOn = "Basically Useless: ";
         }
         else
-        {
-            equippedWeaponBasicallyUselessNameAddOn = "";
-        }
+            equippedBasicallyUselessNameAddOn = "";
 
         if (hotbar.secondaryWeapon != null)
         {
@@ -356,12 +411,12 @@ public class Tooltip : MonoBehaviour
             && secondaryWeapon.damage > item.MinDamage
             && secondaryWeapon.damage <= item.MinDamage + ((item.MaxDamage - item.MinDamage) * 0.05f))
             {
-                secondaryWeaponFireRateNameAddOn = "";
-                secondaryWeaponDamageNameAddOn = "";
-                secondaryWeaponBasicallyUselessNameAddOn = "Basically Useless: ";
+                secondaryFireRateNameAddOn = "";
+                secondaryDamageNameAddOn = "";
+                secondaryBasicallyUselessNameAddOn = "Basically Useless: ";
             }
             else
-                secondaryWeaponBasicallyUselessNameAddOn = "";
+                secondaryBasicallyUselessNameAddOn = "";
         }
     }
 }

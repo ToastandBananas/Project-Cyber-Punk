@@ -360,10 +360,38 @@ MonoBehaviour:
     randomVolume: 0.1
     randomPitch: 0.1
     loop: 0
-  - soundName: Reload1
-    clip: {fileID: 8300000, guid: 913967a9da3a5ea47a6d94a3352d4e80, type: 3}
-    volume: 1.5
+  - soundName: Silenced Gun
+    clip: {fileID: 8300000, guid: 9864fd29db880654e96b2a0525f9e01b, type: 3}
+    volume: 1
     pitch: 1
-    randomVolume: 0
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Silenced Bolt-Action
+    clip: {fileID: 8300000, guid: 5cc6ae6c58de40c49906d5121afb3a9a, type: 3}
+    volume: 1.2
+    pitch: 0.85
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Silenced Sniper
+    clip: {fileID: 8300000, guid: 9864fd29db880654e96b2a0525f9e01b, type: 3}
+    volume: 1.5
+    pitch: 0.8
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Silenced Shotgun
+    clip: {fileID: 8300000, guid: 36ab41f108f51f24fa51bcffa77874d2, type: 3}
+    volume: 1.5
+    pitch: 1.35
+    randomVolume: 0.1
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Silenced Pump Shotgun
+    clip: {fileID: 8300000, guid: a09b8a76e377dc54db3e329080345c96, type: 3}
+    volume: 1.35
+    pitch: 1.1
+    randomVolume: 0.1
     randomPitch: 0.1
     loop: 0

@@ -18,6 +18,8 @@ public class Hotbar : MonoBehaviour {
     public int secondaryWeaponClipSize;
     public string secondaryWeaponAmmoType;
 
+    Weapon currentWeaponScript;
+
     public GameObject ammoText1;
     public GameObject ammoText2;
 
@@ -56,6 +58,7 @@ public class Hotbar : MonoBehaviour {
                 weaponObject.SetActive(true);
                 weaponObject.tag = "EquippedWeapon";
                 currentlyEquippedWeapon = weaponObject;
+                currentWeaponScript = currentlyEquippedWeapon.GetComponent<Weapon>();
                 currentlyEquippedWeaponSlot = 1;
                 weaponSlot1.GetComponent<Image>().color = equippedColor;
             }
@@ -75,9 +78,38 @@ public class Hotbar : MonoBehaviour {
         {
             secondaryWeapon.tag = "SecondaryWeapon";
         }
+
+        currentWeaponScript = currentlyEquippedWeapon.GetComponent<Weapon>();
         // print("Currently equipped weapon: " + currentlyEquippedWeapon);
         // print("Secondary weapon: " + secondaryWeapon);
         // print("Current weapon slot: " + currentlyEquippedWeaponSlot);
+    }
+
+    public void EquipWeapon(int id)
+    {
+        Item itemToAdd = itemDatabase.FetchItemByID(id);
+
+        foreach (GameObject weaponObject in weaponObjects)
+        {
+            if (weaponObject.name == itemToAdd.ItemName)
+            {
+                weaponObject.SetActive(true);
+                weaponObject.tag = "EquippedWeapon";
+
+                if (weaponSlot1.GetComponent<Slot>().isEmpty == false && weaponSlot2.GetComponent<Slot>().isEmpty == false)
+                {
+                    weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + currentlyEquippedWeapon.name + " Item Drop") as GameObject;
+                    // Currently equipped weapon and slot and secondary weapon ammo amount are set in the WeaponPickup script
+                    DropWeapon(weaponToDrop, currentWeaponScript.currentAmmoAmount, currentWeaponScript.clipSize, currentWeaponScript.ammoType, currentWeaponScript.damage, 
+                        currentWeaponScript.fireRate, currentWeaponScript.isSilenced, currentWeaponScript.hasIncreasedClipSize, currentWeaponScript.clipSizeMultiplier);
+                }
+            }
+            else
+            {
+                weaponObject.SetActive(false);
+                weaponObject.tag = "InactiveWeapon";
+            }
+        }
     }
 
     public void AddItemToInventory(int id)
@@ -183,38 +215,18 @@ public class Hotbar : MonoBehaviour {
         infoPanel.SetActive(false);
     }
 
-    public void EquipWeapon(int id)
-    {
-        Item itemToAdd = itemDatabase.FetchItemByID(id);
-
-        foreach (GameObject weaponObject in weaponObjects)
-        {
-            if (weaponObject.name == itemToAdd.ItemName)
-            {
-                weaponObject.SetActive(true);
-                weaponObject.tag = "EquippedWeapon";
-
-                if (weaponSlot1.GetComponent<Slot>().isEmpty == false && weaponSlot2.GetComponent<Slot>().isEmpty == false)
-                {
-                    weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + currentlyEquippedWeapon.name + " Item Drop") as GameObject;
-                    // Currently equipped weapon and slot and secondary weapon ammo amount are set in the WeaponPickup script
-                    DropWeapon(weaponToDrop, currentlyEquippedWeapon.GetComponent<Weapon>().damage, currentlyEquippedWeapon.GetComponent<Weapon>().fireRate);
-                }
-            }
-            else
-            {
-                weaponObject.SetActive(false);
-                weaponObject.tag = "InactiveWeapon";
-            }
-        }
-    }
-
-    public void DropWeapon(GameObject weaponToDrop, float damage, float fireRate)
+    public void DropWeapon(GameObject weaponToDrop, int currentAmmoAmount, int clipSize, string ammoType, float damage, float fireRate, bool isSilenced, bool hasIncreasedClipSize, float clipSizeMultiplier)
     {
         GameObject droppedWeapon = Instantiate(weaponToDrop);
         droppedWeapon.transform.position = player.transform.position + new Vector3(0, .2f);
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().currentAmmoAmount = currentAmmoAmount;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().clipSize = clipSize;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().ammoType = ammoType;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().damage = damage;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().fireRate = fireRate;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().isSilenced = isSilenced;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().hasIncreasedClipSize = hasIncreasedClipSize;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().clipSizeMultiplier = clipSizeMultiplier;
     }
 
     void SwapWeapon()

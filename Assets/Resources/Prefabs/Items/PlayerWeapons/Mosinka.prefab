@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 212111702258895962}
   - component: {fileID: 114852320352486106}
   - component: {fileID: 114791972490700342}
+  - component: {fileID: 114975562095147446}
   m_Layer: 0
   m_Name: Mosinka
   m_TagString: EquippedWeapon
@@ -103,12 +104,17 @@ MonoBehaviour:
   damage: 5
   ammoType: 7.62mm
   clipSize: 5
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
   isShotgun: 0
   isBoltAction: 1
   isSniper: 0
+  isSilenced: 0
   coolDownTime: 1
   soundRadius: 45000
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,
@@ -119,6 +125,17 @@ MonoBehaviour:
   muzzleFlashMinSize: 20
   muzzleFlashMaxSize: 30
   effectSpawnRate: 10
+--- !u!114 &114975562095147446
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1896569823182382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212111702258895962
 SpriteRenderer:
   m_ObjectHideFlags: 1

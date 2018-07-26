@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4373046126935366}
   - component: {fileID: 212360715980658248}
   - component: {fileID: 114298766728162248}
+  - component: {fileID: 114316344881751106}
+  - component: {fileID: 114785859547049934}
   m_Layer: 0
   m_Name: Assault Rifle
   m_TagString: EnemyWeapon
@@ -84,10 +86,19 @@ MonoBehaviour:
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294960601
+  weaponID: 0
   damage: 3
   ammoType: 7.62mm
   clipSize: 30
+  currentAmmoAmount: 0
+  actionType: 
   isTwoHanded: 1
+  isBoltAction: 0
+  isSniper: 0
+  isSilenced: 0
+  soundRadius: 0
+  hasIncreasedClipSize: 0
+  clipSizeMultiplier: 0
   isShotgun: 0
   semiAutoCoolDownTime: 1.3
   isAutomatic: 1
@@ -100,7 +111,32 @@ MonoBehaviour:
     type: 2}
   muzzleFlashMinSize: 20
   muzzleFlashMaxSize: 30
+  playerFireRate: 0
   maxShootDistance: 5
+--- !u!114 &114316344881751106
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1403743654310354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c81dd57b36a60ff4699a241d07ed5ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114785859547049934
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1403743654310354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 202d4ddf7f4615a46b9dd40d5e385e8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundTriggerPrefab: {fileID: 1396566090902624, guid: 473ea12ed07b60b4d8c662b453fb044e,
+    type: 2}
 --- !u!212 &212360715980658248
 SpriteRenderer:
   m_ObjectHideFlags: 1

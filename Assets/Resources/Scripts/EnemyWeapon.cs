@@ -15,6 +15,8 @@ public class EnemyWeapon : MonoBehaviour {
     public int weaponID;
 
     [Header("Stats:")]
+    public float inaccuracyFactor = 0;
+    public float finalAccuracyFactor;
     public float damage;
     public string ammoType;
     public int clipSize;
@@ -29,8 +31,9 @@ public class EnemyWeapon : MonoBehaviour {
 
     [Header("Perk Variables:")]
     public bool isSilenced = false;
-    public bool hasIncreasedClipSize = false;
-    public float clipSizeMultiplier;
+    public bool hasIncreasedClipSize = false; // For tooltip use
+    public float clipSizeMultiplier; // For tooltip use
+    public bool hasAlteredInaccuracyFactor = false; // For tooltip use
 
     private float initialWaitToShootTime;
 
@@ -116,6 +119,12 @@ public class EnemyWeapon : MonoBehaviour {
 
         weaponPerksScript.RandomizePerks(weaponID);
 
+        finalAccuracyFactor = enemy.GetComponent<Enemy>().enemyStats.inaccuracyFactor + inaccuracyFactor;
+        if (finalAccuracyFactor < 0)
+        {
+            finalAccuracyFactor = 0;
+        }
+
         currentAmmoAmount = clipSize;
 
         DetermineSoundName();
@@ -178,7 +187,7 @@ public class EnemyWeapon : MonoBehaviour {
         }
         else
         {
-            hit = Physics2D.Raycast(firePointPosition, (playerPosition - firePointPosition) + new Vector2(0, Random.Range(-enemyScript.enemyStats.accuracyFactor, enemyScript.enemyStats.accuracyFactor)), 100f, whatToHit);
+            hit = Physics2D.Raycast(firePointPosition, (playerPosition - firePointPosition) + new Vector2(0, Random.Range(-finalAccuracyFactor, finalAccuracyFactor)), 100f, whatToHit);
         }
 
         Vector3 hitPos;

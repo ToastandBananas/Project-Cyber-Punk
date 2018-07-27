@@ -143,8 +143,7 @@ public class EnemyMovement : MonoBehaviour {
         enemyHearingScript = enemyHearing.GetComponent<EnemyHearing>();
         enemyScript = gameObject.GetComponent<Enemy>();
         armRotationScript = arm.GetComponent<ArmRotation>();
-
-        childrenSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
+        
         anim = GetComponent<Animator>();
 
         enemyLocation = transform.localScale;
@@ -269,9 +268,16 @@ public class EnemyMovement : MonoBehaviour {
             isAiming = true;
             playerPositionKnown = true;
 
-            for (int i = 1; i < childrenSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the enemy's body)
+            if (childrenSpriteRenderer != null)
             {
-                childrenSpriteRenderer[i].enabled = true;
+                for (int i = 1; i < childrenSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the enemy's body)
+                {
+                    childrenSpriteRenderer[i].enabled = true;
+                }
+            }
+            else
+            {
+                childrenSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
             }
 
             anim.SetBool("isAiming", isAiming);
@@ -281,9 +287,16 @@ public class EnemyMovement : MonoBehaviour {
             isAiming = false;
             playerPositionKnown = false;
 
-            for (int i = 1; i < childrenSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the enemy's body)
+            if (childrenSpriteRenderer != null)
             {
-                childrenSpriteRenderer[i].enabled = false;
+                for (int i = 1; i < childrenSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the enemy's body)
+                {
+                    childrenSpriteRenderer[i].enabled = false;
+                }
+            }
+            else
+            {
+                childrenSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
             }
 
             anim.SetBool("isAiming", isAiming);

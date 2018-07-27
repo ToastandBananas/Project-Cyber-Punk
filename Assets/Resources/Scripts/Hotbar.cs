@@ -100,8 +100,8 @@ public class Hotbar : MonoBehaviour {
                 {
                     weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + currentlyEquippedWeapon.name + " Item Drop") as GameObject;
                     // Currently equipped weapon and slot and secondary weapon ammo amount are set in the WeaponPickup script
-                    DropWeapon(weaponToDrop, currentWeaponScript.currentAmmoAmount, currentWeaponScript.clipSize, currentWeaponScript.ammoType, currentWeaponScript.damage, 
-                        currentWeaponScript.fireRate, currentWeaponScript.isSilenced, currentWeaponScript.hasIncreasedClipSize, currentWeaponScript.clipSizeMultiplier);
+                    DropWeapon(weaponToDrop, currentWeaponScript.currentAmmoAmount, currentWeaponScript.clipSize, currentWeaponScript.ammoType, currentWeaponScript.damage, currentWeaponScript.fireRate, 
+                                currentWeaponScript.isSilenced, currentWeaponScript.hasIncreasedClipSize, currentWeaponScript.clipSizeMultiplier, currentWeaponScript.inaccuracyFactor);
                 }
             }
             else
@@ -215,7 +215,7 @@ public class Hotbar : MonoBehaviour {
         infoPanel.SetActive(false);
     }
 
-    public void DropWeapon(GameObject weaponToDrop, int currentAmmoAmount, int clipSize, string ammoType, float damage, float fireRate, bool isSilenced, bool hasIncreasedClipSize, float clipSizeMultiplier)
+    public void DropWeapon(GameObject weaponToDrop, int currentAmmoAmount, int clipSize, string ammoType, float damage, float fireRate, bool isSilenced, bool hasIncreasedClipSize, float clipSizeMultiplier, float inaccuracyFactor)
     {
         GameObject droppedWeapon = Instantiate(weaponToDrop);
         droppedWeapon.transform.position = player.transform.position + new Vector3(0, .2f);
@@ -227,14 +227,17 @@ public class Hotbar : MonoBehaviour {
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().isSilenced = isSilenced;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().hasIncreasedClipSize = hasIncreasedClipSize;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().clipSizeMultiplier = clipSizeMultiplier;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().inaccuracyFactor = inaccuracyFactor;
     }
 
     void SwapWeapon()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
         {
-            if (weaponSlot1.transform.childCount == 3 && currentlyEquippedWeaponSlot != 1) // If weapon slot 1 isn't empty
+            if (weaponSlot1.transform.childCount == 3 && currentlyEquippedWeaponSlot != 1) // If weapon slot 1 isn't empty and current weapon slot isn't already equal to 1
             {
+                TransferAmmo();
+
                 foreach (GameObject weaponObject in weaponObjects)
                 {
                     // if the weapon in the object pool equals the weapon in slot 1
@@ -246,11 +249,11 @@ public class Hotbar : MonoBehaviour {
                         secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
                         secondaryWeapon = currentlyEquippedWeapon;
                         secondaryWeapon.tag = "SecondaryWeapon";
-                        
+
                         weaponObject.SetActive(true);
                         weaponObject.tag = "EquippedWeapon";
                         currentlyEquippedWeapon = weaponObject;
-                        
+
                         weaponSlot1.GetComponent<Image>().color = equippedColor;
                         weaponSlot2.GetComponent<Image>().color = unequippedColor;
                     }
@@ -271,6 +274,8 @@ public class Hotbar : MonoBehaviour {
         {
             if (weaponSlot2.transform.childCount == 3 && currentlyEquippedWeaponSlot != 2) // If weapon slot 2 isn't empty
             {
+                TransferAmmo();
+
                 foreach (GameObject weaponObject in weaponObjects)
                 {
                     // if the weapon in the object pool equals the weapon in slot 2 
@@ -310,6 +315,7 @@ public class Hotbar : MonoBehaviour {
             {
                 if (currentlyEquippedWeaponSlot == 1) // If currently equipped weapon is in weapon slot 1
                 {
+                    TransferAmmo();
                     foreach (GameObject weaponObject in weaponObjects)
                     {
                         if (weaponObject.name == weaponSlot2.transform.GetChild(2).name) // If the weapon in the object pool equals the weapon in weapon slot 2
@@ -337,6 +343,7 @@ public class Hotbar : MonoBehaviour {
                 }
                 else if (currentlyEquippedWeaponSlot == 2) // If currently equipped weapon is in weapon slot 2
                 {
+                    TransferAmmo();
                     foreach (GameObject weaponObject in weaponObjects)
                     {
                         if (weaponObject.name == weaponSlot1.transform.GetChild(2).name)  // If the weapon in the object pool equals the weapon in weapon slot 1
@@ -360,6 +367,23 @@ public class Hotbar : MonoBehaviour {
                             weaponObject.tag = "InactiveWeapon";
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private void TransferAmmo()
+    {
+        if (currentWeaponScript != null && secondaryWeapon != null)
+        {
+            if (currentWeaponScript.ammoType == secondaryWeapon.GetComponent<Weapon>().ammoType
+                && currentWeaponScript.currentAmmoAmount > 0
+                && secondaryWeapon.GetComponent<Weapon>().currentAmmoAmount < secondaryWeapon.GetComponent<Weapon>().clipSize)
+            {
+                while (currentWeaponScript.currentAmmoAmount > 0 && secondaryWeapon.GetComponent<Weapon>().currentAmmoAmount < secondaryWeapon.GetComponent<Weapon>().clipSize)
+                {
+                    currentWeaponScript.currentAmmoAmount--;
+                    secondaryWeapon.GetComponent<Weapon>().currentAmmoAmount++;
                 }
             }
         }

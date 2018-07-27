@@ -9,7 +9,7 @@ public class Player : MonoBehaviour {
         public float maxHealth = 5f;
         [Header("Note: 1.0 = 100%")] [Range(0.1f, 1.0f)] public float startHealthPercent = 1f;
 
-        public float accuracyFactor = 0.15f; // 0 equals 100 percent accurate.
+        public float inaccuracyFactor = 0.15f; // 0 equals 100 percent accurate.
 
         [SerializeField] private float _currentHealth;
         public float currentHealth
@@ -34,6 +34,7 @@ public class Player : MonoBehaviour {
     public bool isDead = false;
 
     public bool hasEquippedStartingWeapon = false;
+    public GameObject itemToPickup;
 
     private AudioManager audioManager;
 
@@ -48,6 +49,9 @@ public class Player : MonoBehaviour {
 
     CapsuleCollider2D capsuleCollider;
     Rigidbody2D rb;
+
+    // Timer for weapon pick ups
+    public float timeSinceQPressed;
 
     void Awake()
     {

@@ -21,12 +21,8 @@ public class WeaponPickup : MonoBehaviour
 
     GameObject weaponPrefab;
     public int weaponID;
-    
-    BoxCollider2D thisBoxCollider;
-    CapsuleCollider2D playerCapsuleCollider;
-    GameObject[] enemies;
 
-    // These are set when either of the two drop weapon methods are called (there's one in the Enemy Script and one in the Hotbar script)
+    // These are set when either of the two drop weapon methods are called (there's one in the Enemy Script and one in the Hotbar script (for when the player drops a weapon))
     public string ammoType;
     public int currentAmmoAmount;
     public int clipSize;
@@ -35,25 +31,17 @@ public class WeaponPickup : MonoBehaviour
     public bool isSilenced;
     public bool hasIncreasedClipSize;
     public float clipSizeMultiplier;
+    public float inaccuracyFactor;
 
     int roomInPlayersEquippedWeaponClip;
     int roomInPlayersSecondaryWeaponClip;
 
-    float timeSinceQPressed;
-    float delay = 0.25f;
+    float delay = 0.35f;
+
 
     void Start()
     {
         player = Player.instance;
-        thisBoxCollider = GetComponent<BoxCollider2D>();
-        playerCapsuleCollider = player.GetComponent<CapsuleCollider2D>();
-        Physics2D.IgnoreCollision(playerCapsuleCollider, thisBoxCollider);
-
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach(GameObject enemy in enemies)
-        {
-            Physics2D.IgnoreCollision(enemy.GetComponent<CapsuleCollider2D>(), thisBoxCollider);
-        }
 
         weaponSlot1 = GameObject.Find("WeaponSlot1");
         weaponSlot2 = GameObject.Find("WeaponSlot2");
@@ -72,52 +60,24 @@ public class WeaponPickup : MonoBehaviour
         playerSecondaryWeapon = hotbarScript.secondaryWeapon;
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.transform.tag == "WeaponDrop")
-        {
-            print("yep");
-            print(gameObject.transform.parent.name + " " + collision.transform.parent.name); // To do: figure out why this isn't moving them
-            gameObject.transform.parent.transform.position += new Vector3(1f, 0);
-            collision.transform.parent.transform.position += new Vector3(-1f, 0);
-        }
-    }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
+            if (player.itemToPickup == null)
+            {
+                player.itemToPickup = gameObject;
+            }
+
             GetComponent<SpriteRenderer>().material = highlightMaterial;
 
-            if (playerEquippedWeapon.currentAmmoAmount < playerEquippedWeapon.clipSize && playerEquippedWeapon.ammoType == ammoType)
-            {
-                roomInPlayersEquippedWeaponClip = playerEquippedWeapon.clipSize - playerEquippedWeapon.currentAmmoAmount;
+            PickUpAmmo();
 
-                while (this.currentAmmoAmount > 0 && roomInPlayersEquippedWeaponClip > 0)
-                {
-                    this.currentAmmoAmount--;
-                    playerEquippedWeapon.IncreaseAmmo(1);
-                    roomInPlayersEquippedWeaponClip--;
-                }
-            }
-            else if (hotbarScript.secondaryWeaponAmmoAmount < hotbarScript.secondaryWeaponClipSize && hotbarScript.secondaryWeaponAmmoType == ammoType)
+            player.timeSinceQPressed += Time.deltaTime;
+            if (player.timeSinceQPressed > delay)
             {
-                roomInPlayersSecondaryWeaponClip = playerSecondaryWeapon.GetComponent<Weapon>().clipSize - playerSecondaryWeapon.GetComponent<Weapon>().currentAmmoAmount;
-
-                while (this.currentAmmoAmount > 0 && roomInPlayersSecondaryWeaponClip > 0)
+                if (Input.GetKeyDown(KeyCode.Q) && player.itemToPickup == gameObject)
                 {
-                    this.currentAmmoAmount--;
-                    playerSecondaryWeapon.GetComponent<Weapon>().currentAmmoAmount++;
-                    roomInPlayersSecondaryWeaponClip--;
-                }
-            }
-
-            timeSinceQPressed += Time.deltaTime;
-            if (timeSinceQPressed > delay)
-            {
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    print("Q pressed");
                     if (playerEquippedWeapon.name != this.name && (playerSecondaryWeapon == null || playerSecondaryWeapon.name != this.name)) // The player may not have two of the same weapon
                     {
                         if (hotbarScript.weaponSlot1.GetComponent<Slot>().isEmpty || hotbarScript.weaponSlot2.GetComponent<Slot>().isEmpty)
@@ -149,6 +109,14 @@ public class WeaponPickup : MonoBehaviour
                                 hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().isSilenced = isSilenced;
                                 hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().hasIncreasedClipSize = hasIncreasedClipSize;
                                 hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().clipSizeMultiplier = clipSizeMultiplier;
+                                hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().inaccuracyFactor = inaccuracyFactor;
+                                hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().finalAccuracyFactor = player.playerStats.inaccuracyFactor + inaccuracyFactor;
+                                if (hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().finalAccuracyFactor < 0)
+                                {
+                                    hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().finalAccuracyFactor = 0;
+                                }
+
+                                hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().DetermineSoundName();
                             }
                         }
 
@@ -167,10 +135,37 @@ public class WeaponPickup : MonoBehaviour
                             hotbarScript.weaponSlot2.GetComponent<Image>().color = hotbarScript.equippedColor;
                         }
 
-                        timeSinceQPressed = 0f;
+                        player.timeSinceQPressed = 0f;
+                        player.itemToPickup = null;
                         Destroy(gameObject.transform.parent.gameObject);
                     }
                 }
+            }
+        }
+    }
+
+    private void PickUpAmmo()
+    {
+        if (playerEquippedWeapon.currentAmmoAmount < playerEquippedWeapon.clipSize && playerEquippedWeapon.ammoType == ammoType)
+        {
+            roomInPlayersEquippedWeaponClip = playerEquippedWeapon.clipSize - playerEquippedWeapon.currentAmmoAmount;
+
+            while (this.currentAmmoAmount > 0 && roomInPlayersEquippedWeaponClip > 0)
+            {
+                this.currentAmmoAmount--;
+                playerEquippedWeapon.IncreaseAmmo(1);
+                roomInPlayersEquippedWeaponClip--;
+            }
+        }
+        else if (hotbarScript.secondaryWeaponAmmoAmount < hotbarScript.secondaryWeaponClipSize && hotbarScript.secondaryWeaponAmmoType == ammoType)
+        {
+            roomInPlayersSecondaryWeaponClip = playerSecondaryWeapon.GetComponent<Weapon>().clipSize - playerSecondaryWeapon.GetComponent<Weapon>().currentAmmoAmount;
+
+            while (this.currentAmmoAmount > 0 && roomInPlayersSecondaryWeaponClip > 0)
+            {
+                this.currentAmmoAmount--;
+                playerSecondaryWeapon.GetComponent<Weapon>().currentAmmoAmount++;
+                roomInPlayersSecondaryWeaponClip--;
             }
         }
     }
@@ -179,6 +174,10 @@ public class WeaponPickup : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            if (player.itemToPickup == gameObject)
+            {
+                player.itemToPickup = null;
+            }
             GetComponent<SpriteRenderer>().material = defaultMaterial;
         }
     }

@@ -8,6 +8,8 @@ public class Weapon : MonoBehaviour
     public LayerMask whatToHit;
 
     [Header("Stats:")]
+    public float inaccuracyFactor = 0; // 0 equals 100 percent accurate
+    public float finalAccuracyFactor;
     public float fireRate;
     public float damage;
     public string ammoType;
@@ -29,6 +31,7 @@ public class Weapon : MonoBehaviour
     public bool isSilenced = false;
     public bool hasIncreasedClipSize = false;
     public float clipSizeMultiplier;
+    public bool hasAlteredInaccuracyFactor = false;
 
     [Header("Effects:")]
     public Transform BulletTrailPrefab;
@@ -82,13 +85,20 @@ public class Weapon : MonoBehaviour
         actionType = weaponItem.ActionType;
         soundRadius = weaponItem.SoundRadius;
 
-        if (player.hasEquippedStartingWeapon == false)
+        if (player.hasEquippedStartingWeapon == false) // This section is only for the players starting weapon, otherwise these stats will be determined by the WeaponPickup script
         {
             weaponPerksScript.RandomizePerks(weaponID);
             damage = Mathf.Round(Random.Range(weaponItem.MinDamage, weaponItem.MaxDamage) * 100.0f) / 100.0f;
             fireRate = Mathf.Round(Random.Range(weaponItem.MinFireRate, weaponItem.MaxFireRate) * 100.0f) / 100.0f;
             //clipSize is set in the WeaponPerks script
             currentAmmoAmount = clipSize;
+
+            finalAccuracyFactor = player.playerStats.inaccuracyFactor + inaccuracyFactor;
+            if (finalAccuracyFactor < 0)
+            {
+                finalAccuracyFactor = 0;
+            }
+
             player.hasEquippedStartingWeapon = true;
         }
 
@@ -146,7 +156,7 @@ public class Weapon : MonoBehaviour
     {
         Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
-        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, (mousePosition - firePointPosition) + new Vector2(0, Random.Range(-player.playerStats.accuracyFactor, player.playerStats.accuracyFactor) * Vector2.Distance(mousePosition, firePointPosition)), 100f, whatToHit);
+        RaycastHit2D hit = Physics2D.Raycast(firePointPosition, (mousePosition - firePointPosition) + new Vector2(0, Random.Range(-finalAccuracyFactor, finalAccuracyFactor) * Vector2.Distance(mousePosition, firePointPosition)), 100f, whatToHit);
 
         Vector3 hitPos;
         Vector3 hitNormal;

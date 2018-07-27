@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour {
     public class EnemyStats
     {
         public float maxHealth = 1;
-        [Header("Note: 1.0 = 100%")] [Range(0.1f, 10.0f)] public float startHealthPercent = 1f;
+        [Header("Note: 1.0 = 100%")]
+        [Range(0.1f, 10.0f)] public float startHealthPercent = 1f;
 
         [HideInInspector]
         public float actualMaxHealth;
@@ -21,7 +22,8 @@ public class Enemy : MonoBehaviour {
 
         public int hearingRadius = 200;
 
-        [Header("Note: 0 equals 100% accurate")] public float accuracyFactor = 0.4f;
+        [Header("Note: 0 equals 100% accurate")]
+        public float inaccuracyFactor = 0.4f;
 
         public float onTouchDamage = 0;
 
@@ -67,6 +69,8 @@ public class Enemy : MonoBehaviour {
     GameObject enemyArm;
     EnemyWeapon enemyWeaponScript;
 
+    int startingWeaponID;
+
     // public float shakeAmt = 0.1f;
     // public float shakeLength = 0.3f;
 
@@ -74,15 +78,26 @@ public class Enemy : MonoBehaviour {
 
     void Start()
     {
+        enemyArm = transform.Find("EnemyArm").gameObject;
+
+        if (enemyArm.transform.childCount == 0) // If no weapon already equipped
+        {
+            var possibleWeapons = Resources.LoadAll<GameObject>("Prefabs/Items/EnemyWeapons");
+            startingWeaponID = Random.Range(0, possibleWeapons.Length);
+            foreach (GameObject weapon in possibleWeapons)
+            {
+                if (startingWeaponID == weapon.GetComponent<EnemyWeapon>().weaponID)
+                {
+                    Instantiate(weapon, enemyArm.transform);
+                }
+            }
+        }
+
         player = Player.instance;
         enemyMovementScript = gameObject.GetComponent<EnemyMovement>();
         lootDropScript = GetComponent<LootDrop>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        enemyArm = transform.Find("EnemyArm").gameObject;
-        enemyWeapon = enemyArm.transform.GetChild(0).gameObject;
-        enemyWeaponScript = enemyWeapon.GetComponent<EnemyWeapon>();
 
         playerCapsuleCollider = player.GetComponent<CapsuleCollider2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
@@ -164,9 +179,14 @@ public class Enemy : MonoBehaviour {
 
         if (enemyStats.currentHealth <= 0) // If enemy is dead
         {
-            // Drop held weapon with current amount of ammo and specify the ammo type (so that it can be accessed when the player tries to pick up ammo in the WeaponPickup script)
-            lootDropScript.DropWeapon(enemyWeaponScript.currentAmmoAmount, enemyWeaponScript.clipSize, enemyWeaponScript.ammoType, enemyWeaponScript.damage, 
-                enemyWeaponScript.playerFireRate, enemyWeaponScript.isSilenced, enemyWeaponScript.hasIncreasedClipSize, enemyWeaponScript.clipSizeMultiplier);
+            if (enemyWeapon == null)
+            {
+                enemyWeapon = enemyArm.transform.GetChild(0).gameObject;
+                enemyWeaponScript = enemyWeapon.transform.GetComponent<EnemyWeapon>();
+            }
+            // Drop held weapon with current amount of ammo and specify the ammo type (so that it can be accessed when the player tries to pick up ammo in the WeaponPickup script's PickUpAmmo() method)
+            lootDropScript.DropWeapon(enemyWeaponScript.currentAmmoAmount, enemyWeaponScript.clipSize, enemyWeaponScript.ammoType, enemyWeaponScript.damage, enemyWeaponScript.playerFireRate, 
+                                        enemyWeaponScript.isSilenced, enemyWeaponScript.hasIncreasedClipSize, enemyWeaponScript.clipSizeMultiplier, enemyWeaponScript.inaccuracyFactor);
 
             lootBoxCollider.enabled = true;
             sightCollider.enabled = false;

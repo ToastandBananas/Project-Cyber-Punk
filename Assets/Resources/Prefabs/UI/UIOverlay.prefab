@@ -668,7 +668,7 @@ MonoBehaviour:
   secondaryWeaponAmmoType: 
   ammoText1: {fileID: 1253556047132038}
   ammoText2: {fileID: 1315969471279982}
-  startingWeaponID: 4
+  startingWeaponID: 7
   weaponObjects: []
   equippedColor:
     serializedVersion: 2
@@ -962,7 +962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1473,7 +1473,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3764706, g: 0.34901962, b: 0.34901962, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1650,9 +1650,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795b0274b06667648a10bf89956a0e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  perkColor: 
-  equippedHasActivePerks: 0
-  secondaryHasActivePerks: 0
 --- !u!114 &114866416541348284
 MonoBehaviour:
   m_ObjectHideFlags: 1

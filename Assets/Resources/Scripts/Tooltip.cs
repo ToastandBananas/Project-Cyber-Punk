@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Tooltip : MonoBehaviour
@@ -15,43 +12,46 @@ public class Tooltip : MonoBehaviour
     Weapon secondaryWeapon;
 
     Color32 greenColor = new Color32(66, 255, 66, 255); // Green
-    string greenText;
-
-    public bool equippedHasActivePerks;
-    public bool secondaryHasActivePerks;
+    Color32 redColor = new Color32(255, 40, 0, 255); // Red
+    string greenTextColor;
+    string accuracyTextColor;
+    string secondaryAccuracyTextColor;
 
     string equippedFireRateText;
     string secondaryFireRateText;
 
-    string equippedFireRateNameAddOn = "";
-    string secondaryFireRateNameAddOn = "";
+    string equippedFireRateNameAddOn;
+    string secondaryFireRateNameAddOn;
 
-    string equippedDamageNameAddOn = "";
-    string secondaryDamageNameAddOn = "";
+    string equippedDamageNameAddOn;
+    string secondaryDamageNameAddOn;
 
-    string equippedAverageNameAddOn = "";
-    string secondaryAverageNameAddOn = "";
+    string equippedAverageNameAddOn;
+    string secondaryAverageNameAddOn;
 
-    string equippedTaintedNameAddOn = "";
-    string secondaryTaintedNameAddOn = "";
+    string equippedTaintedNameAddOn;
+    string secondaryTaintedNameAddOn;
 
-    string equippedPerfectNameAddOn = "";
-    string secondaryPerfectNameAddOn = "";
+    string equippedPerfectNameAddOn;
+    string secondaryPerfectNameAddOn;
 
-    string equippedNearPerfectNameAddOn = "";
-    string secondaryNearPerfectNameAddOn = "";
+    string equippedNearPerfectNameAddOn;
+    string secondaryNearPerfectNameAddOn;
 
-    string equippedUselessNameAddOn = "";
-    string secondaryUselessNameAddOn = "";
+    string equippedUselessNameAddOn;
+    string secondaryUselessNameAddOn;
 
-    string equippedBasicallyUselessNameAddOn = "";
-    string secondaryBasicallyUselessNameAddOn = "";
+    string equippedBasicallyUselessNameAddOn;
+    string secondaryBasicallyUselessNameAddOn;
 
-    string equippedSilencedText = "";
-    string secondarySilencedText = "";
+    string equippedSilencedText;
+    string secondarySilencedText;
 
-    string equippedClipSizeText = "";
-    string secondaryClipSizeText = "";
+    string equippedClipSizeText;
+    string secondaryClipSizeText;
+
+    string equippedAccuracyText;
+    string secondaryAccuracyText;
 
     void Start()
     {
@@ -60,7 +60,7 @@ public class Tooltip : MonoBehaviour
 
         hotbar = GameObject.Find("Hotbar").GetComponent<Hotbar>();
 
-        greenText = ColorUtility.ToHtmlStringRGBA(greenColor);
+        greenTextColor = ColorUtility.ToHtmlStringRGBA(greenColor);
     }
 
     void Update () {
@@ -84,7 +84,11 @@ public class Tooltip : MonoBehaviour
     public void Activate(Item item)
     {
         //currentWeapon = hotbar.currentlyEquippedWeapon.GetComponent<Weapon>();
-        currentWeapon = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
+        if (hotbar.currentlyEquippedWeapon != null)
+        {
+            currentWeapon = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
+        }
+
         if (hotbar.secondaryWeapon != null)
         {
             secondaryWeapon = hotbar.secondaryWeapon.GetComponent<Weapon>();
@@ -116,10 +120,11 @@ public class Tooltip : MonoBehaviour
                     + equippedTaintedNameAddOn + equippedFireRateNameAddOn + equippedDamageNameAddOn + equippedAverageNameAddOn
                     + currentWeapon.name + "</size>\n\n"
                     + item.ItemDescription + "\n"
-                    + "<color=#" + greenText + ">"
+                    + "<color=#" + greenTextColor + ">"
                     + equippedSilencedText
                     + equippedClipSizeText
                     + "</color>"
+                    + "<color=#" + accuracyTextColor + ">" + equippedAccuracyText + "</color>"
                     + "\n" + currentWeapon.actionType
                     + "\n\nDamage: " + currentWeapon.damage
                     + equippedFireRateText
@@ -133,10 +138,11 @@ public class Tooltip : MonoBehaviour
                     + secondaryTaintedNameAddOn + secondaryFireRateNameAddOn + secondaryDamageNameAddOn + secondaryAverageNameAddOn
                     + hotbar.secondaryWeapon.name + "</size>\n\n"
                     + item.ItemDescription + "\n"
-                    + "<color=#" + greenText + ">"
+                    + "<color=#" + greenTextColor + ">"
                     + secondarySilencedText
                     + secondaryClipSizeText
                     + "</color>"
+                    + "<color=#" + secondaryAccuracyTextColor + ">" + secondaryAccuracyText + "</color>"
                     + "\n" + secondaryWeapon.actionType
                     + "\n\nDamage: " + secondaryWeapon.damage
                     + secondaryFireRateText
@@ -154,27 +160,20 @@ public class Tooltip : MonoBehaviour
     private void DeterminePerkText()
     {
         if (currentWeapon.isSilenced)
-        {
-            equippedHasActivePerks = true;
             equippedSilencedText = " + Silenced\n";
-        }
         else
             equippedSilencedText = "";
 
         if (hotbar.secondaryWeapon != null)
         {
             if (secondaryWeapon.isSilenced)
-            {
-                secondaryHasActivePerks = true;
                 secondarySilencedText = " + Silenced\n";
-            }
             else
                 secondarySilencedText = "";
         }
 
         if (currentWeapon.hasIncreasedClipSize)
         {
-            equippedHasActivePerks = true;
             if (currentWeapon.clipSizeMultiplier == 1.2f)
                 equippedClipSizeText = " + Barely Increased Clip Size\n";
             else if (currentWeapon.clipSizeMultiplier == 1.4f)
@@ -194,7 +193,6 @@ public class Tooltip : MonoBehaviour
         {
             if (secondaryWeapon.hasIncreasedClipSize)
             {
-                secondaryHasActivePerks = true;
                 if (secondaryWeapon.clipSizeMultiplier == 1.2f)
                     secondaryClipSizeText = " + Barely Increased Clip Size\n";
                 else if (secondaryWeapon.clipSizeMultiplier == 1.4f)
@@ -209,6 +207,75 @@ public class Tooltip : MonoBehaviour
             }
             else
                 secondaryClipSizeText = "";
+        }
+
+        if (currentWeapon.hasAlteredInaccuracyFactor)
+        {
+            if (currentWeapon.inaccuracyFactor == -0.015f)
+                equippedAccuracyText = " + Barely Increased Accuracy\n";
+            else if (currentWeapon.inaccuracyFactor == -0.03f)
+                equippedAccuracyText = " + Slightly Increased Accuracy\n";
+            else if (currentWeapon.inaccuracyFactor == -0.045f)
+                equippedAccuracyText = " + Moderately Increased\n   Accuracy\n";
+            else if (currentWeapon.inaccuracyFactor == -0.06f)
+                equippedAccuracyText = " + Greatly Increased Accuracy\n";
+            else if (currentWeapon.inaccuracyFactor == -0.075f)
+                equippedAccuracyText = " + Considerably Increased\n   Accuracy\n";
+            else if (currentWeapon.inaccuracyFactor == 0.015f)
+                equippedAccuracyText = " - Barely Decreased Accuracy\n";
+            else if (currentWeapon.inaccuracyFactor == 0.03f)
+                equippedAccuracyText = " - Slightly Decreased Accuracy\n";
+            else if (currentWeapon.inaccuracyFactor == 0.045f)
+                equippedAccuracyText = " - Moderately Decreased\n   Accuracy\n";
+            else if (currentWeapon.inaccuracyFactor == 0.06f)
+                equippedAccuracyText = " - Greatly Decreased Accuracy\n";
+            else
+                equippedAccuracyText = " - Considerably Decreased\n   Accuracy\n";
+
+            if (currentWeapon.inaccuracyFactor < 0)
+            {
+                accuracyTextColor = ColorUtility.ToHtmlStringRGBA(greenColor);
+            }
+            else
+                accuracyTextColor = ColorUtility.ToHtmlStringRGBA(redColor);
+        }
+        else
+            equippedAccuracyText = "";
+
+        if (hotbar.secondaryWeapon != null)
+        {
+            if (secondaryWeapon.hasAlteredInaccuracyFactor)
+            {
+                if (secondaryWeapon.inaccuracyFactor == -0.015f)
+                    secondaryAccuracyText = " + Barely Increased Accuracy\n";
+                else if (secondaryWeapon.inaccuracyFactor == -0.03f)
+                    secondaryAccuracyText = " + Slightly Increased Accuracy\n";
+                else if (secondaryWeapon.inaccuracyFactor == -0.045f)
+                    secondaryAccuracyText = " + Moderately Increased\n   Accuracy\n";
+                else if (secondaryWeapon.inaccuracyFactor == -0.06f)
+                    secondaryAccuracyText = " + Greatly Increased Accuracy\n";
+                else if (secondaryWeapon.inaccuracyFactor == -0.075f)
+                    secondaryAccuracyText = " + Considerably Increased\n   Accuracy\n";
+                else if (secondaryWeapon.inaccuracyFactor == 0.015f)
+                    secondaryAccuracyText = " - Barely Decreased Accuracy\n";
+                else if (secondaryWeapon.inaccuracyFactor == 0.03f)
+                    secondaryAccuracyText = " - Slightly Decreased Accuracy\n";
+                else if (secondaryWeapon.inaccuracyFactor == 0.045f)
+                    secondaryAccuracyText = " - Moderately Decreased\n   Accuracy\n";
+                else if (secondaryWeapon.inaccuracyFactor == 0.06f)
+                    secondaryAccuracyText = " - Greatly Decreased Accuracy\n";
+                else
+                    secondaryAccuracyText = " - Considerably Decreased\n   Accuracy\n";
+
+                if (currentWeapon.inaccuracyFactor < 0)
+                {
+                    secondaryAccuracyTextColor = ColorUtility.ToHtmlStringRGBA(greenColor);
+                }
+                else
+                    secondaryAccuracyTextColor = ColorUtility.ToHtmlStringRGBA(redColor);
+            }
+            else
+                secondaryAccuracyText = "";
         }
     }
 

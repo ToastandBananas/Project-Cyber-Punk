@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Pathfinding;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Seeker))]
@@ -47,8 +48,8 @@ public class EnemyMovement : MonoBehaviour {
     bool isRunning = false;
     bool isWalking = false;
     bool onGround = false;
-    [HideInInspector]
-    public bool playerPositionKnown = false;
+
+    [HideInInspector] public bool playerPositionKnown = false;
     bool movingTowardsSound = false;
 
     public Transform groundCheck;
@@ -59,7 +60,7 @@ public class EnemyMovement : MonoBehaviour {
 
     float timer = 0f;
 
-    public float continueSearchingTime = 5f;
+    public float continueSearchingForPlayerTime = 5f;
 
     [HideInInspector]
     public Vector3 enemyLocation;
@@ -83,17 +84,28 @@ public class EnemyMovement : MonoBehaviour {
     GameObject[] stairwaysGoingUp;
     GameObject[] stairwaysGoingDown;
 
+    BoxCollider2D[] playerWeapons;
+
+    public GameObject[] rooms;
+    public GameObject patrolPointPrefab;
+    public GameObject newTarget;
+    GameObject randomRoom;
+    GameObject patrolPointContainer;
+
     GameObject[] patrolPoints;
     public Transform[] enemyPatrolPoints;
     public Transform currentPatrolPoint;
     public int currentPatrolIndex;
 
-    CapsuleCollider2D thisCollider;
+    CapsuleCollider2D thisEnemyCollider;
     CapsuleCollider2D enemyCollider;
 
     public int currentFloorLevel = 1;
     public int currentRoomNumber;
     public Transform currentRoom;
+
+    float alertStateTimer;
+    float alertStateTimerLength = 15.0f;
 
     public enum State
     {
@@ -101,7 +113,8 @@ public class EnemyMovement : MonoBehaviour {
         Idle = 1,
         Patrol = 2,
         CheckSound = 3,
-        Attack = 4
+        Attack = 4,
+        Alert = 5
     }
 
     public State startState;
@@ -110,12 +123,14 @@ public class EnemyMovement : MonoBehaviour {
 
     void Start()
     {
+        alertStateTimer = alertStateTimerLength;
+
         arm = gameObject.transform.Find("EnemyArm");
         enemySight = gameObject.transform.Find("Sight");
         enemyHearing = gameObject.transform.Find("Hearing");
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        thisCollider = gameObject.GetComponent<CapsuleCollider2D>();
+        thisEnemyCollider = gameObject.GetComponent<CapsuleCollider2D>();
 
         foreach (GameObject enemy in enemies)
         {
@@ -125,9 +140,12 @@ public class EnemyMovement : MonoBehaviour {
         patrolPoints = GameObject.FindGameObjectsWithTag("PatrolPoint");
         foreach (GameObject patrolPoint in patrolPoints)
         {
-            BoxCollider2D patrolPointCollider = patrolPoint.gameObject.GetComponent<BoxCollider2D>();
-            Physics2D.IgnoreCollision(gameObject.GetComponent<CapsuleCollider2D>(), patrolPointCollider);
+            //BoxCollider2D patrolPointCollider = patrolPoint.gameObject.GetComponent<BoxCollider2D>();
+            //Physics2D.IgnoreCollision(gameObject.GetComponent<CapsuleCollider2D>(), patrolPointCollider);
         }
+
+        rooms = GameObject.FindGameObjectsWithTag("Room");
+        patrolPointContainer = GameObject.Find("PatrolPoints");
 
         currentPatrolIndex = 0;
         currentPatrolPoint = enemyPatrolPoints[currentPatrolIndex];
@@ -158,6 +176,12 @@ public class EnemyMovement : MonoBehaviour {
             armRotationScript.enemyRotationOffset = 180;
             facingRight = false;
         }
+
+        playerWeapons = GameObject.Find("WeaponPool").transform.GetComponentsInChildren<BoxCollider2D>();
+        foreach (BoxCollider2D playerWeaponCollider in playerWeapons)
+        {
+            Physics2D.IgnoreCollision(playerWeaponCollider, thisEnemyCollider);
+        }
     }
 
     void Update()
@@ -174,28 +198,31 @@ public class EnemyMovement : MonoBehaviour {
         {
             DetermineTargetAttackState();
         }
+        else if (currentState == State.Alert)
+        {
+            SearchRandomly();
+        }
     }
 
     void FixedUpdate()
     {
-
         foreach (GameObject enemy in enemies)
         {
             if (enemy.GetComponent<Enemy>().isDead)
             {
-                Physics2D.IgnoreCollision(thisCollider, enemyCollider);
+                Physics2D.IgnoreCollision(thisEnemyCollider, enemyCollider); // Prevent enemies from colliding with dead bodies
             }
-            else if (!facingRight && enemy.GetComponent<EnemyMovement>().facingRight)
+            else if (!facingRight && enemy.GetComponent<EnemyMovement>().facingRight) // Prevent enemies from colliding when moving in opposite direction
             {
-                Physics2D.IgnoreCollision(thisCollider, enemyCollider);
+                Physics2D.IgnoreCollision(thisEnemyCollider, enemyCollider);
             }
-            else if (facingRight && enemy.GetComponent<EnemyMovement>().facingRight == false)
+            else if (facingRight && enemy.GetComponent<EnemyMovement>().facingRight == false) // Same as above ^
             {
-                Physics2D.IgnoreCollision(thisCollider, enemyCollider);
+                Physics2D.IgnoreCollision(thisEnemyCollider, enemyCollider);
             }
             else
             {
-                Physics2D.IgnoreCollision(thisCollider, enemyCollider, false);
+                Physics2D.IgnoreCollision(thisEnemyCollider, enemyCollider, false); // Turn on colliders when they are the same direction, so that they don't overlap
             }
         }
 
@@ -238,6 +265,15 @@ public class EnemyMovement : MonoBehaviour {
             Flip();
             GroundCheck();
         }
+        else if (currentState == State.Alert)
+        {
+            anim.SetInteger("currentState", 5);
+
+            CheckIfAiming();
+            DetermineMoveSpeed();
+            Flip();
+            GroundCheck();
+        }
     }
 
     void Flip()
@@ -263,10 +299,14 @@ public class EnemyMovement : MonoBehaviour {
 
     void CheckIfAiming()
     {
-        if (currentState == State.Attack)
+        if (currentState == State.Attack || currentState == State.Alert)
         {
             isAiming = true;
-            playerPositionKnown = true;
+
+            if (currentState == State.Attack)
+            {
+                playerPositionKnown = true;
+            }
 
             if (childrenSpriteRenderer != null)
             {
@@ -313,7 +353,9 @@ public class EnemyMovement : MonoBehaviour {
                 isRunning = false;
                 isWalking = false;
             }
-            else if (enemyScript.distanceToPlayer > stoppingDistance && player.isDead == false && playerPositionKnown == true || playerPositionKnown == true && enemySightScript.CanPlayerBeSeen() == false || currentState == State.CheckSound)
+            else if (enemyScript.distanceToPlayer > stoppingDistance && player.isDead == false && playerPositionKnown == true 
+                        || playerPositionKnown == true && enemySightScript.CanPlayerBeSeen() == false 
+                        || currentState == State.CheckSound || currentState == State.Alert)
             {
                 moveSpeed = runSpeed;
                 isRunning = true;
@@ -341,6 +383,24 @@ public class EnemyMovement : MonoBehaviour {
         else if (currentTarget != player.transform)
         {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x, transform.position.y), moveSpeed * Time.fixedDeltaTime);
+        }
+
+        if (Vector2.Distance(transform.position, currentTarget.position) < 0.1f) // If enemy makes it to its target while in Alert or CheckSound state
+        {
+            if (currentState == State.Alert)
+            {
+                randomRoom = rooms[UnityEngine.Random.Range(1, rooms.Length)];
+                while (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel)
+                {
+                    randomRoom = rooms[UnityEngine.Random.Range(0, rooms.Length)];
+                }
+                newTarget.transform.position = new Vector3(randomRoom.transform.position.x + UnityEngine.Random.Range(-randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2, randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2), transform.position.y);
+            }
+            else if (currentState == State.CheckSound && currentTarget == newTarget.transform)
+            {
+                Destroy(newTarget);
+                currentState = State.Alert;
+            }
         }
     }
 
@@ -422,9 +482,15 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (enemyHearingScript.soundTriggerColliderRoom != null)
         {
+            if (newTarget == null)
+            {
+                newTarget = Instantiate(patrolPointPrefab, patrolPointContainer.transform);
+            }
+
             if (currentFloorLevel == enemyHearingScript.soundTriggerColliderFloorLevel)
             {
-                currentTarget = enemyHearingScript.soundTriggerColliderRoom;
+                newTarget.transform.position = new Vector3(enemyHearingScript.soundTriggerColliderRoom.position.x, transform.position.y);
+                currentTarget = newTarget.transform;
 
                 MoveTowardsTarget();
             }
@@ -513,34 +579,73 @@ public class EnemyMovement : MonoBehaviour {
 
                 MoveTowardsTarget();
             }
-            else if (currentFloorLevel + 1 == playerControllerScript.currentFloorLevel) // If player is one level above enemy
+            else if (currentTarget.tag != "StairsUp" && currentTarget.tag != "StairsDown")
             {
-                Transform targetRoomName = playerControllerScript.currentRoom;
-                currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
+                if (currentFloorLevel + 1 == playerControllerScript.currentFloorLevel) // If player is one level above enemy
+                {
+                    Transform targetRoomName = playerControllerScript.currentRoom;
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
 
+                    MoveTowardsTarget();
+                }
+                else if (currentFloorLevel - 1 == playerControllerScript.currentFloorLevel) // If player is one level below enemy
+                {
+                    Transform targetRoomName = playerControllerScript.currentRoom;
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
+
+                    MoveTowardsTarget();
+                }
+                else if (currentFloorLevel + 2 == playerControllerScript.currentFloorLevel) // If player is two levels above enemy
+                {
+                    Transform targetRoomName = playerControllerScript.currentRoom;
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
+
+                    MoveTowardsTarget();
+                }
+                else if (currentFloorLevel - 2 == playerControllerScript.currentFloorLevel) // If player is two levels below enemy
+                {
+                    Transform targetRoomName = playerControllerScript.currentRoom;
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
+
+                    MoveTowardsTarget();
+                }
+            }
+            else
+            {
+                print("I made it here.");
                 MoveTowardsTarget();
             }
-            else if (currentFloorLevel - 1 == playerControllerScript.currentFloorLevel) // If player is one level below enemy
-            {
-                Transform targetRoomName = playerControllerScript.currentRoom;
-                currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
+        }
+    }
 
-                MoveTowardsTarget();
-            }
-            else if (currentFloorLevel + 2 == playerControllerScript.currentFloorLevel) // If player is two levels above enemy
-            {
-                Transform targetRoomName = playerControllerScript.currentRoom;
-                currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
+    void SearchRandomly()
+    {
+        alertStateTimer -= Time.deltaTime;
 
-                MoveTowardsTarget();
-            }
-            else if (currentFloorLevel - 2 == playerControllerScript.currentFloorLevel) // If player is two levels below enemy
-            {
-                Transform targetRoomName = playerControllerScript.currentRoom;
-                currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
+        if (alertStateTimer <= 0.0f)
+        {
+            currentState = defaultState;
+            Destroy(newTarget);
+            alertStateTimer = alertStateTimerLength;
+        }
 
-                MoveTowardsTarget();
+        if (currentRoom != null && newTarget == null)
+        {
+            newTarget = Instantiate(patrolPointPrefab, patrolPointContainer.transform);
+
+            randomRoom = rooms[UnityEngine.Random.Range(1, rooms.Length)];
+            while (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel)
+            {
+                randomRoom = rooms[UnityEngine.Random.Range(0, rooms.Length)];
             }
+            newTarget.transform.position = new Vector3(randomRoom.transform.position.x + UnityEngine.Random.Range(-randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2, randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2), transform.position.y);
+
+            currentTarget = newTarget.transform;
+        }
+
+        if (currentTarget != null)
+        {
+            MoveTowardsTarget();
         }
     }
 
@@ -557,7 +662,7 @@ public class EnemyMovement : MonoBehaviour {
             // If the player leaves the enemy's trigger, they will continue following the player for a set amount of time.
             stillSearching = true;
 
-            while (timer < continueSearchingTime)
+            while (timer < continueSearchingForPlayerTime)
             {
                 playerPositionKnown = true;
                 yield return new WaitForSeconds(1f);
@@ -565,11 +670,11 @@ public class EnemyMovement : MonoBehaviour {
                 // Debug.Log("Timer: " + timer);
             }
 
-            if (timer >= continueSearchingTime && enemyScript.enemyStats.currentHealth > 0)
+            if (timer >= continueSearchingForPlayerTime && enemyScript.enemyStats.currentHealth > 0)
             {
                 stillSearching = false;
                 playerPositionKnown = false;
-                currentState = defaultState;
+                currentState = State.Alert;
             }
         }
     }

@@ -668,7 +668,7 @@ MonoBehaviour:
   secondaryWeaponAmmoType: 
   ammoText1: {fileID: 1253556047132038}
   ammoText2: {fileID: 1315969471279982}
-  startingWeaponID: 7
+  startingWeaponID: 2
   weaponObjects: []
   equippedColor:
     serializedVersion: 2

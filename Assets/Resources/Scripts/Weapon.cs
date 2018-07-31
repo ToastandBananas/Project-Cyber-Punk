@@ -55,6 +55,9 @@ public class Weapon : MonoBehaviour
     ProduceSoundTrigger produceSoundTriggerScript;
     ItemDatabase itemDatabase;
     WeaponPerks weaponPerksScript;
+
+    GameObject[] groundObjects;
+    GameObject[] enemies;
     
     void Awake () {
         firePoint = transform.Find("FirePoint");
@@ -103,10 +106,30 @@ public class Weapon : MonoBehaviour
         }
 
         DetermineSoundName();
+
+        groundObjects = GameObject.FindGameObjectsWithTag("Ground");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
     }
 
     void Update () {
         PlayerCheckIfShooting();
+
+        if (gameObject.tag == "EquippedWeapon" && playerController.isAiming)
+        {
+            GetComponent<BoxCollider2D>().enabled = true;
+            foreach (GameObject ground in groundObjects)
+            {
+                Physics2D.IgnoreCollision(ground.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>()); // Ignore collision between ground and weapons
+            }
+            foreach (GameObject enemy in enemies)
+            {
+                Physics2D.IgnoreCollision(enemy.GetComponent<CapsuleCollider2D>(), GetComponent<BoxCollider2D>());
+            }
+        }
+        else
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 
     void PlayerCheckIfShooting()

@@ -23,6 +23,7 @@ TagManager:
   - WeaponDrop
   - InactiveWeapon
   - SecondaryWeapon
+  - Wall
   layers:
   - Default
   - TransparentFX

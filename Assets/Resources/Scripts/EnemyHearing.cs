@@ -49,17 +49,17 @@ public class EnemyHearing : MonoBehaviour {
 
                 if (soundTriggerColliderParent.tag == "Player" && playerEquippedWeapon.isSilenced == false)
                 {
+                    soundTriggerColliderRoom = soundTriggerColliderParent.gameObject.GetComponent<PlayerController>().currentRoom;
                     soundTriggerColliderFloorLevel = soundTriggerColliderParent.gameObject.GetComponent<PlayerController>().currentFloorLevel;
                     soundTriggerColliderRoomNumber = soundTriggerColliderParent.gameObject.GetComponent<PlayerController>().currentRoomNumber;
-                    soundTriggerColliderRoom = soundTriggerColliderParent.gameObject.GetComponent<PlayerController>().currentRoom;
 
                     enemyMovementScript.currentState = EnemyMovement.State.CheckSound;
                 }
                 else if (soundTriggerColliderParent.tag == "Enemy" && soundTriggerColliderParent.GetComponentInChildren<EnemyWeapon>().isSilenced == false)
                 {
+                    soundTriggerColliderRoom = soundTriggerColliderParent.gameObject.GetComponent<EnemyMovement>().currentRoom;
                     soundTriggerColliderFloorLevel = soundTriggerColliderParent.gameObject.GetComponent<EnemyMovement>().currentFloorLevel;
                     soundTriggerColliderRoomNumber = soundTriggerColliderParent.gameObject.GetComponent<EnemyMovement>().currentRoomNumber;
-                    soundTriggerColliderRoom = soundTriggerColliderParent.gameObject.GetComponent<EnemyMovement>().currentRoom;
 
                     enemyMovementScript.currentState = EnemyMovement.State.CheckSound;
                 }

@@ -281,6 +281,7 @@ MonoBehaviour:
   nearestStairsDownTo: {fileID: 0}
   secondNearestStairsUpTo: {fileID: 0}
   secondNearestStairsDownTo: {fileID: 0}
+  nearestRoom: {fileID: 0}
   floorLevel: 3
   roomNumber: 0
 --- !u!212 &212346366781344144

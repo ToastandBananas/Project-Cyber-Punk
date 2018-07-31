@@ -197,8 +197,8 @@ public class EnemyWeapon : MonoBehaviour {
         {
             if (hit.collider != null)
             {
-                Player playerCollider = hit.collider.GetComponent<Player>();
-                if (playerCollider != null)
+                Player player = hit.collider.GetComponent<Player>();
+                if (player != null)
                 {
                     hitPos = hit.point;
                     hitNormal = hit.normal;
@@ -207,23 +207,23 @@ public class EnemyWeapon : MonoBehaviour {
                     {
                         if (Vector2.Distance(firePointPosition, hitPos) >= 3.2 && Vector2.Distance(firePointPosition, hitPos) < 5)
                         {
-                            playerCollider.DamagePlayer(damage / 2);
+                            player.DamagePlayer(damage / 2);
                             // Debug.Log("We hit " + hit.collider.name + " and did " + damage / 2 + " damage.");
                         }
                         else if (Vector2.Distance(firePointPosition, hitPos) >= 5)
                         {
-                            playerCollider.DamagePlayer(1);
+                            player.DamagePlayer(1);
                             // Debug.Log("We hit " + hit.collider.name + " and did " + 1 + " damage.");
                         }
                         else
                         {
-                            playerCollider.DamagePlayer(damage);
+                            player.DamagePlayer(damage);
                             // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                         }
                     }
                     else
                     {
-                        playerCollider.DamagePlayer(damage);
+                        player.DamagePlayer(damage);
                         // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                     }
                     

@@ -23,7 +23,8 @@ GameObject:
   - component: {fileID: 114856596932284950}
   - component: {fileID: 114059701961501874}
   - component: {fileID: 114306258196197472}
-  m_Layer: 0
+  - component: {fileID: 61046027574607134}
+  m_Layer: 2
   m_Name: El Toro
   m_TagString: EquippedWeapon
   m_Icon: {fileID: 0}
@@ -38,7 +39,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4586138032239152}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,6 +73,31 @@ Transform:
   m_Father: {fileID: 4568629386778030}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61046027574607134
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1324753642318018}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 7d0c430db018a3e4382043fb8e8856d9, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 125, y: 93}
+    newSize: {x: 11, y: 3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 125, y: 93}
+  m_EdgeRadius: 0
 --- !u!114 &114059701961501874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -111,6 +137,8 @@ MonoBehaviour:
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294960857
+  inaccuracyFactor: 0
+  finalAccuracyFactor: 0
   fireRate: 1
   damage: 5
   ammoType: .45 cal
@@ -121,11 +149,12 @@ MonoBehaviour:
   isShotgun: 0
   isBoltAction: 0
   isSniper: 0
-  isSilenced: 0
   coolDownTime: 1
   soundRadius: 160000
+  isSilenced: 0
   hasIncreasedClipSize: 0
   clipSizeMultiplier: 0
+  hasAlteredInaccuracyFactor: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,

@@ -191,7 +191,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1019179602100098}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.21, y: -0.53, z: 0}
+  m_LocalPosition: {x: 1.1057549, y: -0.53625715, z: 0}
   m_LocalScale: {x: 0.009, y: 0.009, z: 0.009}
   m_Children:
   - {fileID: 4269116382323314}
@@ -424,6 +424,8 @@ MonoBehaviour:
     m_Bits: 8192
   continueSearchingTime: 3
   enemyLocation: {x: 0, y: 0, z: 0}
+  patrolPointPrefab: {fileID: 1395910035228894, guid: 3ed362be9b83c534a914cafd7294eb86,
+    type: 2}
   enemyPatrolPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -432,7 +434,7 @@ MonoBehaviour:
   currentFloorLevel: 1
   currentRoomNumber: 0
   currentRoom: {fileID: 0}
-  startState: 2
+  startState: 5
   currentState: 0
   defaultState: 2
 --- !u!114 &114636224220000560

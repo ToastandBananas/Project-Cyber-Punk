@@ -22,6 +22,6 @@ public class ProduceSoundTrigger : MonoBehaviour {
         GameObject soundTrigger = Instantiate(soundTriggerPrefab, parent) as GameObject;
         soundTriggerCollider.radius = soundRadius;
 
-        Destroy(soundTrigger.gameObject, .5f);
+        Destroy(soundTrigger.gameObject, 0.1f);
     }
 }

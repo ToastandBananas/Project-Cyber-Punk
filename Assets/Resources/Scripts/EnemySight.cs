@@ -17,16 +17,19 @@ public class EnemySight : MonoBehaviour
     EnemyMovement enemyMovementScript;
 
     GameObject[] sightObjects;
+    GameObject[] enemies;
 
     CircleCollider2D thisSightCollider;
     CircleCollider2D otherSightCollider;
+
+    List<Enemy> DeadEnemiesSeen = new List<Enemy>();
 
     Transform enemy;
 
     void Start()
     {
         enemy = transform.root;
-
+        
         enemyScript = enemy.GetComponent<Enemy>();
         enemyMovementScript = enemy.GetComponent<EnemyMovement>();
 
@@ -39,6 +42,8 @@ public class EnemySight : MonoBehaviour
             otherSightCollider = sightObject.GetComponent<CircleCollider2D>();
         }
 
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
         playerInRange = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -50,12 +55,18 @@ public class EnemySight : MonoBehaviour
         {
             // spr.color = Color.red;
             enemyMovementScript.currentTarget = player;
+            if (enemyMovementScript.newTarget != null)
+            {
+                Destroy(enemyMovementScript.newTarget);
+            }
             enemyMovementScript.currentState = EnemyMovement.State.Attack;
         }
         else
         {
             // spr.color = Color.white;
         }
+
+        CheckForDeadBody();
     }
 
     public bool CanPlayerBeSeen()
@@ -133,7 +144,7 @@ public class EnemySight : MonoBehaviour
         Debug.DrawRay(transform.position, player.position - transform.position, Color.blue); // draw line in the Scene window to show where the raycast is looking
      
         foreach (RaycastHit2D hit in hits)
-        {           
+        {
             // ignore the enemy's own colliders (and other enemies) and patrol points
             if (hit.transform.tag == "Enemy")
                 continue;
@@ -147,10 +158,45 @@ public class EnemySight : MonoBehaviour
                 return true;
             }
         }
-
         // if no objects were closer to the enemy than the player return false (player is not hidden by an object)
         return false; 
-
     }
 
+    void CheckForDeadBody()
+    {
+        if (enemyScript.isDead == false)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy.GetComponent<Enemy>().isDead)
+                {
+                    if (DeadEnemiesSeen.Contains(enemy.GetComponent<Enemy>()))
+                    {
+                        break;
+                    }
+                    else if (enemyMovementScript.currentFloorLevel == enemy.transform.GetComponent<EnemyMovement>().currentFloorLevel && Vector2.Distance(transform.position, enemy.transform.position) < 3.0f)
+                    {
+                        if (transform.position.x < enemy.transform.position.x && enemyMovementScript.facingRight)
+                        {
+                            DeadEnemiesSeen.Add(enemy.GetComponent<Enemy>());
+                            if (enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Alert
+                                && enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Attack)
+                            {
+                                enemyMovementScript.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
+                            }
+                        }
+                        else if (transform.position.x > enemy.transform.position.x && enemyMovementScript.facingRight == false)
+                        {
+                            DeadEnemiesSeen.Add(enemy.GetComponent<Enemy>());
+                            if (enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Alert
+                                && enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Attack)
+                            {
+                                enemyMovementScript.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

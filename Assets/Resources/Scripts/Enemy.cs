@@ -52,7 +52,7 @@ public class Enemy : MonoBehaviour {
     private AudioManager audioManager;
 
     CapsuleCollider2D playerCapsuleCollider;
-    CapsuleCollider2D capsuleCollider;
+    CapsuleCollider2D thisEnemyCollider;
     CircleCollider2D hearingCollider;
     CircleCollider2D sightCollider;
     BoxCollider2D lootBoxCollider;
@@ -100,13 +100,13 @@ public class Enemy : MonoBehaviour {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         playerCapsuleCollider = player.GetComponent<CapsuleCollider2D>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        thisEnemyCollider = GetComponent<CapsuleCollider2D>();
         hearingCollider = transform.Find("Hearing").GetComponent<CircleCollider2D>();
         sightCollider = transform.Find("Sight").GetComponent<CircleCollider2D>();
         lootBoxCollider = GetComponent<BoxCollider2D>();
         lootBoxCollider.enabled = false;
 
-        Physics2D.IgnoreCollision(capsuleCollider, playerCapsuleCollider);
+        Physics2D.IgnoreCollision(thisEnemyCollider, playerCapsuleCollider);
 
         enemyStats.actualMaxHealth = enemyStats.maxHealth * enemyStats.startHealthPercent;
         enemyStats.Init();
@@ -167,9 +167,9 @@ public class Enemy : MonoBehaviour {
             isDead = true;
             enemyMovementScript.currentState = EnemyMovement.State.Dead;
 
-            capsuleCollider.direction = CapsuleDirection2D.Horizontal;
-            capsuleCollider.offset = new Vector2(3.43f, -23.89f);
-            capsuleCollider.size = new Vector2(46.55f, 9.1f);
+            thisEnemyCollider.direction = CapsuleDirection2D.Horizontal;
+            thisEnemyCollider.offset = new Vector2(3.43f, -23.89f);
+            thisEnemyCollider.size = new Vector2(46.55f, 9.1f);
         }
         else if (enemyStats.currentHealth > 0)
         {

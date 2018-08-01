@@ -44,10 +44,11 @@ public class Stairs : MonoBehaviour {
         else if (collision.gameObject.tag == "Enemy" && collision.gameObject.GetComponent<EnemyMovement>().currentTarget == gameObject.transform)
         {
             collision.gameObject.transform.position = new Vector3(targetDoor.transform.position.x, targetDoor.transform.position.y - 0.13f);
-            if (collision.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Attack && collision.GetComponent<EnemyMovement>().currentRoom != player.GetComponent<PlayerController>().currentRoom)
+            if (collision.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.SpreadOut 
+                || (collision.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Attack && collision.GetComponent<EnemyMovement>().currentRoom != player.GetComponent<PlayerController>().currentRoom))
             {
-                collision.GetComponent<EnemyMovement>().currentTarget = null;
                 collision.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
+                collision.GetComponent<EnemyMovement>().currentTarget = null;
             }
         }
     }

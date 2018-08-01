@@ -80,18 +80,7 @@ public class Enemy : MonoBehaviour {
     {
         enemyArm = transform.Find("EnemyArm").gameObject;
 
-        if (enemyArm.transform.childCount == 0) // If no weapon already equipped
-        {
-            var possibleWeapons = Resources.LoadAll<GameObject>("Prefabs/Items/EnemyWeapons");
-            startingWeaponID = Random.Range(0, possibleWeapons.Length);
-            foreach (GameObject weapon in possibleWeapons)
-            {
-                if (startingWeaponID == weapon.GetComponent<EnemyWeapon>().weaponID)
-                {
-                    Instantiate(weapon, enemyArm.transform);
-                }
-            }
-        }
+        RandomizeStartingWeapon();
 
         player = Player.instance;
         enemyMovementScript = gameObject.GetComponent<EnemyMovement>();
@@ -139,6 +128,22 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    void RandomizeStartingWeapon()
+    {
+        if (enemyArm.transform.childCount == 0) // If no weapon already equipped
+        {
+            var possibleWeapons = Resources.LoadAll<GameObject>("Prefabs/Items/EnemyWeapons");
+            startingWeaponID = Random.Range(0, possibleWeapons.Length);
+            foreach (GameObject weapon in possibleWeapons)
+            {
+                if (startingWeaponID == weapon.GetComponent<EnemyWeapon>().weaponID)
+                {
+                    Instantiate(weapon, enemyArm.transform);
+                }
+            }
+        }
+    }
+
     void OnUpgradeMenuToggle(bool active)
     {
         // Handle what happens when the upgrade menu is toggled
@@ -156,7 +161,7 @@ public class Enemy : MonoBehaviour {
             anim.SetFloat("health", enemyStats.currentHealth);
         }
 
-        if (enemyStats.currentHealth <= 0 && isDead == false)
+        if (enemyStats.currentHealth <= 0 && isDead == false) // If enemy health falls to 0 or less they will die
         {
             // Death sound
             audioManager.PlaySound(deathSoundName);

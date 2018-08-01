@@ -189,10 +189,10 @@ AnimatorStateTransition:
     m_EventTreshold: 0.01
   - m_ConditionMode: 3
     m_ConditionEvent: currentState
-    m_EventTreshold: 3
+    m_EventTreshold: 2
   - m_ConditionMode: 4
     m_ConditionEvent: currentState
-    m_EventTreshold: 6
+    m_EventTreshold: 7
   - m_ConditionMode: 1
     m_ConditionEvent: isAiming
     m_EventTreshold: 0

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
-using System;
 
 public class Weapon : MonoBehaviour 
 {

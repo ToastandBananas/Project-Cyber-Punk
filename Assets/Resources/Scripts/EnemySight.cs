@@ -24,14 +24,14 @@ public class EnemySight : MonoBehaviour
 
     List<Enemy> DeadEnemiesSeen = new List<Enemy>();
 
-    Transform enemy;
+    Transform thisEnemy;
 
     void Start()
     {
-        enemy = transform.root;
+        thisEnemy = transform.root;
         
-        enemyScript = enemy.GetComponent<Enemy>();
-        enemyMovementScript = enemy.GetComponent<EnemyMovement>();
+        enemyScript = thisEnemy.GetComponent<Enemy>();
+        enemyMovementScript = thisEnemy.GetComponent<EnemyMovement>();
 
         sightObjects = GameObject.FindGameObjectsWithTag("Sight");
 
@@ -66,7 +66,11 @@ public class EnemySight : MonoBehaviour
             // spr.color = Color.white;
         }
 
-        CheckForDeadBody();
+        if (enemyScript.isDead == false)
+        {
+            CheckIfOtherEnemyIsAttackingOrAlert();
+            CheckForDeadBody();
+        }
     }
 
     public bool CanPlayerBeSeen()
@@ -164,36 +168,67 @@ public class EnemySight : MonoBehaviour
 
     void CheckForDeadBody()
     {
-        if (enemyScript.isDead == false)
+        foreach (GameObject enemy in enemies)
         {
-            foreach (GameObject enemy in enemies)
+            if (enemy.GetComponent<Enemy>().isDead && enemy != gameObject.transform.root.gameObject)
             {
-                if (enemy.GetComponent<Enemy>().isDead)
+                if (DeadEnemiesSeen.Contains(enemy.GetComponent<Enemy>()))
                 {
-                    if (DeadEnemiesSeen.Contains(enemy.GetComponent<Enemy>()))
+                    break;
+                }
+                else if (enemyMovementScript.currentFloorLevel == enemy.transform.GetComponent<EnemyMovement>().currentFloorLevel && Vector2.Distance(transform.position, enemy.transform.position) < 3.0f)
+                {
+                    if (transform.position.x < enemy.transform.position.x && enemyMovementScript.facingRight)
                     {
-                        break;
+                        DeadEnemiesSeen.Add(enemy.GetComponent<Enemy>());
+                        if (enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Alert
+                            && enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Attack)
+                        {
+                            enemyMovementScript.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
+                        }
                     }
-                    else if (enemyMovementScript.currentFloorLevel == enemy.transform.GetComponent<EnemyMovement>().currentFloorLevel && Vector2.Distance(transform.position, enemy.transform.position) < 3.0f)
+                    else if (transform.position.x > enemy.transform.position.x && enemyMovementScript.facingRight == false)
                     {
-                        if (transform.position.x < enemy.transform.position.x && enemyMovementScript.facingRight)
+                        DeadEnemiesSeen.Add(enemy.GetComponent<Enemy>());
+                        if (enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Alert
+                            && enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Attack
+                            && enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.SpreadOut)
                         {
-                            DeadEnemiesSeen.Add(enemy.GetComponent<Enemy>());
-                            if (enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Alert
-                                && enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Attack)
-                            {
-                                enemyMovementScript.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
-                            }
+                            enemyMovementScript.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
                         }
-                        else if (transform.position.x > enemy.transform.position.x && enemyMovementScript.facingRight == false)
-                        {
-                            DeadEnemiesSeen.Add(enemy.GetComponent<Enemy>());
-                            if (enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Alert
-                                && enemyMovementScript.GetComponent<EnemyMovement>().currentState != EnemyMovement.State.Attack)
-                            {
-                                enemyMovementScript.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
-                            }
-                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void CheckIfOtherEnemyIsAttackingOrAlert()
+    {
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy != gameObject.transform.root.gameObject)
+            {
+                if (enemyMovementScript.currentRoom == enemy.transform.GetComponent<EnemyMovement>().currentRoom
+                    || enemyMovementScript.currentFloorLevel == enemy.transform.GetComponent<EnemyMovement>().currentFloorLevel && Vector2.Distance(transform.position, enemy.transform.position) < 1.0f)
+                {
+                    if (enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Attack && enemyMovementScript.currentState != EnemyMovement.State.Attack)
+                    {
+                        enemyMovementScript.currentState = EnemyMovement.State.Attack;
+                    }
+                    else if (enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Alert 
+                            && enemyMovementScript.currentState != EnemyMovement.State.SpreadOut 
+                            && enemyMovementScript.currentState != EnemyMovement.State.Alert 
+                            && enemyMovementScript.currentState != EnemyMovement.State.Attack
+                            && enemyMovementScript.mayBeAlert == true)
+                    {
+                        enemyMovementScript.mayBeAlert = false;
+                        enemyMovementScript.currentTarget = null;
+                        enemyMovementScript.currentState = EnemyMovement.State.SpreadOut;
+                    }
+
+                    if (enemyMovementScript.mayBeAlert == true && enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Alert && enemyMovementScript.currentState == EnemyMovement.State.Alert)
+                    {
+                        enemyMovementScript.mayBeAlert = false;
                     }
                 }
             }

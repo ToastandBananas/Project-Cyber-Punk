@@ -14,6 +14,8 @@ public class WeaponPerks : MonoBehaviour {
     int randomNumber3;
     int randomNumber4;
     int randomNumber5;
+    int randomNumber6;
+    int randomNumber7;
 
 	// Use this for initialization
 	void Start () {
@@ -46,15 +48,139 @@ public class WeaponPerks : MonoBehaviour {
         randomNumber3 = Random.Range(0, 100); // Used in DetermineIncreasedClipSizeChance()
         randomNumber4 = Random.Range(0, 100); // Used in DetermineWeaponAccuracy()
         randomNumber5 = Random.Range(0, 100); // Used in DetermineWeaponAccuracy()
+        randomNumber6 = Random.Range(0, 100); // Used in DetermineDurability()
+        randomNumber7 = Random.Range(0, 100); // Used in DetermineDurability()
 
         // print(randomNumber1 + " " + randomNumber2 + " " + randomNumber3 + " " + randomNumber4 + " " + randomNumber5);
 
         DetermineSilencedWeaponChance();
         DetermineIncreasedClipSizeChance(thisWeapon);
-        DetermineWeaponAccuracyChangeChance();
+        DetermineWeaponAccuracy();
+        DetermineDurability();
     }
 
-    void DetermineWeaponAccuracyChangeChance()
+    void DetermineDurability()
+    {
+        if (randomNumber6 < 1) // 20% chance to increase durability
+        {
+            if (rootTag == "Player")
+            {
+                weaponScript.hasAlteredDurability = true;
+                if (randomNumber7 < 50) // 50% chance
+                {
+                    weaponScript.durabilityMultiplier = 1.2f; // Increase durability by 20%
+                }
+                else if (randomNumber7 >= 50 && randomNumber7 < 75) // 25% chance
+                {
+                    weaponScript.durabilityMultiplier = 1.4f; // Increase durability by 40%
+                }
+                else if (randomNumber7 >= 75 && randomNumber7 < 90) // 15% chance
+                {
+                    weaponScript.durabilityMultiplier = 1.6f; // Increase durability by 60%
+                }
+                else if (randomNumber7 >= 90 && randomNumber7 < 97) // 7% chance
+                {
+                    weaponScript.durabilityMultiplier = 1.8f; // Increase durability by 80%
+                }
+                else // 3% chance
+                {
+                    weaponScript.durabilityMultiplier = 2f; // Increase durability by 100%
+                }
+                weaponScript.durability = 100f * weaponScript.durabilityMultiplier;
+            }
+            else // If enemy
+            {
+                enemyWeaponScript.hasAlteredDurability = true;
+                if (randomNumber7 < 50) // 50% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 1.2f; // Increase durability by 20%
+                }
+                else if (randomNumber7 >= 50 && randomNumber7 < 75) // 25% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 1.4f; // Increase durability by 40%
+                }
+                else if (randomNumber7 >= 75 && randomNumber7 < 90) // 15% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 1.6f; // Increase durability by 60%
+                }
+                else if (randomNumber7 >= 90 && randomNumber7 < 97) // 7% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 1.8f; // Increase durability by 80%
+                }
+                else // 3% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 2f;  // Increase durability by 100%
+                }
+                enemyWeaponScript.durability = 100f * enemyWeaponScript.durabilityMultiplier;
+            }
+        }
+        else if (randomNumber6 < 100 && randomNumber6 > 1) // 20% chance to decrease durability
+        {
+            if (rootTag == "Player")
+            {
+                weaponScript.hasAlteredDurability = true;
+                if (randomNumber7 < 50) // 50% chance
+                {
+                    weaponScript.durabilityMultiplier = 0.9f; // Decrease durability by 10%
+                }
+                else if (randomNumber7 >= 50 && randomNumber7 < 75) // 25% chance
+                {
+                    weaponScript.durabilityMultiplier = 0.8f; // Decrease durability by 20%
+                }
+                else if (randomNumber7 >= 75 && randomNumber7 < 90) // 15% chance
+                {
+                    weaponScript.durabilityMultiplier = 0.7f; // Decrease durability by 30%
+                }
+                else if (randomNumber7 >= 90 && randomNumber7 < 97) // 7% chance
+                {
+                    weaponScript.durabilityMultiplier = 0.6f; // Decrease durability by 40%
+                }
+                else // 3% chance
+                {
+                    weaponScript.durabilityMultiplier = 0.5f; // Decrease durability by 50%
+                }
+                weaponScript.durability = 100f * weaponScript.durabilityMultiplier;
+            }
+            else // If enemy
+            {
+                enemyWeaponScript.hasAlteredDurability = true;
+                if (randomNumber7 < 50) // 50% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 0.9f; // Decrease durability by 10%
+                }
+                else if (randomNumber7 >= 50 && randomNumber7 < 75) // 25% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 0.8f; // Decrease durability by 20%
+                }
+                else if (randomNumber7 >= 75 && randomNumber7 < 90) // 15% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 0.7f; // Decrease durability by 30%
+                }
+                else if (randomNumber7 >= 90 && randomNumber7 < 97) // 7% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 0.6f; // Decrease durability by 40%
+                }
+                else // 3% chance
+                {
+                    enemyWeaponScript.durabilityMultiplier = 0.5f; // Decrease durability by 50%
+                }
+                enemyWeaponScript.durability = 100f * enemyWeaponScript.durabilityMultiplier;
+            }
+        }
+        else
+        {
+            if (rootTag == "Player")
+            {
+                weaponScript.durability = 100f;
+            }
+            else // If enemy
+            {
+                enemyWeaponScript.durability = 100f;
+            }
+        }
+    }
+
+    void DetermineWeaponAccuracy()
     {
         // Subtracting from inaccuracyFactor increases accuracy
         // And vice versa for adding to inaccuracyFactor
@@ -67,15 +193,15 @@ public class WeaponPerks : MonoBehaviour {
                 {
                     weaponScript.inaccuracyFactor -= 0.015f; // Increase accuracy barely
                 }
-                else if (randomNumber3 >= 50 && randomNumber3 < 75) // 25% chance
+                else if (randomNumber5 >= 50 && randomNumber5 < 75) // 25% chance
                 {
                     weaponScript.inaccuracyFactor -= 0.03f; // Increase accuracy slightly
                 }
-                else if (randomNumber3 >= 75 && randomNumber3 < 90) // 15% chance
+                else if (randomNumber5 >= 75 && randomNumber5 < 90) // 15% chance
                 {
                     weaponScript.inaccuracyFactor -= 0.045f; // Increase accuracy moderately
                 }
-                else if (randomNumber3 >= 90 && randomNumber3 < 97) // 7% chance
+                else if (randomNumber5 >= 90 && randomNumber5 < 97) // 7% chance
                 {
                     weaponScript.inaccuracyFactor -= 0.06f; // Increase accuracy greatly
                 }
@@ -91,15 +217,15 @@ public class WeaponPerks : MonoBehaviour {
                 {
                     enemyWeaponScript.inaccuracyFactor -= 0.015f; // Increase accuracy barely
                 }
-                else if (randomNumber3 >= 50 && randomNumber3 < 75) // 25% chance
+                else if (randomNumber5 >= 50 && randomNumber5 < 75) // 25% chance
                 {
                     enemyWeaponScript.inaccuracyFactor -= 0.03f; // Increase accuracy slightly
                 }
-                else if (randomNumber3 >= 75 && randomNumber3 < 90) // 15% chance
+                else if (randomNumber5 >= 75 && randomNumber5 < 90) // 15% chance
                 {
                     enemyWeaponScript.inaccuracyFactor -= 0.045f; // Increase accuracy moderately
                 }
-                else if (randomNumber3 >= 90 && randomNumber3 < 97) // 7% chance
+                else if (randomNumber5 >= 90 && randomNumber5 < 97) // 7% chance
                 {
                     enemyWeaponScript.inaccuracyFactor -= 0.06f; // Increase accuracy greatly
                 }
@@ -118,15 +244,15 @@ public class WeaponPerks : MonoBehaviour {
                 {
                     weaponScript.inaccuracyFactor += 0.015f; // Decrease accuracy barely
                 }
-                else if (randomNumber3 >= 50 && randomNumber3 < 75) // 25% chance
+                else if (randomNumber5 >= 50 && randomNumber5 < 75) // 25% chance
                 {
                     weaponScript.inaccuracyFactor += 0.03f; // Decrease accuracy slightly
                 }
-                else if (randomNumber3 >= 75 && randomNumber3 < 90) // 15% chance
+                else if (randomNumber5 >= 75 && randomNumber5 < 90) // 15% chance
                 {
                     weaponScript.inaccuracyFactor += 0.045f; // Decrease accuracy moderately
                 }
-                else if (randomNumber3 >= 90 && randomNumber3 < 97) // 7% chance
+                else if (randomNumber5 >= 90 && randomNumber5 < 97) // 7% chance
                 {
                     weaponScript.inaccuracyFactor += 0.06f; // Decrease accuracy greatly
                 }
@@ -142,15 +268,15 @@ public class WeaponPerks : MonoBehaviour {
                 {
                     enemyWeaponScript.inaccuracyFactor += 0.015f; // Decrease accuracy barely
                 }
-                else if (randomNumber3 >= 50 && randomNumber3 < 75) // 25% chance
+                else if (randomNumber5 >= 50 && randomNumber5 < 75) // 25% chance
                 {
                     enemyWeaponScript.inaccuracyFactor += 0.03f; // Decrease accuracy slightly
                 }
-                else if (randomNumber3 >= 75 && randomNumber3 < 90) // 15% chance
+                else if (randomNumber5 >= 75 && randomNumber5 < 90) // 15% chance
                 {
                     enemyWeaponScript.inaccuracyFactor += 0.045f; // Decrease accuracy moderately
                 }
-                else if (randomNumber3 >= 90 && randomNumber3 < 97) // 7% chance
+                else if (randomNumber5 >= 90 && randomNumber5 < 97) // 7% chance
                 {
                     enemyWeaponScript.inaccuracyFactor += 0.06f; // Decrease accuracy greatly
                 }
@@ -171,29 +297,25 @@ public class WeaponPerks : MonoBehaviour {
                 weaponScript.hasIncreasedClipSize = true;
                 if (randomNumber3 < 50) // 50% chance
                 {
-                    weaponScript.clipSizeMultiplier = 1.2f;
-                    weaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * weaponScript.clipSizeMultiplier); // Increase clip size by 20%
+                    weaponScript.clipSizeMultiplier = 1.2f; // Increase clip size by 20%
                 }
                 else if (randomNumber3 >= 50 && randomNumber3 < 75) // 25% chance
                 {
-                    weaponScript.clipSizeMultiplier = 1.4f;
-                    weaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * weaponScript.clipSizeMultiplier); // Increase clip size by 40%
+                    weaponScript.clipSizeMultiplier = 1.4f; // Increase clip size by 40%
                 }
                 else if (randomNumber3 >= 75 && randomNumber3 < 90) // 15% chance
                 {
-                    weaponScript.clipSizeMultiplier = 1.6f;
-                    weaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * weaponScript.clipSizeMultiplier); // Increase clip size by 60%
+                    weaponScript.clipSizeMultiplier = 1.6f; // Increase clip size by 60%
                 }
                 else if (randomNumber3 >= 90 && randomNumber3 < 97) // 7% chance
                 {
-                    weaponScript.clipSizeMultiplier = 1.8f;
-                    weaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * weaponScript.clipSizeMultiplier); // Increase clip size by 80%
+                    weaponScript.clipSizeMultiplier = 1.8f; // Increase clip size by 80%
                 }
                 else // 3% chance
                 {
-                    weaponScript.clipSizeMultiplier = 2.0f;
-                    weaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * weaponScript.clipSizeMultiplier); // Increase clip size by 100%
+                    weaponScript.clipSizeMultiplier = 2.0f; // Increase clip size by 100%
                 }
+                weaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * weaponScript.clipSizeMultiplier);
                 weaponScript.currentAmmoAmount = weaponScript.clipSize;
             }
             else // If enemy
@@ -201,29 +323,25 @@ public class WeaponPerks : MonoBehaviour {
                 enemyWeaponScript.hasIncreasedClipSize = true;
                 if (randomNumber3 < 50) // 50% chance
                 {
-                    enemyWeaponScript.clipSizeMultiplier = 1.2f;
-                    enemyWeaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * enemyWeaponScript.clipSizeMultiplier); // Increase clip size by 20%
+                    enemyWeaponScript.clipSizeMultiplier = 1.2f; // Increase clip size by 20%
                 }
                 else if (randomNumber3 >= 50 && randomNumber3 < 75) // 25% chance
                 {
-                    enemyWeaponScript.clipSizeMultiplier = 1.4f;
-                    enemyWeaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * enemyWeaponScript.clipSizeMultiplier); // Increase clip size by 40%
+                    enemyWeaponScript.clipSizeMultiplier = 1.4f; // Increase clip size by 40%
                 }
                 else if (randomNumber3 >= 75 && randomNumber3 < 90) // 15% chance
                 {
-                    enemyWeaponScript.clipSizeMultiplier = 1.6f;
-                    enemyWeaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * enemyWeaponScript.clipSizeMultiplier); // Increase clip size by 60%
+                    enemyWeaponScript.clipSizeMultiplier = 1.6f; // Increase clip size by 60%
                 }
                 else if (randomNumber3 >= 90 && randomNumber3 < 97) // 7% chance
                 {
-                    enemyWeaponScript.clipSizeMultiplier = 1.8f;
-                    enemyWeaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * enemyWeaponScript.clipSizeMultiplier); // Increase clip size by 80%
+                    enemyWeaponScript.clipSizeMultiplier = 1.8f; // Increase clip size by 80%
                 }
                 else // 3% chance
                 {
-                    enemyWeaponScript.clipSizeMultiplier = 2.0f;
-                    enemyWeaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * enemyWeaponScript.clipSizeMultiplier); // Increase clip size by 100%
+                    enemyWeaponScript.clipSizeMultiplier = 2.0f; // Increase clip size by 100%
                 }
+                enemyWeaponScript.clipSize = (int)Mathf.Round(thisWeapon.ClipSize * enemyWeaponScript.clipSizeMultiplier);
                 enemyWeaponScript.currentAmmoAmount = enemyWeaponScript.clipSize;
             }
         }

@@ -37,6 +37,7 @@ public class Hotbar : MonoBehaviour {
 
     public Color32 equippedColor = new Color32(138, 181, 246, 255);
     public Color32 unequippedColor = new Color32(255, 255, 255, 255);
+    public Color32 brokenColor = new Color32(236, 92, 97, 255);
 
     public List<Item> items = new List<Item>();
 
@@ -74,15 +75,40 @@ public class Hotbar : MonoBehaviour {
     {
         SwapWeapon();
         DisplayAmmo();
+
         if (secondaryWeapon != null)
         {
             secondaryWeapon.tag = "SecondaryWeapon";
+            if (secondaryWeapon.GetComponent<Weapon>().durability <= 0)
+                secondaryWeapon.GetComponent<Weapon>().isBroken = true;
         }
+
+        SetBrokenWeaponSlotColor();
 
         currentWeaponScript = currentlyEquippedWeapon.GetComponent<Weapon>();
         // print("Currently equipped weapon: " + currentlyEquippedWeapon);
         // print("Secondary weapon: " + secondaryWeapon);
         // print("Current weapon slot: " + currentlyEquippedWeaponSlot);
+    }
+
+    void SetBrokenWeaponSlotColor()
+    {
+        if (currentlyEquippedWeaponSlot == 1)
+        {
+            if (currentlyEquippedWeapon.GetComponent<Weapon>().isBroken)
+                weaponSlot1.GetComponent<Image>().color = brokenColor;
+
+            if (secondaryWeapon != null && secondaryWeapon.GetComponent<Weapon>().isBroken)
+                weaponSlot2.GetComponent<Image>().color = brokenColor;
+        }
+        else if (currentlyEquippedWeaponSlot == 2)
+        {
+            if (currentlyEquippedWeapon.GetComponent<Weapon>().isBroken)
+                weaponSlot2.GetComponent<Image>().color = brokenColor;
+
+            if (secondaryWeapon != null && secondaryWeapon.GetComponent<Weapon>().isBroken)
+                weaponSlot1.GetComponent<Image>().color = brokenColor;
+        }
     }
 
     public void EquipWeapon(int id)
@@ -100,8 +126,9 @@ public class Hotbar : MonoBehaviour {
                 {
                     weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + currentlyEquippedWeapon.name + " Item Drop") as GameObject;
                     // Currently equipped weapon and slot and secondary weapon ammo amount are set in the WeaponPickup script
-                    DropWeapon(weaponToDrop, currentWeaponScript.currentAmmoAmount, currentWeaponScript.clipSize, currentWeaponScript.ammoType, currentWeaponScript.damage, currentWeaponScript.fireRate, 
-                                currentWeaponScript.isSilenced, currentWeaponScript.hasIncreasedClipSize, currentWeaponScript.clipSizeMultiplier, currentWeaponScript.inaccuracyFactor);
+                    DropWeapon(weaponToDrop, currentWeaponScript.currentAmmoAmount, currentWeaponScript.clipSize, currentWeaponScript.ammoType, currentWeaponScript.damage, currentWeaponScript.fireRate, currentWeaponScript.isSilenced, 
+                                currentWeaponScript.hasIncreasedClipSize, currentWeaponScript.clipSizeMultiplier, currentWeaponScript.inaccuracyFactor, currentWeaponScript.durability, currentWeaponScript.hasAlteredDurability, 
+                                currentWeaponScript.durabilityMultiplier);
                 }
             }
             else
@@ -215,7 +242,8 @@ public class Hotbar : MonoBehaviour {
         infoPanel.SetActive(false);
     }
 
-    public void DropWeapon(GameObject weaponToDrop, int currentAmmoAmount, int clipSize, string ammoType, float damage, float fireRate, bool isSilenced, bool hasIncreasedClipSize, float clipSizeMultiplier, float inaccuracyFactor)
+    public void DropWeapon(GameObject weaponToDrop, int currentAmmoAmount, int clipSize, string ammoType, float damage, float fireRate, bool isSilenced, bool hasIncreasedClipSize, float clipSizeMultiplier, 
+                            float inaccuracyFactor, float durability, bool hasAlteredDurability, float durabilityMultiplier)
     {
         GameObject droppedWeapon = Instantiate(weaponToDrop);
         droppedWeapon.transform.position = player.transform.position + new Vector3(0, .2f);
@@ -228,6 +256,9 @@ public class Hotbar : MonoBehaviour {
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().hasIncreasedClipSize = hasIncreasedClipSize;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().clipSizeMultiplier = clipSizeMultiplier;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().inaccuracyFactor = inaccuracyFactor;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().durability = durability;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().hasAlteredDurability = hasAlteredDurability;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().durabilityMultiplier = durabilityMultiplier;
     }
 
     void SwapWeapon()
@@ -253,7 +284,7 @@ public class Hotbar : MonoBehaviour {
                         weaponObject.SetActive(true);
                         weaponObject.tag = "EquippedWeapon";
                         currentlyEquippedWeapon = weaponObject;
-
+                        
                         weaponSlot1.GetComponent<Image>().color = equippedColor;
                         weaponSlot2.GetComponent<Image>().color = unequippedColor;
                     }
@@ -353,6 +384,7 @@ public class Hotbar : MonoBehaviour {
                             secondaryWeaponClipSize = currentlyEquippedWeapon.GetComponent<Weapon>().clipSize;
                             secondaryWeaponAmmoType = currentlyEquippedWeapon.GetComponent<Weapon>().ammoType;
                             secondaryWeapon = currentlyEquippedWeapon;
+                            secondaryWeapon.tag = "SecondaryWeapon";
 
                             weaponObject.SetActive(true);
                             weaponObject.tag = "EquippedWeapon";

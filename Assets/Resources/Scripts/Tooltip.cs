@@ -13,9 +13,14 @@ public class Tooltip : MonoBehaviour
 
     Color32 greenColor = new Color32(66, 255, 66, 255); // Green
     Color32 redColor = new Color32(255, 40, 0, 255); // Red
+
     string greenTextColor;
     string accuracyTextColor;
     string secondaryAccuracyTextColor;
+    string durabilityTextColor;
+    string secondaryDurabilityTextColor;
+    string brokenWeaponColor;
+    string secondaryBrokenWeaponColor;
 
     string equippedFireRateText;
     string secondaryFireRateText;
@@ -44,6 +49,9 @@ public class Tooltip : MonoBehaviour
     string equippedBasicallyUselessNameAddOn;
     string secondaryBasicallyUselessNameAddOn;
 
+    string brokenNameAddOn;
+    string secondaryBrokenNameAddOn;
+
     string equippedSilencedText;
     string secondarySilencedText;
 
@@ -52,6 +60,9 @@ public class Tooltip : MonoBehaviour
 
     string equippedAccuracyText;
     string secondaryAccuracyText;
+
+    string equippedDurabilityText;
+    string secondaryDurabilityText;
 
     void Start()
     {
@@ -68,11 +79,11 @@ public class Tooltip : MonoBehaviour
         {
             if (hotbar.weaponSlot1.transform.childCount == 3 && item.ItemName == hotbar.weaponSlot1.transform.GetChild(2).name)
             {
-                tooltip.transform.position = hotbar.weaponSlot1.transform.position + new Vector3(-138, 360);
+                tooltip.transform.position = hotbar.weaponSlot1.transform.position + new Vector3(-138, 400);
             }
             else if (hotbar.weaponSlot2.transform.childCount == 3 && item.ItemName == hotbar.weaponSlot2.transform.GetChild(2).name)
             {
-                tooltip.transform.position = hotbar.weaponSlot2.transform.position + new Vector3(-138, 360);
+                tooltip.transform.position = hotbar.weaponSlot2.transform.position + new Vector3(-138, 400);
             }
             else
             {
@@ -116,7 +127,7 @@ public class Tooltip : MonoBehaviour
                 || (hotbar.currentlyEquippedWeaponSlot == 2 && hotbar.weaponSlot2.transform.GetChild(2).name == item.ItemName))
             {
                 data = "<size=22px>"
-                    + equippedBasicallyUselessNameAddOn + equippedNearPerfectNameAddOn + equippedPerfectNameAddOn 
+                    + brokenNameAddOn + equippedBasicallyUselessNameAddOn + equippedNearPerfectNameAddOn + equippedPerfectNameAddOn 
                     + equippedTaintedNameAddOn + equippedFireRateNameAddOn + equippedDamageNameAddOn + equippedAverageNameAddOn
                     + currentWeapon.name + "</size>\n\n"
                     + item.ItemDescription + "\n"
@@ -125,16 +136,17 @@ public class Tooltip : MonoBehaviour
                     + equippedClipSizeText
                     + "</color>"
                     + "<color=#" + accuracyTextColor + ">" + equippedAccuracyText + "</color>"
+                    + "<color=#" + durabilityTextColor + ">" + equippedDurabilityText + "</color>"
                     + "\n" + currentWeapon.actionType
                     + "\n\nDamage: " + currentWeapon.damage
                     + equippedFireRateText
-                    + "\n\nClip Size: " + currentWeapon.clipSize
+                    + "\n\n<color=#" + brokenWeaponColor + ">" + "Durability: " + currentWeapon.durability + "%" + "</color>"
                     + "\n\nAmmo Type: " + item.AmmoType;
             }
             else
             {
                 data = "<size=22px>"
-                    + secondaryBasicallyUselessNameAddOn + secondaryNearPerfectNameAddOn + secondaryPerfectNameAddOn 
+                    + secondaryBrokenNameAddOn + secondaryBasicallyUselessNameAddOn + secondaryNearPerfectNameAddOn + secondaryPerfectNameAddOn 
                     + secondaryTaintedNameAddOn + secondaryFireRateNameAddOn + secondaryDamageNameAddOn + secondaryAverageNameAddOn
                     + hotbar.secondaryWeapon.name + "</size>\n\n"
                     + item.ItemDescription + "\n"
@@ -143,10 +155,11 @@ public class Tooltip : MonoBehaviour
                     + secondaryClipSizeText
                     + "</color>"
                     + "<color=#" + secondaryAccuracyTextColor + ">" + secondaryAccuracyText + "</color>"
+                    + "<color=#" + secondaryDurabilityTextColor + ">" + secondaryDurabilityText + "</color>"
                     + "\n" + secondaryWeapon.actionType
                     + "\n\nDamage: " + secondaryWeapon.damage
                     + secondaryFireRateText
-                    + "\n\nClip Size: " + secondaryWeapon.clipSize
+                    + "\n\n<color=#" + secondaryBrokenWeaponColor + ">" + "Durability: " + secondaryWeapon.durability + "%" + "</color>"
                     + "\n\nAmmo Type: " + item.AmmoType;
             }
         }
@@ -267,7 +280,7 @@ public class Tooltip : MonoBehaviour
                 else
                     secondaryAccuracyText = " - Considerably Decreased\n   Accuracy\n";
 
-                if (currentWeapon.inaccuracyFactor < 0)
+                if (secondaryWeapon.inaccuracyFactor < 0)
                 {
                     secondaryAccuracyTextColor = ColorUtility.ToHtmlStringRGBA(greenColor);
                 }
@@ -277,6 +290,81 @@ public class Tooltip : MonoBehaviour
             else
                 secondaryAccuracyText = "";
         }
+
+        if (currentWeapon.hasAlteredDurability)
+        {
+            if (currentWeapon.durabilityMultiplier == 1.2f)
+                equippedDurabilityText = " + Barely Increased Durability\n";
+            else if (currentWeapon.durabilityMultiplier == 1.4f)
+                equippedDurabilityText = " + Slightly Increased\n   Durability\n";
+            else if (currentWeapon.durabilityMultiplier == 1.6f)
+                equippedDurabilityText = " + Moderately Increased\n   Durability\n";
+            else if (currentWeapon.durabilityMultiplier == 1.8f)
+                equippedDurabilityText = " + Greatly Increased Durability\n";
+            else if (currentWeapon.durabilityMultiplier == 2f)
+                equippedDurabilityText = " + Considerably Increased\n   Durability\n";
+            else if (currentWeapon.durabilityMultiplier == 0.9f)
+                equippedDurabilityText = " - Barely Decreased Durability\n";
+            else if (currentWeapon.durabilityMultiplier == 0.8f)
+                equippedDurabilityText = " - Slightly Decreased\n   Durability\n";
+            else if (currentWeapon.durabilityMultiplier == 0.7f)
+                equippedDurabilityText = " - Moderately Decreased\n   Durability\n";
+            else if (currentWeapon.durabilityMultiplier == 0.6f)
+                equippedDurabilityText = " - Greatly Decreased Durability\n";
+            else
+                equippedDurabilityText = " - Considerably Decreased\n   Durability\n";
+
+            if (currentWeapon.durabilityMultiplier > 1)
+                durabilityTextColor = ColorUtility.ToHtmlStringRGBA(greenColor);
+            else
+                durabilityTextColor = ColorUtility.ToHtmlStringRGBA(redColor);
+
+            if (currentWeapon.isBroken)
+            {
+                brokenWeaponColor = ColorUtility.ToHtmlStringRGBA(redColor);
+            }
+        }
+        else
+            equippedDurabilityText = "";
+
+        if (hotbar.secondaryWeapon != null)
+        {
+            if (secondaryWeapon.hasAlteredDurability)
+            {
+                if (secondaryWeapon.durabilityMultiplier == 1.2f)
+                    secondaryDurabilityText = " + Barely Increased Durability\n";
+                else if (secondaryWeapon.durabilityMultiplier == 1.4f)
+                    secondaryDurabilityText = " + Slightly Increased\n   Durability\n";
+                else if (secondaryWeapon.durabilityMultiplier == 1.6f)
+                    secondaryDurabilityText = " + Moderately Increased\n   Durability\n";
+                else if (secondaryWeapon.durabilityMultiplier == 1.8f)
+                    secondaryDurabilityText = " + Greatly Increased Durability\n";
+                else if (secondaryWeapon.durabilityMultiplier == 2f)
+                    secondaryDurabilityText = " + Considerably Increased\n   Durability\n";
+                else if (secondaryWeapon.durabilityMultiplier == 0.9f)
+                    secondaryDurabilityText = " - Barely Decreased Durability\n";
+                else if (secondaryWeapon.durabilityMultiplier == 0.8f)
+                    secondaryDurabilityText = " - Slightly Decreased\n   Durability\n";
+                else if (secondaryWeapon.durabilityMultiplier == 0.7f)
+                    secondaryDurabilityText = " - Moderately Decreased\n   Durability\n";
+                else if (secondaryWeapon.durabilityMultiplier == 0.6f)
+                    secondaryDurabilityText = " - Greatly Decreased Durability\n";
+                else
+                    secondaryDurabilityText = " - Considerably Decreased\n   Durability\n";
+
+                if (secondaryWeapon.durabilityMultiplier > 1)
+                    secondaryDurabilityTextColor = ColorUtility.ToHtmlStringRGBA(greenColor);
+                else
+                    secondaryDurabilityTextColor = ColorUtility.ToHtmlStringRGBA(redColor);
+
+                if (secondaryWeapon.isBroken)
+                {
+                    secondaryBrokenWeaponColor = ColorUtility.ToHtmlStringRGBA(redColor);
+                }
+            }
+        }
+        else
+            secondaryDurabilityText = "";
     }
 
     private void DetermineFireRateText()
@@ -285,9 +373,7 @@ public class Tooltip : MonoBehaviour
         {
             equippedFireRateText = "\n\nFire Rate: " + currentWeapon.fireRate + " rounds/second";
             if (hotbar.secondaryWeapon != null)
-            {
                 secondaryFireRateText = "\n\nFire Rate: " + secondaryWeapon.fireRate + " rounds/second";
-            }
         }
         else
         {
@@ -466,7 +552,7 @@ public class Tooltip : MonoBehaviour
         {
             equippedFireRateNameAddOn = "";
             equippedDamageNameAddOn = "";
-            equippedBasicallyUselessNameAddOn = "Basically Useless: ";
+            equippedBasicallyUselessNameAddOn = "Basically Useless ";
         }
         else
             equippedBasicallyUselessNameAddOn = "";
@@ -480,10 +566,23 @@ public class Tooltip : MonoBehaviour
             {
                 secondaryFireRateNameAddOn = "";
                 secondaryDamageNameAddOn = "";
-                secondaryBasicallyUselessNameAddOn = "Basically Useless: ";
+                secondaryBasicallyUselessNameAddOn = "Basically Useless ";
             }
             else
                 secondaryBasicallyUselessNameAddOn = "";
+        }
+
+        if (currentWeapon.isBroken)
+            brokenNameAddOn = "Broken ";
+        else
+            brokenNameAddOn = "";
+
+        if (hotbar.secondaryWeapon != null)
+        {
+            if (secondaryWeapon.isBroken)
+                secondaryBrokenNameAddOn = "Broken ";
+            else
+                secondaryBrokenNameAddOn = "";
         }
     }
 }

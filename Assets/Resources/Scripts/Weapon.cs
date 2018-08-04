@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour 
@@ -14,23 +15,28 @@ public class Weapon : MonoBehaviour
     public string ammoType;
     public int clipSize;
     public int currentAmmoAmount;
+    public float durability;
+    public float durabilityUse;
     public string actionType;
+    public bool isBroken = false;
     public bool isTwoHanded = false;
     public bool isShotgun = false;
     public bool isBoltAction = false;
     public bool isSniper = false;
-    private bool canShoot = true;
+    private bool coolDownFinished = true;
     [Tooltip("Only for use with shotgun, rpg, and grenade launcher.")]
     public float coolDownTime = 1f; // For shotgun
 
     [Header("Actual size will depend on parent object size:")]
     public int soundRadius;
 
-    [Header("Perk Variables:")]
+    [Header("Perk Variables:")] // Mostly for tooltip use
     public bool isSilenced = false;
     public bool hasIncreasedClipSize = false;
     public float clipSizeMultiplier;
     public bool hasAlteredInaccuracyFactor = false;
+    public bool hasAlteredDurability = false;
+    public float durabilityMultiplier;
 
     [Header("Effects:")]
     public Transform BulletTrailPrefab;
@@ -86,6 +92,7 @@ public class Weapon : MonoBehaviour
         ammoType = weaponItem.AmmoType;
         actionType = weaponItem.ActionType;
         soundRadius = weaponItem.SoundRadius;
+        durabilityUse = weaponItem.DurabilityUse;
 
         if (player.hasEquippedStartingWeapon == false) // This section is only for the players starting weapon, otherwise these stats will be determined by the WeaponPickup script
         {
@@ -97,9 +104,7 @@ public class Weapon : MonoBehaviour
 
             finalAccuracyFactor = player.playerStats.inaccuracyFactor + inaccuracyFactor;
             if (finalAccuracyFactor < 0)
-            {
                 finalAccuracyFactor = 0;
-            }
 
             player.hasEquippedStartingWeapon = true;
         }
@@ -136,18 +141,19 @@ public class Weapon : MonoBehaviour
         if (Input.GetButton("Fire2") && player.isDead == false) // Holding right click
         {
             Vector2 mousePosition = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-            if (Vector2.Distance(mousePosition, player.transform.position) > 0.4)
+            if (Vector2.Distance(mousePosition, player.transform.position) > 0.4 && isBroken == false && currentAmmoAmount > 0)
             {
                 if (fireRate == 1)
                 {
                     // print("fire rate is 1");
-                    if (Input.GetButtonDown("Fire1") && canShoot && currentAmmoAmount > 0) // Left click while holding right click
+                    if (Input.GetButtonDown("Fire1") && coolDownFinished) // Left click while holding right click
                     {
                         Shoot();
                         DecreaseAmmo();
+                        DecreaseDurability();
                         if (isShotgun || isBoltAction)
                         {
-                            canShoot = false;
+                            coolDownFinished = false;
                             Invoke("CooledDown", coolDownTime);
                         }
                         produceSoundTriggerScript.SoundTrigger(soundRadius);
@@ -156,22 +162,27 @@ public class Weapon : MonoBehaviour
                 }
                 else
                 {
-                    if (Input.GetButton("Fire1") && Time.time > timeToFire && currentAmmoAmount > 0) // For automatic guns
+                    if (Input.GetButton("Fire1") && Time.time > timeToFire) // For automatic guns
                     {
                         timeToFire = Time.time + 1 / fireRate;
                         Shoot();
                         DecreaseAmmo();
+                        DecreaseDurability();
                         produceSoundTriggerScript.SoundTrigger(soundRadius);
                         audioManager.PlaySound(gunfireSoundName);
                     }
                 }
+            }
+            else if (Input.GetButtonDown("Fire1") && (isBroken || currentAmmoAmount <= 0))
+            {
+                audioManager.PlaySound("Empty Clip");
             }
         }
     }
 
     void CooledDown()
     {
-        canShoot = true;
+        coolDownFinished = true;
     }
 
     void Shoot()
@@ -288,6 +299,17 @@ public class Weapon : MonoBehaviour
     public void DecreaseAmmo()
     {
         currentAmmoAmount--;
+    }
+
+    void DecreaseDurability()
+    {
+        durability -= durabilityUse;
+        durability = Mathf.Round(durability * 100.0f) / 100.0f;
+        if (durability <= 0)
+        {
+            isBroken = true;
+            durability = 0.0f;
+        }
     }
 
     public void DetermineSoundName()

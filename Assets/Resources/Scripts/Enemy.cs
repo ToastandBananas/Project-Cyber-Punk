@@ -190,8 +190,9 @@ public class Enemy : MonoBehaviour {
                 enemyWeaponScript = enemyWeapon.transform.GetComponent<EnemyWeapon>();
             }
             // Drop held weapon with current amount of ammo and specify the ammo type (so that it can be accessed when the player tries to pick up ammo in the WeaponPickup script's PickUpAmmo() method)
-            lootDropScript.DropWeapon(enemyWeaponScript.currentAmmoAmount, enemyWeaponScript.clipSize, enemyWeaponScript.ammoType, enemyWeaponScript.damage, enemyWeaponScript.playerFireRate, 
-                                        enemyWeaponScript.isSilenced, enemyWeaponScript.hasIncreasedClipSize, enemyWeaponScript.clipSizeMultiplier, enemyWeaponScript.inaccuracyFactor);
+            lootDropScript.DropWeapon(enemyWeaponScript.currentAmmoAmount, enemyWeaponScript.clipSize, enemyWeaponScript.ammoType, enemyWeaponScript.damage, enemyWeaponScript.playerFireRate, enemyWeaponScript.isSilenced, 
+                                        enemyWeaponScript.hasIncreasedClipSize, enemyWeaponScript.clipSizeMultiplier, enemyWeaponScript.inaccuracyFactor, enemyWeaponScript.durability, enemyWeaponScript.hasAlteredDurability,
+                                        enemyWeaponScript.durabilityMultiplier);
 
             lootBoxCollider.enabled = true;
             sightCollider.enabled = false;

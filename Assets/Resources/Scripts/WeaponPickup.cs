@@ -15,9 +15,12 @@ public class WeaponPickup : MonoBehaviour
     Item item;
 
     GameObject playerArm;
-    Weapon playerEquippedWeapon;
-    GameObject playerSecondaryWeapon;
+    Weapon equippedWeaponScript;
+    Weapon secondaryWeaponScript;
+    GameObject secondaryWeapon;
     Player player;
+
+    AudioManager audioManager;
 
     GameObject weaponPrefab;
     public int weaponID;
@@ -28,10 +31,13 @@ public class WeaponPickup : MonoBehaviour
     public int clipSize;
     public float damage;
     public float fireRate;
+    public float durability;
     public bool isSilenced;
     public bool hasIncreasedClipSize;
     public float clipSizeMultiplier;
     public float inaccuracyFactor;
+    public bool hasAlteredDurability;
+    public float durabilityMultiplier;
 
     int roomInPlayersEquippedWeaponClip;
     int roomInPlayersSecondaryWeaponClip;
@@ -50,14 +56,23 @@ public class WeaponPickup : MonoBehaviour
         itemDatabase = GameObject.Find("Hotbar").GetComponent<ItemDatabase>();
 
         playerArm = GameObject.Find("Arm");
-        playerEquippedWeapon = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
-        playerSecondaryWeapon = hotbarScript.secondaryWeapon;
+        equippedWeaponScript = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
+
+        audioManager = AudioManager.instance;
+        if (audioManager == null)
+        {
+            Debug.LogError("No audio manager in scene.");
+        }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        playerEquippedWeapon = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
-        playerSecondaryWeapon = hotbarScript.secondaryWeapon;
+        equippedWeaponScript = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
+        secondaryWeapon = hotbarScript.secondaryWeapon;
+        if (secondaryWeapon != null)
+        {
+            secondaryWeaponScript = secondaryWeapon.GetComponent<Weapon>();
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -78,7 +93,7 @@ public class WeaponPickup : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Q) && player.itemToPickup == gameObject)
                 {
-                    if (playerEquippedWeapon.name != this.name && (playerSecondaryWeapon == null || playerSecondaryWeapon.name != this.name)) // The player may not have two of the same weapon
+                    if (equippedWeaponScript.name != this.name && (secondaryWeapon == null || secondaryWeapon.name != this.name)) // The player may not have two of the same weapon
                     {
                         if (hotbarScript.weaponSlot1.GetComponent<Slot>().isEmpty || hotbarScript.weaponSlot2.GetComponent<Slot>().isEmpty)
                         {
@@ -90,6 +105,7 @@ public class WeaponPickup : MonoBehaviour
                             hotbarScript.secondaryWeapon.GetComponent<Weapon>().isSilenced = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().isSilenced;
                             hotbarScript.secondaryWeapon.GetComponent<Weapon>().hasIncreasedClipSize = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().hasIncreasedClipSize;
                             hotbarScript.secondaryWeapon.GetComponent<Weapon>().clipSizeMultiplier = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().clipSizeMultiplier;
+                            hotbarScript.secondaryWeapon.GetComponent<Weapon>().durabilityMultiplier = hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().durabilityMultiplier;
                         }
 
                         hotbarScript.EquipWeapon(weaponID);
@@ -112,9 +128,10 @@ public class WeaponPickup : MonoBehaviour
                                 hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().inaccuracyFactor = inaccuracyFactor;
                                 hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().finalAccuracyFactor = player.playerStats.inaccuracyFactor + inaccuracyFactor;
                                 if (hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().finalAccuracyFactor < 0)
-                                {
                                     hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().finalAccuracyFactor = 0;
-                                }
+                                hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().hasAlteredDurability = hasAlteredDurability;
+                                hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().durabilityMultiplier = durabilityMultiplier;
+                                hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().durability = durability;
 
                                 hotbarScript.currentlyEquippedWeapon.GetComponent<Weapon>().DetermineSoundName();
                             }
@@ -137,6 +154,61 @@ public class WeaponPickup : MonoBehaviour
 
                         player.timeSinceQPressed = 0f;
                         player.itemToPickup = null;
+                        audioManager.PlaySound("Weapon Pickup");
+                        Destroy(gameObject.transform.parent.gameObject);
+                    }
+                    else if (equippedWeaponScript.name == this.name)
+                    {
+                        GameObject weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + equippedWeaponScript.name + " Item Drop") as GameObject;
+                        hotbarScript.DropWeapon(weaponToDrop, equippedWeaponScript.currentAmmoAmount, equippedWeaponScript.clipSize, equippedWeaponScript.ammoType, equippedWeaponScript.damage,
+                                                equippedWeaponScript.fireRate, equippedWeaponScript.isSilenced, equippedWeaponScript.hasIncreasedClipSize, equippedWeaponScript.clipSizeMultiplier,
+                                                equippedWeaponScript.inaccuracyFactor, equippedWeaponScript.durability, equippedWeaponScript.hasAlteredDurability, equippedWeaponScript.durabilityMultiplier);
+
+                        equippedWeaponScript.clipSize = clipSize;
+                        equippedWeaponScript.currentAmmoAmount = currentAmmoAmount;
+                        equippedWeaponScript.damage = damage;
+                        equippedWeaponScript.fireRate = fireRate;
+                        equippedWeaponScript.isSilenced = isSilenced;
+                        equippedWeaponScript.hasIncreasedClipSize = hasIncreasedClipSize;
+                        equippedWeaponScript.clipSizeMultiplier = clipSizeMultiplier;
+                        equippedWeaponScript.inaccuracyFactor = inaccuracyFactor;
+                        equippedWeaponScript.finalAccuracyFactor = player.playerStats.inaccuracyFactor + inaccuracyFactor;
+                        if (equippedWeaponScript.finalAccuracyFactor < 0)
+                            equippedWeaponScript.finalAccuracyFactor = 0;
+                        equippedWeaponScript.hasAlteredDurability = hasAlteredDurability;
+                        equippedWeaponScript.durabilityMultiplier = durabilityMultiplier;
+                        equippedWeaponScript.durability = durability;
+
+                        player.timeSinceQPressed = 0f;
+                        player.itemToPickup = null;
+                        audioManager.PlaySound("Weapon Pickup");
+                        Destroy(gameObject.transform.parent.gameObject);
+                    }
+                    else if (secondaryWeapon != null && secondaryWeapon.name == this.name)
+                    {
+                        GameObject weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + secondaryWeapon.name + " Item Drop") as GameObject;
+                        hotbarScript.DropWeapon(weaponToDrop, secondaryWeaponScript.currentAmmoAmount, secondaryWeaponScript.clipSize, secondaryWeaponScript.ammoType, secondaryWeaponScript.damage,
+                                                secondaryWeaponScript.fireRate, secondaryWeaponScript.isSilenced, secondaryWeaponScript.hasIncreasedClipSize, secondaryWeaponScript.clipSizeMultiplier,
+                                                secondaryWeaponScript.inaccuracyFactor, secondaryWeaponScript.durability, secondaryWeaponScript.hasAlteredDurability, secondaryWeaponScript.durabilityMultiplier);
+
+                        secondaryWeaponScript.clipSize = clipSize;
+                        secondaryWeaponScript.currentAmmoAmount = currentAmmoAmount;
+                        secondaryWeaponScript.damage = damage;
+                        secondaryWeaponScript.fireRate = fireRate;
+                        secondaryWeaponScript.isSilenced = isSilenced;
+                        secondaryWeaponScript.hasIncreasedClipSize = hasIncreasedClipSize;
+                        secondaryWeaponScript.clipSizeMultiplier = clipSizeMultiplier;
+                        secondaryWeaponScript.inaccuracyFactor = inaccuracyFactor;
+                        secondaryWeaponScript.finalAccuracyFactor = player.playerStats.inaccuracyFactor + inaccuracyFactor;
+                        if (secondaryWeaponScript.finalAccuracyFactor < 0)
+                            secondaryWeaponScript.finalAccuracyFactor = 0;
+                        secondaryWeaponScript.hasAlteredDurability = hasAlteredDurability;
+                        secondaryWeaponScript.durabilityMultiplier = durabilityMultiplier;
+                        secondaryWeaponScript.durability = durability;
+
+                        player.timeSinceQPressed = 0f;
+                        player.itemToPickup = null;
+                        audioManager.PlaySound("Weapon Pickup");
                         Destroy(gameObject.transform.parent.gameObject);
                     }
                 }
@@ -146,25 +218,25 @@ public class WeaponPickup : MonoBehaviour
 
     private void PickUpAmmo()
     {
-        if (playerEquippedWeapon.currentAmmoAmount < playerEquippedWeapon.clipSize && playerEquippedWeapon.ammoType == ammoType)
+        if (equippedWeaponScript.currentAmmoAmount < equippedWeaponScript.clipSize && equippedWeaponScript.ammoType == ammoType)
         {
-            roomInPlayersEquippedWeaponClip = playerEquippedWeapon.clipSize - playerEquippedWeapon.currentAmmoAmount;
+            roomInPlayersEquippedWeaponClip = equippedWeaponScript.clipSize - equippedWeaponScript.currentAmmoAmount;
 
             while (this.currentAmmoAmount > 0 && roomInPlayersEquippedWeaponClip > 0)
             {
                 this.currentAmmoAmount--;
-                playerEquippedWeapon.IncreaseAmmo(1);
+                equippedWeaponScript.IncreaseAmmo(1);
                 roomInPlayersEquippedWeaponClip--;
             }
         }
         else if (hotbarScript.secondaryWeaponAmmoAmount < hotbarScript.secondaryWeaponClipSize && hotbarScript.secondaryWeaponAmmoType == ammoType)
         {
-            roomInPlayersSecondaryWeaponClip = playerSecondaryWeapon.GetComponent<Weapon>().clipSize - playerSecondaryWeapon.GetComponent<Weapon>().currentAmmoAmount;
+            roomInPlayersSecondaryWeaponClip = secondaryWeapon.GetComponent<Weapon>().clipSize - secondaryWeapon.GetComponent<Weapon>().currentAmmoAmount;
 
             while (this.currentAmmoAmount > 0 && roomInPlayersSecondaryWeaponClip > 0)
             {
                 this.currentAmmoAmount--;
-                playerSecondaryWeapon.GetComponent<Weapon>().currentAmmoAmount++;
+                secondaryWeapon.GetComponent<Weapon>().currentAmmoAmount++;
                 roomInPlayersSecondaryWeaponClip--;
             }
         }

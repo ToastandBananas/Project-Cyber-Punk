@@ -50,6 +50,7 @@ public class ItemDatabase : MonoBehaviour
                 (float)itemData[i]["minFireRate"],
                 (float)itemData[i]["maxFireRate"],
                 (int)itemData[i]["soundRadius"],
+                (float)itemData[i]["durabilityUse"],
                 (bool)itemData[i]["stackable"],
                 itemData[i]["actionType"].ToString(),
                 (Item.ItemType)System.Enum.Parse(typeof(Item.ItemType), itemData[i]["type"].ToString())
@@ -70,6 +71,7 @@ public class Item
     public float MinFireRate { get; set; }
     public float MaxFireRate { get; set; }
     public int SoundRadius { get; set; }
+    public float DurabilityUse { get; set; }
     public bool Stackable { get; set; }
     public string ActionType { get; set; }
     public Sprite Sprite { get; set; }
@@ -84,7 +86,8 @@ public class Item
     }
     public ItemType Type { get; set; }
 
-    public Item(int id, string name, string description, float minDamage, float maxDamage, int clipSize, string ammoType, float minFireRate, float maxFireRate, int soundRadius, bool stackable, string actionType, ItemType type) // For guns
+    public Item(int id, string name, string description, float minDamage, float maxDamage, int clipSize, string ammoType, float minFireRate, float maxFireRate, 
+                int soundRadius, float durabilityUse, bool stackable, string actionType, ItemType type) // For guns
     {
         ItemID = id;
         ItemName = name;
@@ -96,6 +99,7 @@ public class Item
         MinFireRate = minFireRate;
         MaxFireRate = maxFireRate;
         SoundRadius = soundRadius;
+        DurabilityUse = durabilityUse;
         Stackable = stackable;
         ActionType = actionType;
         Sprite = Resources.Load<Sprite>("Prefabs/UI/ItemIcons/" + name);

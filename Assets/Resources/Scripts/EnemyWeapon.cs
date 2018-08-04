@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,6 +22,8 @@ public class EnemyWeapon : MonoBehaviour {
     public string ammoType;
     public int clipSize;
     public int currentAmmoAmount;
+    public float durability;
+    public float durabilityUse;
     public string actionType;
     public bool isTwoHanded = false;
     public bool isBoltAction = false;
@@ -29,11 +32,13 @@ public class EnemyWeapon : MonoBehaviour {
     [Header("Actual size will depend on parent object size:")]
     public int soundRadius;
 
-    [Header("Perk Variables:")]
+    [Header("Perk Variables:")] // Mostly for tooltip use
     public bool isSilenced = false;
-    public bool hasIncreasedClipSize = false; // For tooltip use
-    public float clipSizeMultiplier; // For tooltip use
-    public bool hasAlteredInaccuracyFactor = false; // For tooltip use
+    public bool hasIncreasedClipSize = false;
+    public float clipSizeMultiplier;
+    public bool hasAlteredInaccuracyFactor = false;
+    public bool hasAlteredDurability = false;
+    public float durabilityMultiplier;
 
     private float initialWaitToShootTime;
 
@@ -116,6 +121,7 @@ public class EnemyWeapon : MonoBehaviour {
         autoCoolDownTime = Mathf.Round((1 / playerFireRate) * 100.0f) / 100.0f;
         actionType = weaponItem.ActionType;
         soundRadius = weaponItem.SoundRadius;
+        durabilityUse = weaponItem.DurabilityUse;
 
         weaponPerksScript.RandomizePerks(weaponID);
 
@@ -252,6 +258,7 @@ public class EnemyWeapon : MonoBehaviour {
             audioManager.PlaySound(gunfireSoundName);
 
             DecreaseAmmo();
+            DecreaseDurability();
 
             isCoolingDown = true;
             yield return new WaitForSeconds(coolDownTime);
@@ -310,6 +317,15 @@ public class EnemyWeapon : MonoBehaviour {
     public void DecreaseAmmo()
     {
         currentAmmoAmount--;
+    }
+
+    void DecreaseDurability()
+    {
+        durability -= Mathf.Round(durabilityUse * 100.0f) / 100.0f;
+        if (durability < 25)
+        {
+            durability = 25;
+        }
     }
 
     public void DetermineSoundName()

@@ -18,7 +18,8 @@ public class LootDrop : MonoBehaviour
         enemyArm = transform.Find("EnemyArm").gameObject;
 	}
 
-    public void DropWeapon(int currentAmmoAmount, int clipSize, string ammoType, float damage, float fireRate, bool isSilenced, bool hasIncreasedClipSize, float clipSizeMultiplier, float inaccuracyFactor)
+    public void DropWeapon(int currentAmmoAmount, int clipSize, string ammoType, float damage, float fireRate, bool isSilenced, bool hasIncreasedClipSize, float clipSizeMultiplier, float inaccuracyFactor, 
+                            float durability, bool hasAlteredDurability, float durabilityMultiplier)
     {
         enemyWeapon = enemyArm.transform.GetChild(0).gameObject;
         weaponToDrop = Resources.Load("Prefabs/Items/WeaponDrops/" + enemyWeapon.name + " Item Drop") as GameObject;
@@ -36,6 +37,9 @@ public class LootDrop : MonoBehaviour
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().hasIncreasedClipSize = hasIncreasedClipSize;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().clipSizeMultiplier = clipSizeMultiplier;
         droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().inaccuracyFactor = inaccuracyFactor;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().durability = durability;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().hasAlteredDurability = hasAlteredDurability;
+        droppedWeapon.transform.GetChild(0).GetComponent<WeaponPickup>().durabilityMultiplier = durabilityMultiplier;
     }
     
     //To Do: Randomize gadget drop

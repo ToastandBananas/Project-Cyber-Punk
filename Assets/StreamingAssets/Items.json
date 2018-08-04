@@ -11,6 +11,7 @@
 		"maxFireRate": 10,
 		"actionType": "Automatic",
 		"soundRadius": 45000,
+		"durabilityUse": 2,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -26,6 +27,7 @@
 		"maxFireRate": 1,
 		"actionType": "Bolt-Action",
 		"soundRadius": 35000,
+		"durabilityUse": 4,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -41,6 +43,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 17000,
+		"durabilityUse": 5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -56,6 +59,7 @@
 		"maxFireRate": 1,
 		"actionType": "Bolt-Action",
 		"soundRadius": 38000,
+		"durabilityUse": 5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -71,6 +75,7 @@
 		"maxFireRate": 16,
 		"actionType": "Automatic",
 		"soundRadius": 50000,
+		"durabilityUse": 0.5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -86,6 +91,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 60000,
+		"durabilityUse": 5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -101,6 +107,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 38000,
+		"durabilityUse": 5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -116,6 +123,7 @@
 		"maxFireRate": 12,
 		"actionType": "Automatic",
 		"soundRadius": 70000,
+		"durabilityUse": 1,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -131,6 +139,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 135000,
+		"durabilityUse": 4,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -139,13 +148,14 @@
 		"itemName": "El Toro",
 		"itemDescription": "Powerful little revolver that packs a punch.",
 		"minDamage": 3.5,
-		"maxDamage": 6,
+		"maxDamage": 7,
 		"clipSize": 5,
 		"ammoType": ".45 cal",
 		"minFireRate": 1,
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 160000,
+		"durabilityUse": 3.5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -161,6 +171,7 @@
 		"maxFireRate": 16,
 		"actionType": "Automatic",
 		"soundRadius": 45000,
+		"durabilityUse": 1.75,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -176,6 +187,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 100000,
+		"durabilityUse": 1,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -191,6 +203,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 120000,
+		"durabilityUse": 1.25,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -206,6 +219,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 120000,
+		"durabilityUse": 3,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -221,6 +235,7 @@
 		"maxFireRate": 6.5,
 		"actionType": "Automatic",
 		"soundRadius": 60000,
+		"durabilityUse": 2,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -236,6 +251,7 @@
 		"maxFireRate": 8,
 		"actionType": "Automatic",
 		"soundRadius": 110000,
+		"durabilityUse": 2,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -251,6 +267,7 @@
 		"maxFireRate": 12.5,
 		"actionType": "Automatic",
 		"soundRadius": 80000,
+		"durabilityUse": 1,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -266,6 +283,7 @@
 		"maxFireRate": 13,
 		"actionType": "Automatic",
 		"soundRadius": 45000,
+		"durabilityUse": 1.5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -281,6 +299,7 @@
 		"maxFireRate": 7.5,
 		"actionType": "Automatic",
 		"soundRadius": 110000,
+		"durabilityUse": 2,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -296,6 +315,7 @@
 		"maxFireRate": 10,
 		"actionType": "Automatic",
 		"soundRadius": 55000,
+		"durabilityUse": 0.75,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -311,6 +331,7 @@
 		"maxFireRate": 1,
 		"actionType": "Bolt-Action",
 		"soundRadius": 45000,
+		"durabilityUse": 4,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -326,6 +347,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 38000,
+		"durabilityUse": 4,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -341,6 +363,7 @@
 		"maxFireRate": 1,
 		"actionType": "Pump-Action",
 		"soundRadius": 45000,
+		"durabilityUse": 5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -356,6 +379,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 125000,
+		"durabilityUse": 3,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -371,6 +395,8 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 120000,
+		"durabilityUse": 2,
+		"durabilityUse": 4,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -386,6 +412,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 130000,
+		"durabilityUse": 3,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -401,6 +428,7 @@
 		"maxFireRate": 11,
 		"actionType": "Automatic",
 		"soundRadius": 55000,
+		"durabilityUse": 1.25,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -416,6 +444,7 @@
 		"maxFireRate": 7,
 		"actionType": "Automatic",
 		"soundRadius": 45000,
+		"durabilityUse": 2,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -431,6 +460,7 @@
 		"maxFireRate": 11,
 		"actionType": "Automatic",
 		"soundRadius": 50000,
+		"durabilityUse": 1.25,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -446,6 +476,7 @@
 		"maxFireRate": 8,
 		"actionType": "Automatic",
 		"soundRadius": 70000,
+		"durabilityUse": 1.75,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -461,6 +492,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 45000,
+		"durabilityUse": 5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -476,6 +508,7 @@
 		"maxFireRate": 9,
 		"actionType": "Automatic",
 		"soundRadius": 55000,
+		"durabilityUse": 2,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -491,6 +524,7 @@
 		"maxFireRate": 11,
 		"actionType": "Automatic",
 		"soundRadius": 55000,
+		"durabilityUse": 1.5,
 		"stackable": false,
 		"type": "Gun"
 	},
@@ -506,6 +540,7 @@
 		"maxFireRate": 1,
 		"actionType": "Semi-Automatic",
 		"soundRadius": 125000,
+		"durabilityUse": 4.75,
 		"stackable": false,
 		"type": "Gun"
 	}

@@ -668,7 +668,7 @@ MonoBehaviour:
   secondaryWeaponAmmoType: 
   ammoText1: {fileID: 1253556047132038}
   ammoText2: {fileID: 1315969471279982}
-  startingWeaponID: 4
+  startingWeaponID: 12
   weaponObjects: []
   equippedColor:
     serializedVersion: 2
@@ -676,6 +676,9 @@ MonoBehaviour:
   unequippedColor:
     serializedVersion: 2
     rgba: 4294967295
+  brokenColor:
+    serializedVersion: 2
+    rgba: 4284570860
 --- !u!114 &114018186442766334
 MonoBehaviour:
   m_ObjectHideFlags: 1

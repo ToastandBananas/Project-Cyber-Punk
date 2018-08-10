@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using Pathfinding;
-using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(Seeker))]
 
 public class EnemyMovement : MonoBehaviour {
 
@@ -15,11 +12,8 @@ public class EnemyMovement : MonoBehaviour {
     public float updateRate = 2f;
 
     // Caching
-    private Seeker seeker;
+    //private Seeker seeker;
     private Rigidbody2D rb;
-
-    // The calculated path
-    public Path path;
 
     // The AI's speed per second
     float noSpeed = 0f;
@@ -156,8 +150,7 @@ public class EnemyMovement : MonoBehaviour {
         anim = GetComponent<Animator>();
 
         enemyLocation = transform.localScale;
-
-        seeker = GetComponent<Seeker>();
+        
         rb = GetComponent<Rigidbody2D>();
 
         if (facingRight == false)

@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: c8fadcf8a6b88dc44a81fdf4b8330cdb
-timeCreated: 1473874526
-licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: Agent_Walk_1_0
@@ -14,14 +12,27 @@ TextureImporter:
     21300014: Agent_Walk_1_7
     21300016: Agent_Walk_1_8
     21300018: Agent_Walk_1_9
-  serializedVersion: 2
+    21300020: Agent_Walk_0
+    21300022: Agent_Walk_1
+    21300024: Agent_Walk_2
+    21300026: Agent_Walk_3
+    21300028: Agent_Walk_4
+    21300030: Agent_Walk_5
+    21300032: Agent_Walk_6
+    21300034: Agent_Walk_7
+    21300036: Agent_Walk_8
+    21300038: Agent_Walk_9
+  externalObjects: {}
+  serializedVersion: 7
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -30,256 +41,268 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
-    wrapMode: 1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 100
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: Agent_Walk_1_0
+    - serializedVersion: 2
+      name: Agent_Walk_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 19
+        y: 2
+        width: 22
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: -29}
-        - {x: 11, y: -1}
-        - {x: 8, y: 26}
-        - {x: -8, y: 26}
-        - {x: -15, y: 12}
-        - {x: -15, y: -30}
-        - {x: -10, y: -32}
-        - {x: -8, y: -32}
-        - {x: -6, y: -30}
-        - {x: 4, y: -32}
-        - {x: 8, y: -32}
-    - name: Agent_Walk_1_1
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1ee9ee2969b70344abc824cfa272b83
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
+        x: 85
+        y: 2
+        width: 21
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 12, y: -2}
-        - {x: 5, y: 23}
-        - {x: 4, y: 27}
-        - {x: -6, y: 27}
-        - {x: -9, y: 26}
-        - {x: -13, y: 9}
-        - {x: -13, y: -28}
-        - {x: -10, y: -32}
-        - {x: -9, y: -32}
-        - {x: -4, y: -30}
-        - {x: -5, y: -25}
-        - {x: -2, y: -23}
-        - {x: -3, y: -24}
-        - {x: -3, y: -29}
-        - {x: 0, y: -32}
-        - {x: 5, y: -32}
-        - {x: 7, y: -30}
-        - {x: 7, y: -29}
-        - {x: 12, y: -4}
-    - name: Agent_Walk_1_2
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6b2d0d5f6d0c2049b8ec10bf0c65e57
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
+        x: 149
+        y: 1
+        width: 23
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 6, y: 24}
-        - {x: 4, y: 26}
-        - {x: -4, y: 26}
-        - {x: -8, y: 24}
-        - {x: -13, y: 20}
-        - {x: -13, y: -29}
-        - {x: -12, y: -32}
-        - {x: 1, y: -32}
-        - {x: 3, y: -31}
-        - {x: 14, y: -6}
-        - {x: 14, y: 6}
-    - name: Agent_Walk_1_3
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bfd3549889334c4982b795b6cfbab3c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_3
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
+        x: 211
+        y: 1
+        width: 27
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 7, y: 25}
-        - {x: -5, y: 25}
-        - {x: -15, y: 13}
-        - {x: -15, y: -32}
-        - {x: 9, y: -32}
-        - {x: 10, y: -31}
-        - {x: 9, y: -27}
-        - {x: 16, y: -16}
-        - {x: 16, y: 5}
-    - name: Agent_Walk_1_4
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e5ebb0c96ac604892734542d277353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_4
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
+        x: 275
+        y: 2
+        width: 28
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 7, y: 24}
-        - {x: 3, y: 25}
-        - {x: -5, y: 25}
-        - {x: -15, y: 11}
-        - {x: -15, y: -25}
-        - {x: -11, y: -32}
-        - {x: 13, y: -32}
-        - {x: 16, y: -29}
-        - {x: 17, y: -23}
-        - {x: 17, y: 4}
-    - name: Agent_Walk_1_5
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4734a40bd43581640adce3ba1743cc84
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_5
       rect:
         serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 64
+        x: 341
+        y: 2
+        width: 24
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 6, y: 26}
-        - {x: -13, y: 26}
-        - {x: -13, y: -32}
-        - {x: 8, y: -32}
-        - {x: 15, y: -19}
-        - {x: 15, y: 11}
-        - {x: 7, y: 25}
-    - name: Agent_Walk_1_6
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc2e658a017a48446971794563c85a5b
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_6
       rect:
         serializedVersion: 2
-        x: 384
-        y: 0
-        width: 64
-        height: 64
+        x: 406
+        y: 2
+        width: 20
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -6, y: 27}
-        - {x: -12, y: 17}
-        - {x: -12, y: -8}
-        - {x: -10, y: -29}
-        - {x: -7, y: -32}
-        - {x: 2, y: -32}
-        - {x: 12, y: -17}
-        - {x: 12, y: 17}
-        - {x: 9, y: 27}
-    - name: Agent_Walk_1_7
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f35f81f7910bd06409cad880805ef4af
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_7
       rect:
         serializedVersion: 2
-        x: 448
-        y: 0
-        width: 64
-        height: 64
+        x: 470
+        y: 1
+        width: 18
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: -32}
-        - {x: 10, y: -32}
-        - {x: 10, y: 7}
-        - {x: 9, y: 25}
-        - {x: 5, y: 26}
-        - {x: -5, y: 26}
-        - {x: -12, y: 18}
-    - name: Agent_Walk_1_8
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e844bf4e81f1fc441808de1980c8aa09
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_8
       rect:
         serializedVersion: 2
-        x: 512
-        y: 0
-        width: 64
-        height: 64
+        x: 530
+        y: 2
+        width: 27
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 7, y: -32}
-        - {x: 12, y: -32}
-        - {x: 15, y: -29}
-        - {x: 15, y: -28}
-        - {x: 5, y: 25}
-        - {x: -2, y: 25}
-        - {x: -16, y: 18}
-        - {x: -16, y: -32}
-        - {x: -9, y: -32}
-        - {x: -7, y: -30}
-        - {x: -7, y: -28}
-        - {x: -2, y: -15}
-        - {x: 5, y: -30}
-    - name: Agent_Walk_1_9
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4df1d7b0c098fc247ac3b683bccf74cc
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Agent_Walk_9
       rect:
         serializedVersion: 2
-        x: 576
-        y: 0
-        width: 64
-        height: 64
+        x: 594
+        y: 2
+        width: 26
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 7, y: 25}
-        - {x: 6, y: 26}
-        - {x: -10, y: 26}
-        - {x: -16, y: 13}
-        - {x: -16, y: -31}
-        - {x: -14, y: -32}
-        - {x: -9, y: -32}
-        - {x: -6, y: -31}
-        - {x: -1, y: -32}
-        - {x: 13, y: -32}
-        - {x: 14, y: -30}
-        - {x: 14, y: -27}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc5b60fd5e895604c8b6f5659469cfdd
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 0c6629660f8e5ab4aae78879ea1ede19
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

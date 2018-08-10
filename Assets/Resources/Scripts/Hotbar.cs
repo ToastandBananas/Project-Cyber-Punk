@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Hotbar : MonoBehaviour {
+    public int startingWeaponID;
+
     public GameObject weaponSlot1;
     public GameObject weaponSlot2;
     public GameObject gadgetSlot1;
@@ -27,8 +29,6 @@ public class Hotbar : MonoBehaviour {
     GameObject weaponToDrop;
 
     Player player;
-
-    public int startingWeaponID;
 
     public GameObject[] weaponObjects;
 

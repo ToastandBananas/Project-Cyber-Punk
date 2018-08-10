@@ -9,7 +9,9 @@ public class Door : MonoBehaviour {
     Vector3 playerPosition;
     
     BoxCollider2D doorTriggerCollider;
-    BoxCollider2D doorCollider;
+    PolygonCollider2D doorCollider;
+
+    SFPolygon SFPolygonScript;
 
     bool isNearDoor = false;
 
@@ -31,7 +33,9 @@ public class Door : MonoBehaviour {
         door = transform.parent;
         
         doorTriggerCollider = GetComponent<BoxCollider2D>();
-        doorCollider = door.GetComponent<BoxCollider2D>();
+        doorCollider = door.GetComponent<PolygonCollider2D>();
+
+        SFPolygonScript = door.GetComponent<SFPolygon>();
 
         startDoorState = DoorState.Closed;
         currentDoorState = startDoorState;
@@ -49,16 +53,19 @@ public class Door : MonoBehaviour {
         {
             doorAnim.SetInteger("doorState", 0);
             doorCollider.enabled = true;
+            SFPolygonScript.enabled = true;
         }
         else if (currentDoorState == DoorState.OpenLeft)
         {
             doorAnim.SetInteger("doorState", 1);
             doorCollider.enabled = false;
+            SFPolygonScript.enabled = false;
         }
         else if (currentDoorState == DoorState.OpenRight)
         {
             doorAnim.SetInteger("doorState", 2);
             doorCollider.enabled = false;
+            SFPolygonScript.enabled = false;
         }
         // Debug.Log("Current door state: " + currentDoorState);
 	}

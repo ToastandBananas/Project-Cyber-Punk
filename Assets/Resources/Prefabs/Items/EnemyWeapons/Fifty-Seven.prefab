@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1201199394125118}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1050328279868522
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4014354967420152}
   m_Layer: 8
@@ -29,9 +29,9 @@ GameObject:
 --- !u!1 &1201199394125118
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4437982050850170}
   - component: {fileID: 212546667654655506}
@@ -48,7 +48,7 @@ GameObject:
 --- !u!4 &4014354967420152
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1050328279868522}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -61,7 +61,7 @@ Transform:
 --- !u!4 &4437982050850170
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1201199394125118}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
@@ -75,7 +75,7 @@ Transform:
 --- !u!114 &114182132847249236
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1201199394125118}
   m_Enabled: 1
@@ -87,18 +87,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294960601
   weaponID: 11
+  inaccuracyFactor: 0
+  finalAccuracyFactor: 0
   damage: 1
   ammoType: 5.7mm
   clipSize: 20
   currentAmmoAmount: 0
+  durability: 0
+  durabilityUse: 0
   actionType: 
   isTwoHanded: 0
   isBoltAction: 0
   isSniper: 0
-  isSilenced: 0
   soundRadius: 0
+  isSilenced: 0
   hasIncreasedClipSize: 0
   clipSizeMultiplier: 0
+  hasAlteredInaccuracyFactor: 0
+  hasAlteredDurability: 0
+  durabilityMultiplier: 0
   isShotgun: 0
   semiAutoCoolDownTime: 0.85
   isAutomatic: 0
@@ -116,7 +123,7 @@ MonoBehaviour:
 --- !u!114 &114469144592454182
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1201199394125118}
   m_Enabled: 1
@@ -127,7 +134,7 @@ MonoBehaviour:
 --- !u!114 &114869766971641910
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1201199394125118}
   m_Enabled: 1
@@ -140,7 +147,7 @@ MonoBehaviour:
 --- !u!212 &212546667654655506
 SpriteRenderer:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1201199394125118}
   m_Enabled: 1
@@ -152,7 +159,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 903c7352dda7d41cbad8ce92fb3fa8b5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -182,3 +189,4 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+  m_SpriteSortPoint: 0

@@ -22,7 +22,7 @@ public class EnemyWeaponSwap : MonoBehaviour {
 
     private void ArmSpriteSwap()
     {
-        if (gameObject.transform.childCount == 0 && enemyWeaponScript != null)
+        if (gameObject.transform.childCount == 1 && enemyWeaponScript != null)
         {
             if (enemyWeaponScript.isTwoHanded)
             {
@@ -33,7 +33,7 @@ public class EnemyWeaponSwap : MonoBehaviour {
                 armSpriteRenderer.sprite = oneHandedWeaponArms;
             }
         }
-        else
+        else if (enemyWeaponScript == null)
         {
             enemyWeaponScript = transform.GetComponentInChildren<EnemyWeapon>();
         }

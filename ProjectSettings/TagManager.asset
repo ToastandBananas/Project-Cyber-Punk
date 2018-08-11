@@ -24,6 +24,7 @@ TagManager:
   - InactiveWeapon
   - SecondaryWeapon
   - Wall
+  - Victim
   layers:
   - Default
   - TransparentFX

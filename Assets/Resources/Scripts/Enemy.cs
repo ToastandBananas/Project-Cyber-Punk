@@ -25,8 +25,6 @@ public class Enemy : MonoBehaviour {
         [Header("Note: 0 equals 100% accurate")]
         public float inaccuracyFactor = 0.4f;
 
-        public float onTouchDamage = 0;
-
         public void Init()
         {
             currentHealth = actualMaxHealth;
@@ -170,11 +168,12 @@ public class Enemy : MonoBehaviour {
             // cameraShake.Shake(_enemy.shakeAmt, _enemy.shakeLength);
             
             isDead = true;
+            anim.SetBool("isDead", isDead);
             enemyMovementScript.currentState = EnemyMovement.State.Dead;
 
             thisEnemyCollider.direction = CapsuleDirection2D.Horizontal;
-            thisEnemyCollider.offset = new Vector2(3.43f, -23.89f);
-            thisEnemyCollider.size = new Vector2(46.55f, 9.1f);
+            thisEnemyCollider.offset = new Vector2(3.43f, -19.05f);
+            thisEnemyCollider.size = new Vector2(46.55f, 10.41f);
         }
         else if (enemyStats.currentHealth > 0)
         {
@@ -197,16 +196,6 @@ public class Enemy : MonoBehaviour {
             lootBoxCollider.enabled = true;
             sightCollider.enabled = false;
             hearingCollider.enabled = false;
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D collision) // Damage player on collision with enemy
-    {
-        Player _player = collision.collider.GetComponent<Player>();
-
-        if(_player != null)
-        {
-            _player.DamagePlayer(enemyStats.onTouchDamage);
         }
     }
 

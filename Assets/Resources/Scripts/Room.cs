@@ -18,16 +18,6 @@ public class Room : MonoBehaviour {
     public int floorLevel;
     public int roomNumber;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "PatrolPoint")
@@ -51,6 +41,12 @@ public class Room : MonoBehaviour {
             collision.GetComponent<EnemyMovement>().currentFloorLevel = floorLevel;
             collision.GetComponent<EnemyMovement>().currentRoomNumber = roomNumber;
             collision.GetComponent<EnemyMovement>().currentRoom = gameObject.transform;
+        }
+        else if (collision.gameObject.tag == "Victim")
+        {
+            collision.GetComponent<VictimMovement>().currentFloorLevel = floorLevel;
+            collision.GetComponent<VictimMovement>().currentRoomNumber = roomNumber;
+            collision.GetComponent<VictimMovement>().currentRoom = gameObject.transform;
         }
     }
 

@@ -10,9 +10,7 @@ public class EnemyMovement : MonoBehaviour {
 
     // How many times each second we will update our path
     public float updateRate = 2f;
-
-    // Caching
-    //private Seeker seeker;
+    
     private Rigidbody2D rb;
 
     // The AI's speed per second
@@ -22,11 +20,6 @@ public class EnemyMovement : MonoBehaviour {
     public float moveSpeed = 0f;
 
     public float stoppingDistance = 3f;
-
-    public ForceMode2D fMode;
-
-    [HideInInspector]
-    public bool pathIsEnded = false;
 
     // The max distance from the AI to a waypoint for it to continue to the next waypoint
     float nextWaypointDistance = 2f;
@@ -56,7 +49,7 @@ public class EnemyMovement : MonoBehaviour {
     public float continueSearchingForPlayerTime = 5f;
 
     [HideInInspector]
-    public Vector3 enemyLocation;
+    public Vector3 enemyLocalScale;
 
     Animator anim;
     SpriteRenderer[] childrenSpriteRenderer;
@@ -149,14 +142,14 @@ public class EnemyMovement : MonoBehaviour {
         
         anim = GetComponent<Animator>();
 
-        enemyLocation = transform.localScale;
+        enemyLocalScale = transform.localScale;
         
         rb = GetComponent<Rigidbody2D>();
 
         if (facingRight == false)
         {
-            enemyLocation.x *= -1;
-            transform.localScale = enemyLocation;
+            enemyLocalScale.x *= -1;
+            transform.localScale = enemyLocalScale;
             armRotationScript.enemyRotationOffset = 180;
             facingRight = false;
         }
@@ -224,7 +217,6 @@ public class EnemyMovement : MonoBehaviour {
         {
             CheckIfAiming();
             anim.SetInteger("currentState", 0);
-            return;
         }
         else if (currentState == State.Idle)
         {
@@ -285,15 +277,15 @@ public class EnemyMovement : MonoBehaviour {
         {
             if (facingRight == true && transform.position.x > currentTarget.transform.position.x)
             {
-                enemyLocation.x *= -1;
-                transform.localScale = enemyLocation;
+                enemyLocalScale.x *= -1;
+                transform.localScale = enemyLocalScale;
                 armRotationScript.enemyRotationOffset = 180;
                 facingRight = false;
             }
             else if (facingRight == false && transform.position.x < currentTarget.transform.position.x)
             {
-                enemyLocation.x *= -1;
-                transform.localScale = enemyLocation;
+                enemyLocalScale.x *= -1;
+                transform.localScale = enemyLocalScale;
                 armRotationScript.enemyRotationOffset = 360;
                 facingRight = true;
             }

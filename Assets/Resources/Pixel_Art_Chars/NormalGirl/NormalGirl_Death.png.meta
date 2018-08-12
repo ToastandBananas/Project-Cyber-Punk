@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: 20b2cc21190e8d946a8557f5dd3d0d96
-timeCreated: 1474791195
-licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: NormalGirl_Death_1_0
@@ -11,14 +9,24 @@ TextureImporter:
     21300008: NormalGirl_Death_1_4
     21300010: NormalGirl_Death_1_5
     21300012: NormalGirl_Death_1_6
-  serializedVersion: 2
+    21300014: NormalGirl_Death_0
+    21300016: NormalGirl_Death_1
+    21300018: NormalGirl_Death_2
+    21300020: NormalGirl_Death_3
+    21300022: NormalGirl_Death_4
+    21300024: NormalGirl_Death_5
+    21300026: NormalGirl_Death_6
+  externalObjects: {}
+  serializedVersion: 7
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -27,174 +35,208 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
-    wrapMode: 1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 100
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: NormalGirl_Death_1_0
+    - serializedVersion: 2
+      name: NormalGirl_Death_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 17
+        y: 1
+        width: 33
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 6, y: 22}
-        - {x: -5, y: 22}
-        - {x: -15, y: 0}
-        - {x: -17, y: -26}
-        - {x: -17, y: -32}
-        - {x: 20, y: -32}
-        - {x: 20, y: 1}
-        - {x: 12, y: 15}
-    - name: NormalGirl_Death_1_1
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6fc0a8c0b67b2f42a2631aa10caa2ee
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Death_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
+        x: 82
+        y: 1
+        width: 30
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -12, y: 22}
-        - {x: -16, y: 12}
-        - {x: -16, y: -32}
-        - {x: 18, y: -32}
-        - {x: 18, y: 7}
-        - {x: 13, y: 22}
-    - name: NormalGirl_Death_1_2
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7207ebb592ec4bd4b941867e8e08c4e4
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Death_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
+        x: 147
+        y: 1
+        width: 29
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -13, y: 22}
-        - {x: -15, y: 6}
-        - {x: -15, y: -32}
-        - {x: 18, y: -32}
-        - {x: 18, y: 3}
-        - {x: 1, y: 22}
-    - name: NormalGirl_Death_1_3
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8617f335055f0ae499763f3f6a465bb6
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Death_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 209
         y: 0
-        width: 64
-        height: 64
+        width: 34
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 8, y: -1}
-        - {x: 14, y: 0}
-        - {x: 17, y: 1}
-        - {x: 15, y: 9}
-        - {x: -2, y: 18}
-        - {x: -17, y: 18}
-        - {x: -17, y: -2}
-        - {x: -10, y: -30}
-        - {x: -8, y: -32}
-        - {x: 21, y: -32}
-        - {x: 21, y: -21}
-        - {x: 10, y: -3}
-    - name: NormalGirl_Death_1_4
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f799ec219a569b440bd81a4f833cc9d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Death_4
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
+        x: 267
+        y: 2
+        width: 49
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 13, y: 3}
-        - {x: 9, y: 8}
-        - {x: 6, y: 8}
-        - {x: -23, y: 7}
-        - {x: -23, y: -5}
-        - {x: -13, y: -30}
-        - {x: -6, y: -32}
-        - {x: 27, y: -32}
-        - {x: 30, y: -28}
-        - {x: 30, y: -24}
-        - {x: 29, y: -21}
-    - name: NormalGirl_Death_1_5
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0541f11d5347ae4d9a2e003d8f85ef5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Death_5
       rect:
         serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 64
+        x: 327
+        y: 2
+        width: 55
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 10, y: -1}
-        - {x: -5, y: -1}
-        - {x: -23, y: -6}
-        - {x: -27, y: -14}
-        - {x: -27, y: -19}
-        - {x: -19, y: -32}
-        - {x: 32, y: -32}
-        - {x: 32, y: -21}
-        - {x: 15, y: -4}
-    - name: NormalGirl_Death_1_6
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdcb65c13ff4fba459d432854a18ab40
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Death_6
       rect:
         serializedVersion: 2
-        x: 384
-        y: 0
-        width: 64
-        height: 64
+        x: 391
+        y: 1
+        width: 55
+        height: 51
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -15, y: -16}
-        - {x: -21, y: -17}
-        - {x: -27, y: -24}
-        - {x: -27, y: -32}
-        - {x: 32, y: -32}
-        - {x: 32, y: -22}
-        - {x: 20, y: -16}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 610deeed73665d348b076e012cfcd3e7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
+    physicsShape: []
+    bones: []
+    spriteID: c911e22c43c5bf14e9ac192e2e7fdf99
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

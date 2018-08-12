@@ -118,6 +118,20 @@ public class Door : MonoBehaviour {
                 }
             }
         }
+        else if (coll.gameObject.tag == "Victim" && coll.isTrigger == false)
+        {
+            if (currentDoorState == DoorState.Closed && coll.gameObject.GetComponent<VictimMovement>().currentState != VictimMovement.State.Idle && coll.gameObject.GetComponent<VictimMovement>().currentState != VictimMovement.State.Imprisoned)
+            {
+                if (doorPosition.x > coll.gameObject.transform.position.x)
+                {
+                    currentDoorState = DoorState.OpenRight;
+                }
+                else if (doorPosition.x < coll.gameObject.transform.position.x)
+                {
+                    currentDoorState = DoorState.OpenLeft;
+                }
+            }
+        }
     }
 
     void OnTriggerExit2D(Collider2D coll)

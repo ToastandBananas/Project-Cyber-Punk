@@ -4,7 +4,7 @@ public class Stairs : MonoBehaviour {
 
     Player player;
 
-    public Transform targetDoor;
+    public Transform targetDoor; // Where these stairs lead to
     
     BoxCollider2D stairsTriggerCollider;
 
@@ -17,7 +17,7 @@ public class Stairs : MonoBehaviour {
         stairsTriggerCollider = GetComponent<BoxCollider2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         UseStairs();
     }
@@ -41,7 +41,7 @@ public class Stairs : MonoBehaviour {
             playerIsNearStairs = true;
             // Debug.Log("Player is near stairs: " + playerIsNearStairs);
         }
-        else if (collision.gameObject.tag == "Enemy" && collision.gameObject.GetComponent<EnemyMovement>().currentTarget == gameObject.transform)
+        else if (collision.gameObject.tag == "Enemy" && collision.gameObject.GetComponent<EnemyMovement>().currentTarget == transform)
         {
             collision.gameObject.transform.position = new Vector3(targetDoor.transform.position.x, targetDoor.transform.position.y - 0.13f);
             if (collision.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.SpreadOut 
@@ -50,6 +50,10 @@ public class Stairs : MonoBehaviour {
                 collision.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
                 collision.GetComponent<EnemyMovement>().currentTarget = null;
             }
+        }
+        else if (collision.tag == "Victim" && collision.GetComponent<VictimMovement>().currentTarget == transform)
+        {
+            collision.transform.position = new Vector3(targetDoor.transform.position.x, targetDoor.transform.position.y - 0.13f);
         }
     }
 

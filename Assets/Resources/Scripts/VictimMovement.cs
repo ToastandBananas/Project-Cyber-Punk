@@ -5,21 +5,39 @@ using UnityEngine;
 
 public class VictimMovement : MonoBehaviour
 {
+    [Header("Ground Check")]
+    public Transform groundCheck;
+    float groundRadius = 0.1f;
+    public LayerMask whatIsGround;
+    bool onGround = false;
+
+    [Header("Target Info")]
     public Transform currentTarget;
 
     public float distanceToPlayer;
     public float stoppingDistance = 1f;
 
-    float noSpeed = 0f;
+    [Header("Movement Stats")]
     public float runSpeed = 3f;
     public float moveSpeed = 0f;
+    float noSpeed = 0f;
 
     public bool facingRight = true;
     Vector3 victimLocalScale;
 
+    [Header("Location")]
     public int currentFloorLevel = 1;
     public int currentRoomNumber;
     public Transform currentRoom;
+
+    [Header("Materials")]
+    public Material defaultMaterial;
+    public Material highlightMaterial;
+
+    CapsuleCollider2D thisCollider;
+    CapsuleCollider2D playerCollider;
+    GameObject[] enemies;
+    BoxCollider2D[] playerWeapons;
 
     Player player;
     PlayerController playerControllerScript;
@@ -35,15 +53,33 @@ public class VictimMovement : MonoBehaviour
         // Panic state when can't find player?
     }
 
-    public State startState;
+    [Header("States")]
+    public State startState = State.Imprisoned;
     public State currentState;
     public State defaultState = State.Idle;
 
     // Use this for initialization
     void Start () {
+        currentState = startState;
+
         player = Player.instance;
         playerControllerScript = player.GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
+
+        // Collisions to ignore:
+        thisCollider = GetComponent<CapsuleCollider2D>();
+        playerCollider = player.GetComponent<CapsuleCollider2D>();
+        Physics2D.IgnoreCollision(thisCollider, playerCollider);
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach(GameObject enemy in enemies)
+        {
+            Physics2D.IgnoreCollision(thisCollider, enemy.GetComponent<CapsuleCollider2D>());
+        }
+        playerWeapons = GameObject.Find("WeaponPool").transform.GetComponentsInChildren<BoxCollider2D>();
+        foreach (BoxCollider2D playerWeaponCollider in playerWeapons)
+        {
+            Physics2D.IgnoreCollision(playerWeaponCollider, thisCollider);
+        }
 
         victimLocalScale = transform.localScale;
 
@@ -74,18 +110,39 @@ public class VictimMovement : MonoBehaviour
         else if (currentState == State.Imprisoned)
         {
             DetermineMoveSpeed();
+            FreeFromImprisonment();
             anim.SetInteger("currentState", 1);
         }
         else if (currentState == State.Idle)
         {
             DetermineMoveSpeed();
+            GroundCheck();
             anim.SetInteger("currentState", 2);
         }
         else if (currentState == State.Follow)
         {
             DetermineMoveSpeed();
             Flip();
+            GroundCheck();
             anim.SetInteger("currentState", 3);
+        }
+    }
+
+    private void FreeFromImprisonment()
+    {
+        if (currentRoom == playerControllerScript.currentRoom && distanceToPlayer <= 1)
+        {
+            GetComponent<SpriteRenderer>().material = highlightMaterial;
+            if (Input.GetKeyDown(KeyCode.E)) // Maybe require a key?
+            {
+                // Freedom! And then follow the player...
+                currentState = State.Follow;
+                GetComponent<SpriteRenderer>().material = defaultMaterial;
+            }
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().material = defaultMaterial;
         }
     }
 
@@ -203,5 +260,11 @@ public class VictimMovement : MonoBehaviour
             distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             // print("Distance to Player: " + distanceToPlayer + " units");
         }
+    }
+
+    private void GroundCheck()
+    {
+        onGround = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
+        anim.SetBool("onGround", onGround);
     }
 }

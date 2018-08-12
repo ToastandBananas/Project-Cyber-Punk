@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour {
     }
 
     public EnemyStats enemyStats = new EnemyStats();
-
+    
     public string deathSoundName = "DeathVoice";
     public string damageSoundName = "DamageVoice";
 

@@ -1,21 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Victim : MonoBehaviour
 {
     [Header("Stats:")]
     public float maxHealth = 1;
     public float currentHealth;
+    public bool isDead = false;
 
     [Header("Sounds")]
     public string deathSoundName = "DeathVoice";
     public string damageSoundName = "DamageVoice";
 
-    [Header("Other")]
-    public bool isDead = false;
-
     CapsuleCollider2D thisVictimCollider;
+    GameObject[] otherVictims;
 
     Animator anim;
     AudioManager audioManager;
@@ -35,6 +32,7 @@ public class Victim : MonoBehaviour
         victimMovementScript = GetComponent<VictimMovement>();
 
         thisVictimCollider = GetComponent<CapsuleCollider2D>();
+        otherVictims = GameObject.FindGameObjectsWithTag("Victim");
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -43,7 +41,7 @@ public class Victim : MonoBehaviour
         }
     }
 
-    public void DamageEnemy(float damage)
+    public void DamageVictim(float damage)
     {
         if (currentHealth > 0)
         {
@@ -59,6 +57,13 @@ public class Victim : MonoBehaviour
             isDead = true;
             anim.SetBool("isDead", isDead);
             victimMovementScript.currentState = VictimMovement.State.Dead;
+
+            GetComponent<SpriteRenderer>().material = victimMovementScript.defaultMaterial;
+
+            foreach(GameObject victim in otherVictims)
+            {
+                Physics2D.IgnoreCollision(thisVictimCollider, victim.GetComponent<CapsuleCollider2D>());
+            }
 
             thisVictimCollider.direction = CapsuleDirection2D.Horizontal;
             thisVictimCollider.offset = new Vector2(3.43f, -19.05f);

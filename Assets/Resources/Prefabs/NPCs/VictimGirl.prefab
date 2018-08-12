@@ -9,37 +9,16 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1740847519466060}
+  m_RootGameObject: {fileID: 1743461955727886}
   m_IsPrefabAsset: 1
---- !u!1 &1740847519466060
+--- !u!1 &1096961760252246
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4835905309790374}
-  - component: {fileID: 212958935406976854}
-  - component: {fileID: 114676475162902110}
-  - component: {fileID: 114457121911144602}
-  - component: {fileID: 50526048038101876}
-  - component: {fileID: 95435798598854664}
-  - component: {fileID: 70823880512337506}
-  m_Layer: 0
-  m_Name: VictimGuy
-  m_TagString: Victim
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1911200478563984
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4974428868047032}
+  - component: {fileID: 4993285894752054}
   m_Layer: 0
   m_Name: VictimGroundCheck
   m_TagString: Untagged
@@ -47,40 +26,61 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4835905309790374
+--- !u!1 &1743461955727886
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4708847517133762}
+  - component: {fileID: 212606543216983686}
+  - component: {fileID: 114444542722644122}
+  - component: {fileID: 114424401271837172}
+  - component: {fileID: 50095580515857266}
+  - component: {fileID: 95199551644474576}
+  - component: {fileID: 70450111867515992}
+  m_Layer: 0
+  m_Name: VictimGirl
+  m_TagString: Victim
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4708847517133762
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1740847519466060}
+  m_GameObject: {fileID: 1743461955727886}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.383, y: 2.696, z: 0}
+  m_LocalPosition: {x: 3.93, y: 2.659, z: 0}
   m_LocalScale: {x: 0.009, y: 0.009, z: 0.009}
   m_Children:
-  - {fileID: 4974428868047032}
+  - {fileID: 4993285894752054}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4974428868047032
+--- !u!4 &4993285894752054
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1911200478563984}
+  m_GameObject: {fileID: 1096961760252246}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.52, y: -26.98, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4835905309790374}
+  m_Father: {fileID: 4708847517133762}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50526048038101876
+--- !u!50 &50095580515857266
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1740847519466060}
+  m_GameObject: {fileID: 1743461955727886}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -94,12 +94,12 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!70 &70823880512337506
+--- !u!70 &70450111867515992
 CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1740847519466060}
+  m_GameObject: {fileID: 1743461955727886}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -109,16 +109,16 @@ CapsuleCollider2D:
   m_Offset: {x: 0.84765756, y: 0.98016196}
   m_Size: {x: 19.371775, y: 49.0019}
   m_Direction: 0
---- !u!95 &95435798598854664
+--- !u!95 &95199551644474576
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1740847519466060}
+  m_GameObject: {fileID: 1743461955727886}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8d271ee570c7c9248a26d691baa96ff5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6c89551fcfa11864eb2c1898c9f69609, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -127,18 +127,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114457121911144602
+--- !u!114 &114424401271837172
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1740847519466060}
+  m_GameObject: {fileID: 1743461955727886}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d2d587bee56f0e4cb0f8ec5647f94f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheck: {fileID: 4974428868047032}
+  groundCheck: {fileID: 4993285894752054}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8192
@@ -156,28 +156,28 @@ MonoBehaviour:
   startState: 1
   currentState: 2
   defaultState: 2
---- !u!114 &114676475162902110
+--- !u!114 &114444542722644122
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1740847519466060}
+  m_GameObject: {fileID: 1743461955727886}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 763f0f82a4b7f5d4e90791892a2b674b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 2
   currentHealth: 0
-  deathSoundName: DeathVoice
-  damageSoundName: DamageVoice
   isDead: 0
---- !u!212 &212958935406976854
+  deathSoundName: FemaleDeathVoice
+  damageSoundName: FemaleDamageVoice
+--- !u!212 &212606543216983686
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1740847519466060}
+  m_GameObject: {fileID: 1743461955727886}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -207,12 +207,12 @@ SpriteRenderer:
   m_SortingLayerID: 1838205595
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300018, guid: 40ed488550c90a6488c4dab6c4024612, type: 3}
+  m_Sprite: {fileID: 21300016, guid: c3d087dddd3c8fc4c8b3589fb860e712, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.48}
+  m_Size: {x: 21, y: 56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

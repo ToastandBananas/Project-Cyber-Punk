@@ -1,7 +1,5 @@
 fileFormatVersion: 2
 guid: c3d087dddd3c8fc4c8b3589fb860e712
-timeCreated: 1474790927
-licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: NormalGirl_Idle_1_0
@@ -10,14 +8,23 @@ TextureImporter:
     21300006: NormalGirl_Idle_1_3
     21300008: NormalGirl_Idle_1_4
     21300010: NormalGirl_Idle_1_5
-  serializedVersion: 2
+    21300012: NormalGirl_Idle_0
+    21300014: NormalGirl_Idle_1
+    21300016: NormalGirl_Idle_2
+    21300018: NormalGirl_Idle_3
+    21300020: NormalGirl_Idle_4
+    21300022: NormalGirl_Idle_5
+  externalObjects: {}
+  serializedVersion: 7
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
     mipMapFadeDistanceStart: 1
     mipMapFadeDistanceEnd: 3
   bumpmap:
@@ -26,157 +33,188 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 1
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
+    serializedVersion: 2
     filterMode: 0
     aniso: -1
-    mipBias: -1
-    wrapMode: 1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 100
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
   alphaIsTransparency: 1
+  spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 100
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
+    serializedVersion: 2
     sprites:
-    - name: NormalGirl_Idle_1_0
+    - serializedVersion: 2
+      name: NormalGirl_Idle_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 20
+        y: 1
+        width: 21
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: 16}
-        - {x: 9, y: 22}
-        - {x: 5, y: 25}
-        - {x: 1, y: 25}
-        - {x: -7, y: 21}
-        - {x: -14, y: 6}
-        - {x: -14, y: 1}
-        - {x: -13, y: -5}
-        - {x: -14, y: -32}
-        - {x: 11, y: -32}
-    - name: NormalGirl_Idle_1_1
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75fc28ff359e1524a943a83cbe48be0d
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Idle_1
       rect:
         serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64
-        height: 64
+        x: 84
+        y: 1
+        width: 21
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: -28}
-        - {x: 11, y: 12}
-        - {x: 4, y: 25}
-        - {x: -3, y: 25}
-        - {x: -14, y: 11}
-        - {x: -14, y: -32}
-        - {x: -3, y: -32}
-        - {x: -3, y: -31}
-        - {x: -1, y: -32}
-        - {x: 9, y: -32}
-    - name: NormalGirl_Idle_1_2
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 240864ba0513e914b94bc799f1854ba7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Idle_2
       rect:
         serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
+        x: 148
+        y: 1
+        width: 20
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 10, y: 7}
-        - {x: 9, y: 23}
-        - {x: 6, y: 26}
-        - {x: 0, y: 26}
-        - {x: -7, y: 23}
-        - {x: -14, y: 9}
-        - {x: -14, y: -32}
-        - {x: -3, y: -32}
-        - {x: -3, y: -31}
-        - {x: -1, y: -32}
-        - {x: 10, y: -32}
-    - name: NormalGirl_Idle_1_3
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c24af62c2944dd844848399ab0ad63bb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Idle_3
       rect:
         serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64
-        height: 64
+        x: 212
+        y: 1
+        width: 21
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 4, y: 26}
-        - {x: -1, y: 26}
-        - {x: -7, y: 23}
-        - {x: -14, y: 7}
-        - {x: -14, y: -32}
-        - {x: 11, y: -32}
-        - {x: 11, y: 15}
-        - {x: 6, y: 24}
-    - name: NormalGirl_Idle_1_4
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c831360d3eb7b544194a20513ba6052c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Idle_4
       rect:
         serializedVersion: 2
-        x: 256
-        y: 0
-        width: 64
-        height: 64
+        x: 276
+        y: 1
+        width: 21
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 11, y: 20}
-        - {x: 9, y: 23}
-        - {x: 3, y: 26}
-        - {x: -2, y: 26}
-        - {x: -6, y: 21}
-        - {x: -14, y: 7}
-        - {x: -14, y: -32}
-        - {x: 11, y: -32}
-    - name: NormalGirl_Idle_1_5
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe9e0f8092453e740b66baed3da53cd7
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: NormalGirl_Idle_5
       rect:
         serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 64
+        x: 340
+        y: 1
+        width: 21
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -4, y: 25}
-        - {x: -7, y: 22}
-        - {x: -14, y: 9}
-        - {x: -14, y: -32}
-        - {x: 11, y: -32}
-        - {x: 11, y: 25}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd30ce47f28ea30498694526aa4f0d10
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 1c211f52be30d864abcccd0399f39fc6
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

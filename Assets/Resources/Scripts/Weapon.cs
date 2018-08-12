@@ -200,6 +200,7 @@ public class Weapon : MonoBehaviour
         {
             // Debug.DrawLine(firePointPosition, hit.point, Color.red);
             Enemy enemyCollider = hit.collider.GetComponent<Enemy>();
+            Victim victimCollider = hit.collider.GetComponent<Victim>();
             if (enemyCollider != null)
             {
                 hitPos = hit.point;
@@ -230,6 +231,39 @@ public class Weapon : MonoBehaviour
                     {
                         hit.transform.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Attack;
                         enemyCollider.DamageEnemy(damage);
+                        // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
+                    }
+                }
+                CreateHitParticle(hitPos, hitNormal);
+            }
+            else if (victimCollider != null)
+            {
+                hitPos = hit.point;
+                hitNormal = hit.normal;
+
+                if (hit.transform.GetComponent<Victim>().isDead == false) // If enemy is alive
+                {
+                    if (isShotgun)
+                    {
+                        if (Vector2.Distance(firePointPosition, hitPos) >= 3.2 && Vector2.Distance(firePointPosition, hitPos) < 5)
+                        {
+                            victimCollider.DamageVictim(damage / 2);
+                            // Debug.Log("We hit " + hit.collider.name + " and did " + damage / 2 + " damage.");
+                        }
+                        else if (Vector2.Distance(firePointPosition, hitPos) >= 5)
+                        {
+                            victimCollider.DamageVictim(1);
+                            // Debug.Log("We hit " + hit.collider.name + " and did " + 1 + " damage.");
+                        }
+                        else
+                        {
+                            victimCollider.DamageVictim(damage);
+                            // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
+                        }
+                    }
+                    else
+                    {
+                        victimCollider.DamageVictim(damage);
                         // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                     }
                 }

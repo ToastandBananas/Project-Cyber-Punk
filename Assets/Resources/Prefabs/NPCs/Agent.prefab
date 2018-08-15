@@ -151,7 +151,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1810934153870436}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.084, y: -0.5, z: 0}
+  m_LocalPosition: {x: 1.084, y: -0.529, z: 0}
   m_LocalScale: {x: 0.009, y: 0.009, z: 0.009}
   m_Children:
   - {fileID: 4987469338844168}
@@ -287,7 +287,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 32, y: 48}
+    oldSize: {x: 32, y: 55}
     newSize: {x: 0.32, y: 0.48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -308,8 +308,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.84765756, y: 0.98016196}
-  m_Size: {x: 19.371775, y: 49.0019}
+  m_Offset: {x: 0.84765756, y: -0.72658724}
+  m_Size: {x: 19.371775, y: 52.415398}
   m_Direction: 0
 --- !u!95 &95590930510378398
 Animator:
@@ -360,17 +360,15 @@ MonoBehaviour:
   walkSpeed: 0.75
   moveSpeed: 0
   stoppingDistance: 3
-  fMode: 0
-  pathIsEnded: 0
   stillSearching: 0
-  facingRight: 0
+  facingRight: 1
   playerPositionKnown: 0
   groundCheck: {fileID: 4987469338844168}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8192
   continueSearchingForPlayerTime: 5
-  enemyLocation: {x: 0, y: 0, z: 0}
+  enemyLocalScale: {x: 0, y: 0, z: 0}
   rooms: []
   patrolPointPrefab: {fileID: 1395910035228894, guid: 3ed362be9b83c534a914cafd7294eb86,
     type: 2}
@@ -382,10 +380,11 @@ MonoBehaviour:
   currentPatrolIndex: 0
   currentFloorLevel: 1
   currentRoomNumber: 0
+  currentBuildingNumber: 0
   currentRoom: {fileID: 0}
   mayBeAlert: 1
   mayBeAlertTimer: 0
-  startState: 2
+  startState: 1
   currentState: 0
   defaultState: 2
 --- !u!114 &114400769637986530
@@ -450,7 +449,6 @@ MonoBehaviour:
     actualMaxHealth: 1
     hearingRadius: 200
     inaccuracyFactor: 0.4
-    onTouchDamage: 0
   deathSoundName: DeathVoice
   damageSoundName: DamageVoice
   minMoneyDrop: 2

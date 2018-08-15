@@ -54,6 +54,10 @@ public class Stairs : MonoBehaviour {
         else if (collision.tag == "Victim" && collision.GetComponent<VictimMovement>().currentTarget == transform)
         {
             collision.transform.position = new Vector3(targetDoor.transform.position.x, targetDoor.transform.position.y - 0.13f);
+            if (collision.GetComponent<VictimMovement>().currentState == VictimMovement.State.Follow && collision.GetComponent<VictimMovement>().currentRoom != player.GetComponent<PlayerController>().currentRoom)
+            {
+                collision.GetComponent<VictimMovement>().currentState = VictimMovement.State.Panic;
+            }
         }
     }
 

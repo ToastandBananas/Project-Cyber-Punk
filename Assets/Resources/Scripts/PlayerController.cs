@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     ArmRotation armRotationScript;
 
     GameObject[] patrolPoints;
+    GameObject[] lights;
 
     public static PlayerController instance;
     
@@ -59,7 +60,13 @@ public class PlayerController : MonoBehaviour
         foreach (GameObject patrolPoint in patrolPoints)
         {
             BoxCollider2D patrolPointCollider = patrolPoint.gameObject.GetComponent<BoxCollider2D>();
-            Physics2D.IgnoreCollision(player.gameObject.GetComponent<CapsuleCollider2D>(), patrolPointCollider);
+            Physics2D.IgnoreCollision(player.GetComponent<CapsuleCollider2D>(), patrolPointCollider);
+        }
+
+        lights = GameObject.FindGameObjectsWithTag("Light");
+        foreach (GameObject light in lights)
+        {
+            Physics2D.IgnoreCollision(player.GetComponent<CapsuleCollider2D>(), light.GetComponent<BoxCollider2D>());
         }
 
         arm = gameObject.transform.Find("Arm");

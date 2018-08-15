@@ -1242,6 +1242,10 @@ Prefab:
       propertyPath: m_LocalScale.z
       value: 0.38753998
       objectReference: {fileID: 0}
+    - target: {fileID: 1097500065718052, guid: 43d058f4d0f38e840a536d7c1730000a, type: 2}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43d058f4d0f38e840a536d7c1730000a, type: 2}
   m_IsPrefabAsset: 0
@@ -1435,7 +1439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 388694711}
   - component: {fileID: 388694712}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightFixture1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2383,7 +2387,7 @@ GameObject:
   - component: {fileID: 648291664}
   - component: {fileID: 648291666}
   - component: {fileID: 648291665}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BasicLight
   m_TagString: Light
   m_Icon: {fileID: 0}
@@ -2440,8 +2444,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatToHit:
     serializedVersion: 2
-    m_Bits: 9217
+    m_Bits: 9473
   floorLevel: 0
+  feetOffset: 0.135
+  headOffset: 0.17
 --- !u!50 &648291665
 Rigidbody2D:
   serializedVersion: 4
@@ -4460,6 +4466,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 70966310843213360, guid: bf2de79753adacc4a823eaa8700fa2fe,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: -1.130614
+      objectReference: {fileID: 0}
+    - target: {fileID: 70966310843213360, guid: bf2de79753adacc4a823eaa8700fa2fe,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 49.189026
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf2de79753adacc4a823eaa8700fa2fe, type: 2}
   m_IsPrefabAsset: 0
@@ -4704,7 +4720,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1530668002}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RoomLight (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

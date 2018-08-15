@@ -80,8 +80,9 @@ public class EnemySight : MonoBehaviour
             // we only need to check visibility if the player is within the enemy's visual range
             if (playerInRange)
             {
-                if ((PlayerInFieldOfView() && !PlayerHiddenByObstacles() && player.GetComponent<Player>().isVisibleByLight)
-                    || (Vector2.Distance(transform.position, player.position) < 1.0f && ((enemyMovementScript.facingRight && transform.position.x < player.position.x) || (enemyMovementScript.facingRight == false && transform.position.x > player.position.x))))
+                if ((PlayerInFieldOfView() && !PlayerHiddenByObstacles()) 
+                    && (player.GetComponent<Player>().isVisibleByLight
+                    || (Vector2.Distance(transform.position, player.position) < 1.0f && ((enemyMovementScript.facingRight && transform.position.x < player.position.x) || (enemyMovementScript.facingRight == false && transform.position.x > player.position.x)))))
                 {
                     return true;
                 }
@@ -155,6 +156,9 @@ public class EnemySight : MonoBehaviour
                 continue;
 
             if (hit.transform.tag == "PatrolPoint")
+                continue;
+
+            if (hit.transform.tag == "Victim")
                 continue;
             
             // if anything other than the player is hit then it must be between the player and the enemy's eyes (since the player can only see as far as the player)

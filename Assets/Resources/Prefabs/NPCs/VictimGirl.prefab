@@ -150,9 +150,14 @@ MonoBehaviour:
   facingRight: 1
   currentFloorLevel: 1
   currentRoomNumber: 0
+  currentBuildingNumber: 0
   currentRoom: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: 903c7352dda7d41cbad8ce92fb3fa8b5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 82be8d44dc028c34b8a1f72b134981ee, type: 2}
+  rooms: []
+  patrolPointPrefab: {fileID: 1395910035228894, guid: 3ed362be9b83c534a914cafd7294eb86,
+    type: 2}
+  newTarget: {fileID: 0}
   startState: 1
   currentState: 2
   defaultState: 2
@@ -172,6 +177,8 @@ MonoBehaviour:
   isDead: 0
   deathSoundName: FemaleDeathVoice
   damageSoundName: FemaleDamageVoice
+  lightTimer: 0
+  isVisibleByLight: 0
 --- !u!212 &212606543216983686
 SpriteRenderer:
   m_ObjectHideFlags: 1

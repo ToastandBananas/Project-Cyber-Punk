@@ -25,10 +25,8 @@ public class LightSwitch : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        print(collision.tag);
         if (collision.tag == "Player")
         {
-            print("Yep thats the player");
             spriteRenderer.material = highlightMaterial;
             if (Input.GetKeyDown(KeyCode.E))
             {

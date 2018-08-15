@@ -204,7 +204,8 @@ public class EnemyWeapon : MonoBehaviour {
             if (hit.collider != null)
             {
                 Player player = hit.collider.GetComponent<Player>();
-                if (player != null)
+                Victim victim = hit.collider.GetComponent<Victim>();
+                if (player != null || victim != null)
                 {
                     hitPos = hit.point;
                     hitNormal = hit.normal;
@@ -213,23 +214,35 @@ public class EnemyWeapon : MonoBehaviour {
                     {
                         if (Vector2.Distance(firePointPosition, hitPos) >= 3.2 && Vector2.Distance(firePointPosition, hitPos) < 5)
                         {
-                            player.DamagePlayer(damage / 2);
+                            if (player != null)
+                                player.DamagePlayer(damage / 2);
+                            else if (victim != null)
+                                victim.DamageVictim(damage / 2);
                             // Debug.Log("We hit " + hit.collider.name + " and did " + damage / 2 + " damage.");
                         }
                         else if (Vector2.Distance(firePointPosition, hitPos) >= 5)
                         {
-                            player.DamagePlayer(1);
+                            if (player != null)
+                                player.DamagePlayer(1);
+                            else if (victim != null)
+                                victim.DamageVictim(1);
                             // Debug.Log("We hit " + hit.collider.name + " and did " + 1 + " damage.");
                         }
                         else
                         {
-                            player.DamagePlayer(damage);
+                            if (player != null)
+                                player.DamagePlayer(damage);
+                            else if (victim != null)
+                                victim.DamageVictim(damage);
                             // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                         }
                     }
                     else
                     {
-                        player.DamagePlayer(damage);
+                        if (player != null)
+                            player.DamagePlayer(damage);
+                        else if (victim != null)
+                            victim.DamageVictim(damage);
                         // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                     }
                     

@@ -46,13 +46,22 @@ public class VictimMovement : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator anim;
 
+    [Header("Panic State Variables")]
+    public GameObject[] rooms;
+    public GameObject patrolPointPrefab;
+    public GameObject newTarget;
+    GameObject randomRoom;
+    GameObject patrolPointContainer;
+    //float panicStateTimer;
+    //float panicStateTimerLength = 15.0f;
+
     public enum State
     {
         Dead = 0,
         Imprisoned = 1,
         Idle = 2,
-        Follow = 3
-        // Panic state when can't find player?
+        Follow = 3,
+        Panic = 4
     }
 
     [Header("States")]
@@ -68,6 +77,9 @@ public class VictimMovement : MonoBehaviour
         playerControllerScript = player.GetComponent<PlayerController>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
+        rooms = GameObject.FindGameObjectsWithTag("Room");
+        patrolPointContainer = GameObject.Find("PatrolPoints");
 
         // Collisions to ignore:
         thisCollider = GetComponent<CapsuleCollider2D>();
@@ -100,6 +112,10 @@ public class VictimMovement : MonoBehaviour
         {
             DetermineTargetFollowState();
         }
+        else if (currentState == State.Panic)
+        {
+            Panic();
+        }
 	}
 
     void FixedUpdate()
@@ -129,6 +145,13 @@ public class VictimMovement : MonoBehaviour
             GroundCheck();
             anim.SetInteger("currentState", 3);
         }
+        else if (currentState == State.Panic)
+        {
+            DetermineMoveSpeed();
+            Flip();
+            GroundCheck();
+            anim.SetInteger("currentState", 4);
+        }
     }
 
     private void FreeFromImprisonment()
@@ -146,6 +169,55 @@ public class VictimMovement : MonoBehaviour
         else
         {
             spriteRenderer.material = defaultMaterial;
+        }
+    }
+
+    private void Panic()
+    {
+        //panicStateTimer -= Time.deltaTime;
+
+        if (currentRoom == player.GetComponent<PlayerController>().currentRoom)
+        {
+            currentState = State.Follow;
+            Destroy(newTarget);
+            //panicStateTimer = panicStateTimerLength;
+        }
+
+        if (currentRoom != null && newTarget == null)
+        {
+            newTarget = Instantiate(patrolPointPrefab, patrolPointContainer.transform);
+
+            randomRoom = rooms[UnityEngine.Random.Range(1, rooms.Length)];
+            while ((randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber == currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel == currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)) // If you edit this, also edit the MoveTowardsTarget script
+            {
+                randomRoom = rooms[UnityEngine.Random.Range(0, rooms.Length)];
+            }
+            newTarget.transform.position = new Vector3(randomRoom.transform.position.x + UnityEngine.Random.Range((-randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2) + 0.25f, (randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2)) - 0.25f, transform.position.y);
+
+            currentTarget = newTarget.transform;
+        }
+        else if ((newTarget != null && currentTarget == null) || (newTarget != null && currentTarget != newTarget.transform))
+        {
+            currentTarget = newTarget.transform;
+        }
+
+        if (currentFloorLevel != newTarget.GetComponent<PatrolPoint>().currentFloorLevel || currentBuildingNumber != newTarget.GetComponent<PatrolPoint>().currentBuildingNumber)
+        {
+            randomRoom = rooms[UnityEngine.Random.Range(1, rooms.Length)];
+            while ((randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber == currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel == currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)) // If you edit this, also edit the MoveTowardsTarget script
+            {
+                randomRoom = rooms[UnityEngine.Random.Range(0, rooms.Length)];
+            }
+            newTarget.transform.position = new Vector3(randomRoom.transform.position.x + UnityEngine.Random.Range((-randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2) + 0.25f, (randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2)) - 0.25f, transform.position.y);
+        }
+
+        if (currentTarget != null)
+        {
+            MoveTowardsTarget();
         }
     }
 
@@ -214,6 +286,21 @@ public class VictimMovement : MonoBehaviour
         else if (currentTarget != player.transform)
         {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x, transform.position.y), moveSpeed * Time.fixedDeltaTime);
+        }
+
+        if (Vector2.Distance(transform.position, currentTarget.position) < 0.1f) // If enemy makes it to its target while in Alert or CheckSound state
+        {
+            if (currentState == State.Panic)
+            {
+                randomRoom = rooms[UnityEngine.Random.Range(1, rooms.Length)];
+                while ((randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber == currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel == currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)) // If you edit this, also edit the SearchRandomly script
+                {
+                    randomRoom = rooms[UnityEngine.Random.Range(0, rooms.Length)];
+                }
+                newTarget.transform.position = new Vector3(randomRoom.transform.position.x + UnityEngine.Random.Range(-randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2, randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2), transform.position.y);
+            }
         }
     }
 

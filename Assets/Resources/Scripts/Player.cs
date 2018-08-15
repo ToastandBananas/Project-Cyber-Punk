@@ -53,6 +53,10 @@ public class Player : MonoBehaviour {
     // Timer for weapon pick ups
     public float timeSinceQPressed;
 
+    [Header("LightRaycast Script Variables")]
+    public float lightTimer = 0.0f; // For the LightRaycast script
+    public bool isVisibleByLight = false;
+
     void Awake()
     {
         if (instance == null)

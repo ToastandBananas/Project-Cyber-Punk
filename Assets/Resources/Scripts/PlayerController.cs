@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     public int currentFloorLevel;
     public int currentRoomNumber;
+    public int currentBuildingNumber;
     public Transform currentRoom;
 
     SpriteRenderer playerSpriteRenderer;

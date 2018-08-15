@@ -4,6 +4,7 @@ public class PatrolPoint : MonoBehaviour {
 
     public int currentFloorLevel;
     public int currentRoomNumber;
+    public int currentBuildingNumber;
     public Transform currentRoom;
 
     [Header("Only use if patrol point is outside:")]

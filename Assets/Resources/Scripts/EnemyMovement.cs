@@ -86,6 +86,7 @@ public class EnemyMovement : MonoBehaviour {
 
     public int currentFloorLevel = 1;
     public int currentRoomNumber;
+    public int currentBuildingNumber;
     public Transform currentRoom;
 
     float alertStateTimer;
@@ -385,7 +386,9 @@ public class EnemyMovement : MonoBehaviour {
             if (currentState == State.Alert)
             {
                 randomRoom = rooms[UnityEngine.Random.Range(1, rooms.Length)];
-                while (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel)
+                while ((randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber == currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel == currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)) // If you edit this, also edit the SearchRandomly script
                 {
                     randomRoom = rooms[UnityEngine.Random.Range(0, rooms.Length)];
                 }
@@ -401,7 +404,7 @@ public class EnemyMovement : MonoBehaviour {
 
     private void PatrolWaypoints()
     {
-        if (Vector3.Distance (transform.position, currentPatrolPoint.position) < .1f) // Cycles through only the patrol points that are assigned to each enemy in the inspector
+        if (Vector3.Distance (transform.position, currentPatrolPoint.position) < 0.1f) // Cycles through only the patrol points that are assigned to each enemy in the inspector
         {
             if (currentPatrolIndex + 1 < enemyPatrolPoints.Length)
             {
@@ -628,7 +631,9 @@ public class EnemyMovement : MonoBehaviour {
             newTarget = Instantiate(patrolPointPrefab, patrolPointContainer.transform);
 
             randomRoom = rooms[UnityEngine.Random.Range(1, rooms.Length)];
-            while (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel)
+            while ((randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber == currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel == currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)) // If you edit this, also edit the MoveTowardsTarget script
             {
                 randomRoom = rooms[UnityEngine.Random.Range(0, rooms.Length)];
             }
@@ -641,10 +646,12 @@ public class EnemyMovement : MonoBehaviour {
             currentTarget = newTarget.transform;
         }
 
-        if (currentFloorLevel != newTarget.GetComponent<PatrolPoint>().currentFloorLevel)
+        if (currentFloorLevel != newTarget.GetComponent<PatrolPoint>().currentFloorLevel || currentBuildingNumber != newTarget.GetComponent<PatrolPoint>().currentBuildingNumber)
         {
             randomRoom = rooms[UnityEngine.Random.Range(1, rooms.Length)];
-            while (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel)
+            while ((randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber == currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel == currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)
+                    || (randomRoom.GetComponent<Room>().floorLevel != currentFloorLevel && randomRoom.GetComponent<Room>().buildingNumber != currentBuildingNumber)) // If you edit this, also edit the MoveTowardsTarget script
             {
                 randomRoom = rooms[UnityEngine.Random.Range(0, rooms.Length)];
             }

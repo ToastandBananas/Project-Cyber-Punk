@@ -28,6 +28,7 @@ public class VictimMovement : MonoBehaviour
     [Header("Location")]
     public int currentFloorLevel = 1;
     public int currentRoomNumber;
+    public int currentBuildingNumber;
     public Transform currentRoom;
 
     [Header("Materials")]
@@ -42,6 +43,7 @@ public class VictimMovement : MonoBehaviour
     Player player;
     PlayerController playerControllerScript;
 
+    SpriteRenderer spriteRenderer;
     Animator anim;
 
     public enum State
@@ -64,6 +66,7 @@ public class VictimMovement : MonoBehaviour
 
         player = Player.instance;
         playerControllerScript = player.GetComponent<PlayerController>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
 
         // Collisions to ignore:
@@ -132,17 +135,17 @@ public class VictimMovement : MonoBehaviour
     {
         if (currentRoom == playerControllerScript.currentRoom && distanceToPlayer <= 1)
         {
-            GetComponent<SpriteRenderer>().material = highlightMaterial;
+            spriteRenderer.material = highlightMaterial;
             if (Input.GetKeyDown(KeyCode.E)) // Maybe require a key?
             {
                 // Freedom! And then follow the player...
                 currentState = State.Follow;
-                GetComponent<SpriteRenderer>().material = defaultMaterial;
+                spriteRenderer.material = defaultMaterial;
             }
         }
         else
         {
-            GetComponent<SpriteRenderer>().material = defaultMaterial;
+            spriteRenderer.material = defaultMaterial;
         }
     }
 

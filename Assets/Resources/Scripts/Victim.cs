@@ -11,6 +11,10 @@ public class Victim : MonoBehaviour
     public string deathSoundName = "DeathVoice";
     public string damageSoundName = "DamageVoice";
 
+    [Header("Other")]
+    public float lightTimer = 0.0f; // For the LightRaycast script
+    public bool isVisibleByLight = false;
+
     CapsuleCollider2D thisVictimCollider;
     GameObject[] otherVictims;
 

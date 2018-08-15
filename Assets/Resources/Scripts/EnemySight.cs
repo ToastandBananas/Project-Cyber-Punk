@@ -80,9 +80,10 @@ public class EnemySight : MonoBehaviour
             // we only need to check visibility if the player is within the enemy's visual range
             if (playerInRange)
             {
-                if (PlayerInFieldOfView())
+                if ((PlayerInFieldOfView() && !PlayerHiddenByObstacles() && player.GetComponent<Player>().isVisibleByLight)
+                    || (Vector2.Distance(transform.position, player.position) < 1.0f && ((enemyMovementScript.facingRight && transform.position.x < player.position.x) || (enemyMovementScript.facingRight == false && transform.position.x > player.position.x))))
                 {
-                    return (!PlayerHiddenByObstacles());
+                    return true;
                 }
                 else
                     return false;

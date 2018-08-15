@@ -15,8 +15,10 @@ public class Room : MonoBehaviour {
     [Header("Only use if this 'room' is outside:")]
     public Transform nearestRoom;
 
+    [Header("Room Info")]
     public int floorLevel;
     public int roomNumber;
+    public int buildingNumber;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,6 +27,7 @@ public class Room : MonoBehaviour {
             collision.GetComponent<PatrolPoint>().currentFloorLevel = floorLevel;
             collision.GetComponent<PatrolPoint>().currentRoomNumber = roomNumber;
             collision.GetComponent<PatrolPoint>().currentRoom = gameObject.transform;
+            collision.GetComponent<PatrolPoint>().currentBuildingNumber = buildingNumber;
         }
     }
 
@@ -35,18 +38,25 @@ public class Room : MonoBehaviour {
             collision.GetComponent<PlayerController>().currentFloorLevel = floorLevel;
             collision.GetComponent<PlayerController>().currentRoomNumber = roomNumber;
             collision.GetComponent<PlayerController>().currentRoom = gameObject.transform;
+            collision.GetComponent<PlayerController>().currentBuildingNumber = buildingNumber;
         }
         else if (collision.gameObject.tag == "Enemy")
         {
             collision.GetComponent<EnemyMovement>().currentFloorLevel = floorLevel;
             collision.GetComponent<EnemyMovement>().currentRoomNumber = roomNumber;
             collision.GetComponent<EnemyMovement>().currentRoom = gameObject.transform;
+            collision.GetComponent<EnemyMovement>().currentBuildingNumber = buildingNumber;
         }
         else if (collision.gameObject.tag == "Victim")
         {
             collision.GetComponent<VictimMovement>().currentFloorLevel = floorLevel;
             collision.GetComponent<VictimMovement>().currentRoomNumber = roomNumber;
             collision.GetComponent<VictimMovement>().currentRoom = gameObject.transform;
+            collision.GetComponent<VictimMovement>().currentBuildingNumber = buildingNumber;
+        }
+        else if (collision.tag == "Light")
+        {
+            collision.GetComponent<LightRaycast>().floorLevel = floorLevel;
         }
     }
 

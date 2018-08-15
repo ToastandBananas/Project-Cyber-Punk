@@ -13,7 +13,7 @@ public class Stairs : MonoBehaviour {
     void Start()
     {
         player = Player.instance;
-        
+
         stairsTriggerCollider = GetComponent<BoxCollider2D>();
     }
 
@@ -45,7 +45,7 @@ public class Stairs : MonoBehaviour {
         {
             collision.gameObject.transform.position = new Vector3(targetDoor.transform.position.x, targetDoor.transform.position.y - 0.13f);
             if (collision.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.SpreadOut 
-                || (collision.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Attack && collision.GetComponent<EnemyMovement>().currentRoom != player.GetComponent<PlayerController>().currentRoom))
+                || (collision.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Attack && (collision.GetComponent<EnemyMovement>().currentRoom != player.GetComponent<PlayerController>().currentRoom || player.isVisibleByLight == false)))
             {
                 collision.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Alert;
                 collision.GetComponent<EnemyMovement>().currentTarget = null;

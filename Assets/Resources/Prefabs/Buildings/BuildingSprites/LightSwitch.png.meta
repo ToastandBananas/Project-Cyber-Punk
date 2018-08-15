@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: cb5b6c01ba2ae2d4d8b525c866a958b9
+guid: 31d09241ce0517b4ea55855539c233c4
 TextureImporter:
   fileIDToRecycleName:
-    21300000: MetalDoor1_0
+    21300000: LightSwitch_0
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -21,7 +21,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 1
+  isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   grayScaleToAlpha: 0
@@ -46,7 +46,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -81,17 +81,39 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MetalDoor1_0
+      name: LightSwitch_0
       rect:
         serializedVersion: 2
-        x: 5
-        y: 4
-        width: 45
-        height: 65
+        x: 1
+        y: 1
+        width: 28
+        height: 38
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,7 +121,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5dc61d76354e37d4d8f792ddc61c4f9b
+      spriteID: 1ffc041a51edcfb428e072057921d674
       vertices: []
       indices: 
       edges: []
@@ -107,7 +129,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 853347b3d2fde734e93996ffdd73c03f
+    spriteID: 705146b8cb9cace4d8cc26f8f2fefdff
     vertices: []
     indices: 
     edges: []

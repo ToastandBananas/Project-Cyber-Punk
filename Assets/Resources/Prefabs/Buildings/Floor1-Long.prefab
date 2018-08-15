@@ -20,7 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4793063288966708}
   - component: {fileID: 212758760107284776}
-  - component: {fileID: 61869103713906902}
+  - component: {fileID: 60359776071798718}
+  - component: {fileID: 114364338358461224}
   m_Layer: 13
   m_Name: Floor1-Long
   m_TagString: Ground
@@ -35,14 +36,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1523645245982228}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.220635, y: 0.88235843, z: 0}
+  m_LocalPosition: {x: 8.377, y: 0.92, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61869103713906902
-BoxCollider2D:
+--- !u!60 &60359776071798718
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -63,9 +64,34 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 25.6, y: 0.9}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: -12.8, y: 0.45000002}
+      - {x: -12.8, y: -0.45000002}
+      - {x: 12.8, y: -0.45000002}
+      - {x: 12.8, y: 0.45000002}
+--- !u!114 &114364338358461224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1523645245982228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7b15544ddfa4e49b82852d600f44d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _verts:
+  - {x: 12.8, y: 0.45000002}
+  - {x: 12.8, y: -0.45000002}
+  - {x: -12.8, y: -0.45000002}
+  - {x: -12.8, y: 0.45000002}
+  _looped: 1
+  _shadowLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _lightPenetration: 0
+  _opacity: 1
 --- !u!212 &212758760107284776
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -81,7 +107,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 78add833d2f9d4a7c806b520a60ed176, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

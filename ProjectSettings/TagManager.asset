@@ -25,6 +25,8 @@ TagManager:
   - SecondaryWeapon
   - Wall
   - Victim
+  - Stairs
+  - Light
   layers:
   - Default
   - TransparentFX

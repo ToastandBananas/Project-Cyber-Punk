@@ -61,7 +61,7 @@ public class WeaponPerks : MonoBehaviour {
 
     void DetermineDurability()
     {
-        if (randomNumber6 < 1) // 20% chance to increase durability
+        if (randomNumber6 < 20) // 20% chance to increase durability
         {
             if (rootTag == "Player")
             {
@@ -114,7 +114,7 @@ public class WeaponPerks : MonoBehaviour {
                 enemyWeaponScript.durability = 100f * enemyWeaponScript.durabilityMultiplier;
             }
         }
-        else if (randomNumber6 < 100 && randomNumber6 > 1) // 20% chance to decrease durability
+        else if (randomNumber6 < 100 && randomNumber6 > 80) // 20% chance to decrease durability
         {
             if (rootTag == "Player")
             {

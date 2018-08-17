@@ -25,6 +25,8 @@ public class VictimMovement : MonoBehaviour
     public bool facingRight = true;
     Vector3 victimLocalScale;
 
+    bool isTeleporting = false;
+
     [Header("Location")]
     public int currentFloorLevel = 1;
     public int currentRoomNumber;
@@ -52,8 +54,9 @@ public class VictimMovement : MonoBehaviour
     public GameObject newTarget;
     GameObject randomRoom;
     GameObject patrolPointContainer;
-    //float panicStateTimer;
-    //float panicStateTimerLength = 15.0f;
+
+    Transform levelExitTrigger;
+    LevelExit levelExitScript;
 
     public enum State
     {
@@ -61,7 +64,8 @@ public class VictimMovement : MonoBehaviour
         Imprisoned = 1,
         Idle = 2,
         Follow = 3,
-        Panic = 4
+        Panic = 4,
+        ExitLevel = 5
     }
 
     [Header("States")]
@@ -104,6 +108,9 @@ public class VictimMovement : MonoBehaviour
             transform.localScale = victimLocalScale;
             facingRight = false;
         }
+
+        levelExitTrigger = GameObject.Find("LevelExitTrigger").transform;
+        levelExitScript = levelExitTrigger.GetComponent<LevelExit>();
     }
 	
 	// Update is called once per frame
@@ -115,6 +122,11 @@ public class VictimMovement : MonoBehaviour
         else if (currentState == State.Panic)
         {
             Panic();
+        }
+        else if (currentState == State.ExitLevel)
+        {
+            currentTarget = levelExitTrigger;
+            MoveTowardsTarget();
         }
 	}
 
@@ -152,6 +164,13 @@ public class VictimMovement : MonoBehaviour
             GroundCheck();
             anim.SetInteger("currentState", 4);
         }
+        else if (currentState == State.ExitLevel)
+        {
+            DetermineMoveSpeed();
+            Flip();
+            GroundCheck();
+            anim.SetInteger("currentState", 5);
+        }
     }
 
     private void FreeFromImprisonment()
@@ -164,6 +183,7 @@ public class VictimMovement : MonoBehaviour
                 // Freedom! And then follow the player...
                 currentState = State.Follow;
                 spriteRenderer.material = defaultMaterial;
+                levelExitScript.victimsFollowing++;
             }
         }
         else
@@ -301,6 +321,20 @@ public class VictimMovement : MonoBehaviour
                 }
                 newTarget.transform.position = new Vector3(randomRoom.transform.position.x + UnityEngine.Random.Range(-randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2, randomRoom.GetComponent<SpriteRenderer>().bounds.size.x / 2), transform.position.y);
             }
+            else if (currentState == State.ExitLevel)
+            {
+                currentState = State.Idle; // To prevent this next bit of code from being executed multiple times
+
+                // Play teleport animation and get rid of (destroy) victim game object
+                isTeleporting = true;
+                anim.SetBool("isTeleporting", isTeleporting);
+                Destroy(gameObject, 0.5f);
+
+                // Increase victimsSaved count
+                levelExitScript.victimsSaved++;
+                if (levelExitScript.victimsSaved == levelExitScript.victimCount)
+                    levelExitScript.RescueVictimsMissionComplete();
+            }
         }
     }
 
@@ -329,9 +363,9 @@ public class VictimMovement : MonoBehaviour
         {
             moveSpeed = noSpeed;
         }
-        else if (currentState == State.Follow)
+        else if (currentState == State.Follow || currentState == State.Panic || currentState == State.ExitLevel)
         {
-            if (distanceToPlayer <= stoppingDistance)
+            if ((currentState == State.Follow && distanceToPlayer <= stoppingDistance) || (currentState == State.ExitLevel && Vector2.Distance(currentTarget.position, transform.position) <= 0.1))
             {
                 moveSpeed = noSpeed;
             }

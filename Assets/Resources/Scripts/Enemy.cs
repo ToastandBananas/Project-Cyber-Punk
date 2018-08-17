@@ -209,7 +209,7 @@ public class Enemy : MonoBehaviour {
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    GameMaster.Money += actualMoney; // Loot money from enemy
+                    GameMaster.money += actualMoney; // Loot money from enemy
                     actualMoney = 0;
                     audioManager.PlaySound("Money");
                     spriteRenderer.material = defaultMaterial;

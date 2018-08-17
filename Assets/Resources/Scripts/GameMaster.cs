@@ -6,12 +6,13 @@ public class GameMaster : MonoBehaviour {
 
     public static GameMaster gm;
 
-    [SerializeField] private int startingMoney = 100;
-    public static int Money;
+    public static int money = 0;
 
     public Transform playerPrefab;
     public Transform spawnPoint;
     public int spawnDelay = 3;
+
+    public int totalVictimsSaved = 0;
 
     [SerializeField] private GameObject upgradeMenu;
 
@@ -38,8 +39,6 @@ public class GameMaster : MonoBehaviour {
     void Start()
     {
         player = Player.instance;
-
-        Money = startingMoney;
 
         // Sound
         audioManager = AudioManager.instance;

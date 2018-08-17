@@ -25,14 +25,14 @@ public class UpgradeMenu : MonoBehaviour {
 
     public void UpgradeHealth()
     {
-        if(GameMaster.Money < upgradeCost)
+        if(GameMaster.money < upgradeCost)
         {
             AudioManager.instance.PlaySound("NoMoney");
             return;
         }
         
         player.playerStats.maxHealth += 1;
-        GameMaster.Money -= upgradeCost;
+        GameMaster.money -= upgradeCost;
         AudioManager.instance.PlaySound("Money");
         player.playerStats.currentHealth = player.playerStats.maxHealth;
         //player.statusIndicator.SetHealth(playerStats.currentHealth, playerStats.maxHealth);

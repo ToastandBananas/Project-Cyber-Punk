@@ -33,19 +33,23 @@ public class Enemy : MonoBehaviour {
 
     public EnemyStats enemyStats = new EnemyStats();
     
+    [Header("Sounds")]
     public string deathSoundName = "DeathVoice";
     public string damageSoundName = "DamageVoice";
 
+    [Header("Money")]
     public int minMoneyDrop = 2;
     public int maxMoneyDrop = 10;
     public int actualMoney;
 
-    public float distanceToPlayer;
-
-    public bool isDead = false;
-
+    [Header("Materials")]
     public Material highlightMaterial;
     public Material defaultMaterial;
+
+    [Header("Other Variables")]
+    public float distanceToPlayer;
+    public bool isDead = false;
+    public bool isAssassinationTarget = false;
 
     private AudioManager audioManager;
 
@@ -66,6 +70,7 @@ public class Enemy : MonoBehaviour {
     GameObject enemyWeapon;
     GameObject enemyArm;
     EnemyWeapon enemyWeaponScript;
+    LevelExit levelExitScript;
 
     int startingWeaponID;
 
@@ -83,6 +88,7 @@ public class Enemy : MonoBehaviour {
         player = Player.instance;
         enemyMovementScript = gameObject.GetComponent<EnemyMovement>();
         lootDropScript = GetComponent<LootDrop>();
+        levelExitScript = GameObject.Find("LevelExitTrigger").GetComponent<LevelExit>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -170,6 +176,16 @@ public class Enemy : MonoBehaviour {
             isDead = true;
             anim.SetBool("isDead", isDead);
             enemyMovementScript.currentState = EnemyMovement.State.Dead;
+
+            levelExitScript.enemiesKilled++;
+            if (levelExitScript.enemiesKilled == levelExitScript.enemyCount)
+                levelExitScript.KillAllEnemiesMissionComplete();
+
+            if (isAssassinationTarget)
+                levelExitScript.targetsAssassinated++;
+
+            if (levelExitScript.targetsAssassinated == levelExitScript.assassinationTargetCount)
+                levelExitScript.AssassinationMissionComplete();
 
             thisEnemyCollider.direction = CapsuleDirection2D.Horizontal;
             thisEnemyCollider.offset = new Vector2(3.43f, -19.05f);

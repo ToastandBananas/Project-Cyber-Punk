@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class ItemData : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler

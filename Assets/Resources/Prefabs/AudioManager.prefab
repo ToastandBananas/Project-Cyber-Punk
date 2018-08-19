@@ -54,7 +54,7 @@ MonoBehaviour:
   sounds:
   - soundName: Music1
     clip: {fileID: 8300000, guid: aa8ce5fc65ab2d0459c6b12f283f52f5, type: 3}
-    volume: 0
+    volume: 0.5
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -421,5 +421,12 @@ MonoBehaviour:
     volume: 0.5
     pitch: 1
     randomVolume: 0.1
+    randomPitch: 0
+    loop: 0
+  - soundName: MissionFailure
+    clip: {fileID: 8300000, guid: f4cd35f47756e7f439191998dd5b8fa0, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
     randomPitch: 0
     loop: 0

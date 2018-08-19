@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public bool facingRight = true;
     public bool isAiming = false;
     private bool inAir = false;
+    public bool isTeleporting = false;
 
     public Transform groundCheck;
     float groundRadius = 0.1f;
@@ -143,7 +144,7 @@ public class PlayerController : MonoBehaviour
 
         playerAnim.SetBool("onGround", onGround);
 
-        if (onGround && Input.GetButtonDown("Jump") && player.isDead == false)
+        if (onGround && Input.GetButtonDown("Jump") && player.isDead == false && !isTeleporting)
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpPower);
         }
@@ -151,25 +152,16 @@ public class PlayerController : MonoBehaviour
 
     void MoveHorizontally()
     {
-        if (player.isDead == false)
+        if (player.isDead == false && !isTeleporting)
         {
             float x = Input.GetAxisRaw("Horizontal");
-
-            //if (Input.GetKeyDown(KeyCode.LeftShift) && onGround == true)
-            // {
+            
             if (onGround == true)
             {
                 speedFactor = runSpeed;
                 isRunning = true;
                 playerAnim.SetBool("isRunning", isRunning);
             }
-            //}
-           // else if (Input.GetKeyUp(KeyCode.LeftShift))
-           // {
-                //speedFactor = walkSpeed;
-                //isRunning = false;
-                //playerAnim.SetBool("isRunning", isRunning);
-           // }
 
             moveSpeed = x * speedFactor;
             Vector2 move = new Vector2(moveSpeed, rigidBody.velocity.y);
@@ -202,7 +194,7 @@ public class PlayerController : MonoBehaviour
 
     void CheckIfAiming()
     {
-        if (Input.GetButton("Fire2") && player.isDead == false) // Holding right click
+        if (Input.GetButton("Fire2") && player.isDead == false && !isTeleporting) // Holding right click
         {
             isAiming = true;
 

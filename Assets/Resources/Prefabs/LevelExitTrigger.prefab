@@ -77,6 +77,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd2f79f2c8f20041813a679fcc9c9e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allMainMissionsComplete: 0
+  mission1: 4
+  mission1Complete: 0
+  mission2: 0
+  mission2Complete: 0
+  mission3: 0
+  mission3Complete: 0
+  sideMission1: 0
+  sideMission1Complete: 0
+  sideMission2: 0
+  sideMission2Complete: 0
+  sideMission3: 0
+  sideMission3Complete: 0
+  assassinationTargetCount: 0
+  targetsAssassinated: 0
+  enemyCount: 0
+  enemiesKilled: 0
   victimCount: 0
   victimsSaved: 0
   victimsFollowing: 0

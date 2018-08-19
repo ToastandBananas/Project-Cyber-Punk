@@ -165,7 +165,9 @@ public class Tooltip : MonoBehaviour
         }
         else
         {
-            data = "<size=22px>" + item.ItemName + "</size>\n\n" + item.ItemDescription;
+            data = "<size=22px>" 
+                + item.ItemName + "</size>\n\n" 
+                + item.ItemDescription;
         }
         tooltip.transform.GetChild(0).GetComponent<Text>().text = data;
     }

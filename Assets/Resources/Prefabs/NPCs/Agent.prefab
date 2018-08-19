@@ -449,6 +449,7 @@ MonoBehaviour:
     actualMaxHealth: 1
     hearingRadius: 200
     inaccuracyFactor: 0.4
+  isAssassinationMissionTarget: 0
   deathSoundName: DeathVoice
   damageSoundName: DamageVoice
   minMoneyDrop: 2

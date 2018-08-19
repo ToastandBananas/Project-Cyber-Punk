@@ -23,6 +23,7 @@ public class Victim : MonoBehaviour
 
     Player player;
     VictimMovement victimMovementScript;
+    LevelExit levelExitScript;
 
     // Use this for initialization
     void Start()
@@ -34,6 +35,7 @@ public class Victim : MonoBehaviour
 
         player = Player.instance;
         victimMovementScript = GetComponent<VictimMovement>();
+        levelExitScript = GameObject.Find("LevelExitTrigger").GetComponent<LevelExit>();
 
         thisVictimCollider = GetComponent<CapsuleCollider2D>();
         otherVictims = GameObject.FindGameObjectsWithTag("Victim");
@@ -61,6 +63,8 @@ public class Victim : MonoBehaviour
             isDead = true;
             anim.SetBool("isDead", isDead);
             victimMovementScript.currentState = VictimMovement.State.Dead;
+
+            StartCoroutine(levelExitScript.RescueVictimsMissionFailed());
 
             GetComponent<SpriteRenderer>().material = victimMovementScript.defaultMaterial;
 

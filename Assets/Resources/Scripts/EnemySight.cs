@@ -94,8 +94,6 @@ public class EnemySight : MonoBehaviour
                 // always false if the player is not within the enemy's range
                 return false;
             }
-
-            //return playerInRange;
         }
         else
         {
@@ -151,11 +149,8 @@ public class EnemySight : MonoBehaviour
      
         foreach (RaycastHit2D hit in hits)
         {
-            // ignore the enemy's own colliders (and other enemies) and patrol points
+            // Ignore the enemy's own colliders (and other enemies) and victims
             if (hit.transform.tag == "Enemy")
-                continue;
-
-            if (hit.transform.tag == "PatrolPoint")
                 continue;
 
             if (hit.transform.tag == "Victim")

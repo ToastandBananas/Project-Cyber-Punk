@@ -2,8 +2,8 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-public class GameMaster : MonoBehaviour {
-
+public class GameMaster : MonoBehaviour
+{
     public static GameMaster gm;
 
     public static int money = 0;
@@ -12,14 +12,17 @@ public class GameMaster : MonoBehaviour {
     public Transform spawnPoint;
     public int spawnDelay = 3;
 
-    public int totalVictimsSaved = 0;
-
-    [SerializeField] private GameObject upgradeMenu;
-
-    // [SerializeField] private WaveSpawner waveSpawner;
-
     public delegate void UpgradeMenuCallback(bool active);
     public UpgradeMenuCallback onToggleUpgradeMenu;
+    [SerializeField] private GameObject upgradeMenu;
+
+    [Header("Game Stats")]
+    public int totalVictimsSaved = 0;
+    
+    public int teleportationDeviceMaxCharge = 1;
+    public int teleportationDeviceRange = 3;
+
+    // [SerializeField] private WaveSpawner waveSpawner;
 
     Player player;
 

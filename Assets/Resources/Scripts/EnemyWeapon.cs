@@ -108,9 +108,7 @@ public class EnemyWeapon : MonoBehaviour {
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
-        {
             Debug.LogError("No AudioManager found in the scene");
-        }
 
         Item weaponItem = itemDatabase.FetchItemByID(weaponID);
         name = weaponItem.ItemName;
@@ -127,9 +125,7 @@ public class EnemyWeapon : MonoBehaviour {
 
         finalAccuracyFactor = enemy.GetComponent<Enemy>().enemyStats.inaccuracyFactor + inaccuracyFactor;
         if (finalAccuracyFactor < 0)
-        {
             finalAccuracyFactor = 0;
-        }
 
         currentAmmoAmount = clipSize;
 
@@ -141,14 +137,10 @@ public class EnemyWeapon : MonoBehaviour {
         EnemyCheckIfShooting();
 
         if (enemyMovementScript.stillSearching == false)
-        {
             initialWaitToShootTime = 1.5f;
-        }
 
         if (currentAmmoAmount <= 0)
-        {
             Invoke("Reload", 2f); // Enemy has infinite ammo, but will only drop what is currently loaded in their gun when they die
-        }
     }
 
     void EnemyCheckIfShooting()

@@ -2,7 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Hotbar : MonoBehaviour {
+public class Hotbar : MonoBehaviour
+{
     public int startingWeaponID;
 
     public GameObject weaponSlot1;
@@ -50,6 +51,7 @@ public class Hotbar : MonoBehaviour {
         player = Player.instance;
 
         AddItemToInventory(startingWeaponID);
+        AddItemToInventory(34);
 
         weaponObjects = GameObject.FindGameObjectsWithTag("EquippedWeapon");
         foreach (GameObject weaponObject in weaponObjects)

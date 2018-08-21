@@ -430,3 +430,24 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0
     loop: 0
+  - soundName: Teleport
+    clip: {fileID: 8300000, guid: 88641986c8b39164db3c83451bbe40f8, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0.1
+    loop: 0
+  - soundName: Gadget Active
+    clip: {fileID: 8300000, guid: 441b3c7459cf9fc409360b206c46ccc5, type: 3}
+    volume: 1.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - soundName: Gadget Empty
+    clip: {fileID: 8300000, guid: 4735c97b38be1ba43bf468020daf3bc8, type: 3}
+    volume: 1.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0

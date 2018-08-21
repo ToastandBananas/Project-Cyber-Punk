@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public bool isAiming = false;
     private bool inAir = false;
     public bool isTeleporting = false;
+    public bool isReappearing = false;
 
     public Transform groundCheck;
     float groundRadius = 0.1f;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     public Transform currentRoom;
 
     SpriteRenderer playerSpriteRenderer;
-    Animator playerAnim;
+    [HideInInspector] public Animator playerAnim;
     Rigidbody2D rigidBody;
 
     Player player;
@@ -144,7 +145,7 @@ public class PlayerController : MonoBehaviour
 
         playerAnim.SetBool("onGround", onGround);
 
-        if (onGround && Input.GetButtonDown("Jump") && player.isDead == false && !isTeleporting)
+        if (onGround && Input.GetButtonDown("Jump") && player.isDead == false && !isTeleporting && !isReappearing)
         {
             rigidBody.velocity = new Vector2(rigidBody.velocity.x, jumpPower);
         }
@@ -152,7 +153,7 @@ public class PlayerController : MonoBehaviour
 
     void MoveHorizontally()
     {
-        if (player.isDead == false && !isTeleporting)
+        if (player.isDead == false && !isTeleporting && !isReappearing)
         {
             float x = Input.GetAxisRaw("Horizontal");
             
@@ -172,7 +173,7 @@ public class PlayerController : MonoBehaviour
 
     void Flip()
     {
-        if (playerSpriteRenderer != null && player.isDead == false)
+        if (playerSpriteRenderer != null && player.isDead == false && !isTeleporting && !isReappearing)
         {
             if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && facingRight == true)
             {
@@ -194,7 +195,7 @@ public class PlayerController : MonoBehaviour
 
     void CheckIfAiming()
     {
-        if (Input.GetButton("Fire2") && player.isDead == false && !isTeleporting) // Holding right click
+        if (Input.GetButton("Fire2") && player.isDead == false && !isTeleporting && !isReappearing) // Holding right click
         {
             isAiming = true;
 

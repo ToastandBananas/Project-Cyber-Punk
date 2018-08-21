@@ -543,5 +543,21 @@
 		"durabilityUse": 4.75,
 		"stackable": false,
 		"type": "Gun"
+	},
+	{
+		"itemID": 34,
+		"itemName": "Teleportation Device",
+		"itemDescription": "Commuting to work has never been easier!",
+		"minDamage": 0,
+		"maxDamage": 0,
+		"clipSize": 0,
+		"ammoType": "N/A",
+		"minFireRate": 0,
+		"maxFireRate": 0,
+		"actionType": "N/A",
+		"soundRadius": 0,
+		"durabilityUse": 1,
+		"stackable": false,
+		"type": "Gadget"
 	}
 ]

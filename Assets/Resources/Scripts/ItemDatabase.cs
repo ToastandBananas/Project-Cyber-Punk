@@ -102,7 +102,10 @@ public class Item
         DurabilityUse = durabilityUse;
         Stackable = stackable;
         ActionType = actionType;
-        Sprite = Resources.Load<Sprite>("Prefabs/UI/ItemIcons/" + name);
+        if (ItemID < 34)
+            Sprite = Resources.Load<Sprite>("Prefabs/UI/ItemIcons/" + name);
+        else
+            Sprite = Resources.Load<Sprite>("Prefabs/UI/ItemIcons/GadgetIcons/" + name);
         Type = type;
     }
 
@@ -112,7 +115,7 @@ public class Item
         ItemName = name;
         ItemDescription = description;
         Stackable = stackable;
-        Sprite = Resources.Load<Sprite>("Prefabs/UI/ItemIcons/" + name);
+        Sprite = Resources.Load<Sprite>("Prefabs/UI/ItemIcons/GadgetIcons/" + name);
         Type = type;
     }
 

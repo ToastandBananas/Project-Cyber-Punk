@@ -28,7 +28,7 @@ public class BackgroundTiling : MonoBehaviour
     void Start ()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteWidth = gameObject.transform.GetComponent<SpriteRenderer>().bounds.size.x; //spriteRenderer.sprite.bounds.size.x;
+        spriteWidth = spriteRenderer.bounds.size.x; //spriteRenderer.sprite.bounds.size.x;
 	}
 	
 	// Update is called once per frame

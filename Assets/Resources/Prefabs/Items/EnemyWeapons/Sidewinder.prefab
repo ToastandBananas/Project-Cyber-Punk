@@ -110,6 +110,9 @@ MonoBehaviour:
   whatToHit:
     serializedVersion: 2
     m_Bits: 4294960601
+  whatToHitWhileHacked:
+    serializedVersion: 2
+    m_Bits: 9745
   weaponID: 26
   inaccuracyFactor: 0
   finalAccuracyFactor: 0

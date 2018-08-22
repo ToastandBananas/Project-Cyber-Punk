@@ -7,6 +7,7 @@ public class EnemyMovement : MonoBehaviour {
 
     // What to chase
     public Transform currentTarget;
+    public Transform enemyToAttack;
 
     // How many times each second we will update our path
     public float updateRate = 2f;
@@ -34,6 +35,7 @@ public class EnemyMovement : MonoBehaviour {
     bool isRunning = false;
     bool isWalking = false;
     bool onGround = false;
+    public bool isHacked = false;
 
     [HideInInspector] public bool playerPositionKnown = false;
     bool movingTowardsSound = false;
@@ -164,21 +166,6 @@ public class EnemyMovement : MonoBehaviour {
 
     void Update()
     {
-        foreach (GameObject enemy in enemies)
-        {
-            if (enemy.gameObject != gameObject)
-            {
-                if (enemy.GetComponent<Enemy>().isDead == false && ((facingRight && enemy.GetComponent<EnemyMovement>().facingRight) || (!facingRight && enemy.GetComponent<EnemyMovement>().facingRight == false)))
-                {
-                    Physics2D.IgnoreCollision(thisEnemyCollider, enemy.GetComponent<CapsuleCollider2D>(), false); // Turn on colliders when they are the same direction, so that they don't overlap
-                }
-                else
-                {
-                    Physics2D.IgnoreCollision(thisEnemyCollider, enemy.GetComponent<CapsuleCollider2D>()); // Prevent enemies from colliding when moving in opposite direction or when dead
-                }
-            }
-        }
-
         if (currentState == State.Patrol)
         {
             PatrolWaypoints();
@@ -214,6 +201,21 @@ public class EnemyMovement : MonoBehaviour {
 
     void FixedUpdate()
     {
+        foreach (GameObject enemy in enemies)
+        {
+            if (enemy.gameObject != gameObject)
+            {
+                if (gameObject.GetComponent<Enemy>().isDead == false && enemy.GetComponent<Enemy>().isDead == false && ((facingRight && enemy.GetComponent<EnemyMovement>().facingRight) || (!facingRight && enemy.GetComponent<EnemyMovement>().facingRight == false)))
+                {
+                    Physics2D.IgnoreCollision(thisEnemyCollider, enemy.GetComponent<CapsuleCollider2D>(), false); // Turn on colliders when they are the same direction, so that they don't overlap
+                }
+                else
+                {
+                    Physics2D.IgnoreCollision(thisEnemyCollider, enemy.GetComponent<CapsuleCollider2D>(), true); // Prevent enemies from colliding when moving in opposite direction or when dead
+                }
+            }
+        }
+
         if (currentState == State.Dead)
         {
             CheckIfAiming();
@@ -343,13 +345,16 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (enemyScript.isDead == false)
         {
-            if ((enemySightScript.CanPlayerBeSeen() == true && enemyScript.distanceToPlayer < stoppingDistance) || currentState == State.Idle)
+            if ((enemySightScript.CanPlayerBeSeen() == true && enemyScript.distanceToPlayer <= stoppingDistance && !isHacked) 
+                || currentState == State.Idle 
+                || (currentState == State.Attack && enemyToAttack != null && currentTarget == enemyToAttack && Vector2.Distance(transform.position, enemyToAttack.position) <= stoppingDistance))
             {
                 moveSpeed = noSpeed;
                 isRunning = false;
                 isWalking = false;
             }
             else if (enemyScript.distanceToPlayer > stoppingDistance && player.isDead == false && playerPositionKnown == true 
+                        || (currentState == State.Attack && currentTarget == enemyToAttack)
                         || playerPositionKnown == true && enemySightScript.CanPlayerBeSeen() == false 
                         || currentState == State.CheckSound || currentState == State.Alert || currentState == State.SpreadOut)
             {
@@ -372,7 +377,8 @@ public class EnemyMovement : MonoBehaviour {
 
     void MoveTowardsTarget()
     {
-        if (currentTarget == player.transform && (Vector2.Distance(transform.position, currentTarget.position) > stoppingDistance || (enemySightScript.CanPlayerBeSeen() == false && playerPositionKnown == true)))
+        if (currentTarget == player.transform && (Vector2.Distance(transform.position, currentTarget.position) > stoppingDistance || (enemySightScript.CanPlayerBeSeen() == false && playerPositionKnown == true))
+            || (currentTarget == enemyToAttack && Vector2.Distance(transform.position, enemyToAttack.position) > stoppingDistance))
         {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x, transform.position.y), moveSpeed * Time.fixedDeltaTime);
         }
@@ -381,7 +387,7 @@ public class EnemyMovement : MonoBehaviour {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(currentTarget.position.x, transform.position.y), moveSpeed * Time.fixedDeltaTime);
         }
 
-        if (Vector2.Distance(transform.position, currentTarget.position) < 0.1f) // If enemy makes it to its target while in Alert or CheckSound state
+        if (Vector2.Distance(transform.position, currentTarget.position) <= 0.1f) // If enemy makes it to its target while in Alert or CheckSound state
         {
             if (currentState == State.Alert)
             {
@@ -404,7 +410,7 @@ public class EnemyMovement : MonoBehaviour {
 
     private void PatrolWaypoints()
     {
-        if (Vector3.Distance (transform.position, currentPatrolPoint.position) < 0.1f) // Cycles through only the patrol points that are assigned to each enemy in the inspector
+        if (Vector2.Distance(transform.position, currentPatrolPoint.position) <= 0.1f) // Cycles through only the patrol points that are assigned to each enemy in the inspector
         {
             if (currentPatrolIndex + 1 < enemyPatrolPoints.Length)
             {
@@ -547,7 +553,82 @@ public class EnemyMovement : MonoBehaviour {
 
     private void DetermineTargetAttackState()
     {
-        if (enemyScript.isDead == false && player.isDead == false)
+        if (enemyToAttack != null)
+        {
+            if (enemyToAttack.GetComponent<Enemy>().isDead)
+            {
+                currentTarget = null;
+                enemyToAttack = null;
+                currentState = defaultState;
+                return;
+            }
+
+            EnemyMovement enemyToAttackMovementScript = enemyToAttack.GetComponent<EnemyMovement>();
+            if (enemyToAttackMovementScript.currentFloorLevel == currentFloorLevel)
+            {
+                currentTarget = enemyToAttack;
+
+                MoveTowardsTarget();
+            }
+            else if (enemyToAttackMovementScript.currentRoomNumber == 0)
+            {
+                Transform targetRoomName = enemyToAttackMovementScript.currentRoom.gameObject.GetComponent<Room>().nearestRoom;
+                if (currentFloorLevel - 1 > 1)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
+                }
+                else if (currentFloorLevel - 1 == 1)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
+                }
+                else if (currentFloorLevel + 1 < 0)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
+                }
+                else if (currentFloorLevel + 1 == 0)
+                {
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
+                }
+
+                MoveTowardsTarget();
+            }
+            else if (currentTarget == null || (currentTarget.tag != "StairsUp" && currentTarget.tag != "StairsDown"))
+            {
+                if (currentFloorLevel + 1 == enemyToAttackMovementScript.currentFloorLevel) // If player is one level above enemy
+                {
+                    Transform targetRoomName = enemyToAttackMovementScript.currentRoom;
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
+
+                    MoveTowardsTarget();
+                }
+                else if (currentFloorLevel - 1 == enemyToAttackMovementScript.currentFloorLevel) // If player is one level below enemy
+                {
+                    Transform targetRoomName = enemyToAttackMovementScript.currentRoom;
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
+
+                    MoveTowardsTarget();
+                }
+                else if (currentFloorLevel + 2 == enemyToAttackMovementScript.currentFloorLevel) // If player is two levels above enemy
+                {
+                    Transform targetRoomName = enemyToAttackMovementScript.currentRoom;
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
+
+                    MoveTowardsTarget();
+                }
+                else if (currentFloorLevel - 2 == enemyToAttackMovementScript.currentFloorLevel) // If player is two levels below enemy
+                {
+                    Transform targetRoomName = enemyToAttackMovementScript.currentRoom;
+                    currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
+
+                    MoveTowardsTarget();
+                }
+            }
+            else
+            {
+                MoveTowardsTarget();
+            }
+        }
+        else if (enemyScript.isDead == false && player.isDead == false && !isHacked)
         {
             if ((enemySightScript.CanPlayerBeSeen() == true || playerPositionKnown == true) && currentFloorLevel == playerControllerScript.currentFloorLevel)
             {
@@ -668,7 +749,6 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (UnityEngine.Random.Range(0, 2) == 0 && currentTarget == null)
         {
-            print("Enemy staying on same floor.");
             currentState = State.Alert;
             mayBeAlert = false;
         }
@@ -676,7 +756,6 @@ public class EnemyMovement : MonoBehaviour {
         {
             if (UnityEngine.Random.Range(0, 2) == 0)
             {
-                print("Enemy trying to move to floor above first.");
                 if (GameObject.Find("Floor" + (currentFloorLevel + 1) + "Room" + currentRoomNumber) != null)
                 {
                     currentTarget = GameObject.Find("Floor" + (currentFloorLevel + 1) + "Room" + currentRoomNumber).GetComponent<Room>().nearestStairsUpTo;
@@ -702,7 +781,6 @@ public class EnemyMovement : MonoBehaviour {
             }
             else
             {
-                print("Enemy trying to move to floor below first.");
                 if (GameObject.Find("Floor" + (currentFloorLevel - 1) + "Room" + currentRoomNumber) != null)
                 {
                     currentTarget = GameObject.Find("Floor" + (currentFloorLevel - 1) + "Room" + currentRoomNumber).GetComponent<Room>().nearestStairsDownTo;

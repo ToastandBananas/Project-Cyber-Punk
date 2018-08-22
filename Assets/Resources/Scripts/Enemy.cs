@@ -50,6 +50,7 @@ public class Enemy : MonoBehaviour {
     public float distanceToPlayer;
     public bool isDead = false;
     public bool isAssassinationTarget = false;
+    public bool isHackable = true;
 
     private AudioManager audioManager;
 

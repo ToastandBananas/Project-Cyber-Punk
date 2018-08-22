@@ -65,6 +65,11 @@ public class MouseCursor : MonoBehaviour
                 anim.enabled = true;
                 transform.localScale = new Vector2(.006f, .006f);
             }
+            else if (gadgetScript.hackerActive)
+            {
+                anim.enabled = true;
+                transform.localScale = new Vector2(.006f, .006f);
+            }
             else
             {
                 anim.enabled = false;

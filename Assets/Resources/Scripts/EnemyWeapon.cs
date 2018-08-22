@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +12,7 @@ public class EnemyWeapon : MonoBehaviour {
     Transform enemySight;
 
     public LayerMask whatToHit;
+    public LayerMask whatToHitWhileHacked;
     public int weaponID;
 
     [Header("Stats:")]
@@ -134,7 +134,7 @@ public class EnemyWeapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        EnemyCheckIfShooting();
+        CheckIfShooting();
 
         if (enemyMovementScript.stillSearching == false)
             initialWaitToShootTime = 1.5f;
@@ -143,11 +143,12 @@ public class EnemyWeapon : MonoBehaviour {
             Invoke("Reload", 2f); // Enemy has infinite ammo, but will only drop what is currently loaded in their gun when they die
     }
 
-    void EnemyCheckIfShooting()
+    void CheckIfShooting()
     {
-        if (enemyScript.isDead == false)
+        if (enemyScript.isDead == false && enemyMovementScript.currentState == EnemyMovement.State.Attack)
         {
-            if (enemySightScript.CanPlayerBeSeen() == true && enemyScript.distanceToPlayer <= maxShootDistance)
+            if ((enemySightScript.CanPlayerBeSeen() == true && enemyScript.distanceToPlayer <= maxShootDistance)
+                || (enemyMovementScript.currentTarget != null && enemyMovementScript.currentTarget == enemyMovementScript.enemyToAttack && Vector2.Distance(enemyMovementScript.transform.position, enemyMovementScript.currentTarget.position) <= maxShootDistance))
             {
                 isAbleToShoot = true;
             }
@@ -179,7 +180,12 @@ public class EnemyWeapon : MonoBehaviour {
         Vector2 firePointPosition = new Vector2(firePoint.position.x, firePoint.position.y);
         Vector2 playerPosition = new Vector2(player.transform.position.x, player.transform.position.y);
 
-        if (enemyScript.distanceToPlayer < 2f)
+        if (enemyMovementScript.enemyToAttack != null && enemyMovementScript.currentTarget != null && enemyMovementScript.currentTarget != player.transform)
+        {
+            Vector2 enemyToAttackPosition = new Vector2(enemyMovementScript.enemyToAttack.position.x, enemyMovementScript.enemyToAttack.position.y);
+            hit = Physics2D.Raycast(firePointPosition, (enemyToAttackPosition - firePointPosition), 100f, whatToHitWhileHacked);
+        }
+        else if (enemyScript.distanceToPlayer < 2f)
         {
             hit = Physics2D.Raycast(firePointPosition, (playerPosition - firePointPosition), 100f, whatToHit);
         }
@@ -197,7 +203,9 @@ public class EnemyWeapon : MonoBehaviour {
             {
                 Player player = hit.collider.GetComponent<Player>();
                 Victim victim = hit.collider.GetComponent<Victim>();
-                if (player != null || victim != null)
+                Enemy enemy = hit.collider.GetComponent<Enemy>();
+
+                if (player != null || victim != null || enemy != null)
                 {
                     hitPos = hit.point;
                     hitNormal = hit.normal;
@@ -210,6 +218,15 @@ public class EnemyWeapon : MonoBehaviour {
                                 player.DamagePlayer(damage / 2);
                             else if (victim != null)
                                 victim.DamageVictim(damage / 2);
+                            else if (enemy != null)
+                            {
+                                enemy.DamageEnemy(damage / 2);
+                                if (enemy.isDead == false)
+                                {
+                                    enemy.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Attack;
+                                    enemy.GetComponent<EnemyMovement>().enemyToAttack = transform.root.transform;
+                                }
+                            }
                             // Debug.Log("We hit " + hit.collider.name + " and did " + damage / 2 + " damage.");
                         }
                         else if (Vector2.Distance(firePointPosition, hitPos) >= 5)
@@ -218,6 +235,15 @@ public class EnemyWeapon : MonoBehaviour {
                                 player.DamagePlayer(1);
                             else if (victim != null)
                                 victim.DamageVictim(1);
+                            else if (enemy != null)
+                            {
+                                enemy.DamageEnemy(1);
+                                if (enemy.isDead == false)
+                                {
+                                    enemy.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Attack;
+                                    enemy.GetComponent<EnemyMovement>().enemyToAttack = transform.root.transform;
+                                }
+                            }
                             // Debug.Log("We hit " + hit.collider.name + " and did " + 1 + " damage.");
                         }
                         else
@@ -226,6 +252,15 @@ public class EnemyWeapon : MonoBehaviour {
                                 player.DamagePlayer(damage);
                             else if (victim != null)
                                 victim.DamageVictim(damage);
+                            else if (enemy != null)
+                            {
+                                enemy.DamageEnemy(damage);
+                                if (enemy.isDead == false)
+                                {
+                                    enemy.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Attack;
+                                    enemy.GetComponent<EnemyMovement>().enemyToAttack = transform.root.transform;
+                                }
+                            }
                             // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                         }
                     }
@@ -235,6 +270,15 @@ public class EnemyWeapon : MonoBehaviour {
                             player.DamagePlayer(damage);
                         else if (victim != null)
                             victim.DamageVictim(damage);
+                        else if (enemy != null)
+                        {
+                            enemy.DamageEnemy(damage);
+                            if (enemy.isDead == false)
+                            {
+                                enemy.GetComponent<EnemyMovement>().currentState = EnemyMovement.State.Attack;
+                                enemy.GetComponent<EnemyMovement>().enemyToAttack = transform.root.transform;
+                            }
+                        }
                         // Debug.Log("We hit " + hit.collider.name + " and did " + damage + " damage.");
                     }
                     

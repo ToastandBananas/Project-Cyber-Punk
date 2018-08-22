@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public class EnemySight : MonoBehaviour
 {
+    public LayerMask whatToHit;
 
     // Use this for initialization
     public bool playerInRange; // is the player within the enemy's sight range collider (this only checks if the enemy can theoretically see the player if nothing is in the way)
@@ -51,7 +52,7 @@ public class EnemySight : MonoBehaviour
   
     void FixedUpdate()
     {
-        if (CanPlayerBeSeen())
+        if (CanPlayerBeSeen() && enemyMovementScript.isHacked == false)
         {
             // spr.color = Color.red;
             enemyMovementScript.currentTarget = player;
@@ -70,6 +71,7 @@ public class EnemySight : MonoBehaviour
         {
             CheckIfOtherEnemyIsAttackingOrAlert();
             CheckForDeadBody();
+            CheckIfEnemiesAreNear();
         }
     }
 
@@ -158,9 +160,7 @@ public class EnemySight : MonoBehaviour
             
             // if anything other than the player is hit then it must be between the player and the enemy's eyes (since the player can only see as far as the player)
             if (hit.transform.tag != "Player")
-            {
                 return true;
-            }
         }
         // if no objects were closer to the enemy than the player return false (player is not hidden by an object)
         return false; 
@@ -204,31 +204,84 @@ public class EnemySight : MonoBehaviour
 
     void CheckIfOtherEnemyIsAttackingOrAlert()
     {
-        foreach (GameObject enemy in enemies)
+        if (enemyMovementScript.isHacked == false)
         {
-            if (enemy != gameObject.transform.root.gameObject)
+            foreach (GameObject enemy in enemies)
             {
-                if (enemyMovementScript.currentRoom == enemy.transform.GetComponent<EnemyMovement>().currentRoom
-                    || enemyMovementScript.currentFloorLevel == enemy.transform.GetComponent<EnemyMovement>().currentFloorLevel && Vector2.Distance(transform.position, enemy.transform.position) < 1.0f)
+                if (enemy != gameObject.transform.root.gameObject)
                 {
-                    if (enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Attack && enemyMovementScript.currentState != EnemyMovement.State.Attack)
+                    if (enemyMovementScript.currentRoom == enemy.transform.GetComponent<EnemyMovement>().currentRoom
+                        || (enemyMovementScript.currentFloorLevel == enemy.transform.GetComponent<EnemyMovement>().currentFloorLevel && Vector2.Distance(transform.position, enemy.transform.position) < 1.0f))
                     {
-                        enemyMovementScript.currentState = EnemyMovement.State.Attack;
-                    }
-                    else if (enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Alert 
-                            && enemyMovementScript.currentState != EnemyMovement.State.SpreadOut 
-                            && enemyMovementScript.currentState != EnemyMovement.State.Alert 
-                            && enemyMovementScript.currentState != EnemyMovement.State.Attack
-                            && enemyMovementScript.mayBeAlert == true)
-                    {
-                        enemyMovementScript.mayBeAlert = false;
-                        enemyMovementScript.currentTarget = null;
-                        enemyMovementScript.currentState = EnemyMovement.State.SpreadOut;
-                    }
+                        if (enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Attack && enemyMovementScript.currentState != EnemyMovement.State.Attack && enemy.GetComponent<EnemyMovement>().isHacked == false)
+                        {
+                            enemyMovementScript.currentState = EnemyMovement.State.Attack;
+                        }
+                        else if (enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Alert
+                                && enemyMovementScript.currentState != EnemyMovement.State.SpreadOut
+                                && enemyMovementScript.currentState != EnemyMovement.State.Alert
+                                && enemyMovementScript.currentState != EnemyMovement.State.Attack
+                                && enemyMovementScript.mayBeAlert == true)
+                        {
+                            enemyMovementScript.mayBeAlert = false;
+                            enemyMovementScript.currentTarget = null;
+                            enemyMovementScript.currentState = EnemyMovement.State.SpreadOut;
+                        }
 
-                    if (enemyMovementScript.mayBeAlert == true && enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Alert && enemyMovementScript.currentState == EnemyMovement.State.Alert)
+                        if (enemyMovementScript.mayBeAlert == true && enemy.transform.GetComponent<EnemyMovement>().currentState == EnemyMovement.State.Alert && enemyMovementScript.currentState == EnemyMovement.State.Alert)
+                        {
+                            enemyMovementScript.mayBeAlert = false;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void CheckIfEnemiesAreNear() // For when hacked
+    {
+        if (enemyMovementScript.isHacked && enemyMovementScript.enemyToAttack == null)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy.gameObject != transform.root.gameObject && enemy.GetComponent<EnemyMovement>().isHacked == false)
+                {
+                    if (enemy.GetComponent<EnemyMovement>().currentFloorLevel == enemyMovementScript.currentFloorLevel && enemy.GetComponent<Enemy>().isDead == false
+                        && ((enemyMovementScript.facingRight && gameObject.transform.position.x < enemy.transform.position.x) || (enemyMovementScript.facingRight == false && gameObject.transform.position.x > enemy.transform.position.x)))
                     {
-                        enemyMovementScript.mayBeAlert = false;
+                        float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
+                        Vector3 enemyPos = enemy.transform.position;
+                        RaycastHit2D hit = Physics2D.Raycast(transform.position, (enemyPos - transform.position), distanceToEnemy, whatToHit);
+                        
+                        if (hit.collider != null && hit.collider.tag == "Enemy")
+                        {
+                            print("Hacked enemy is in attack state");
+                            enemyMovementScript.enemyToAttack = enemy.transform;
+                            enemyMovementScript.currentState = EnemyMovement.State.Attack;
+                        }
+                    }
+                }
+            }
+        }
+        else if (!enemyMovementScript.isHacked && enemyMovementScript.enemyToAttack == null)
+        {
+            foreach (GameObject enemy in enemies)
+            {
+                if (enemy.gameObject != transform.root.gameObject && enemy.GetComponent<EnemyMovement>().isHacked)
+                {
+                    if (enemy.GetComponent<EnemyMovement>().currentFloorLevel == enemyMovementScript.currentFloorLevel && enemy.GetComponent<Enemy>().isDead == false
+                        && ((enemyMovementScript.facingRight && gameObject.transform.position.x < enemy.transform.position.x) || (enemyMovementScript.facingRight == false && gameObject.transform.position.x > enemy.transform.position.x)))
+                    {
+                        float distanceToEnemy = Vector2.Distance(transform.position, enemy.transform.position);
+                        Vector3 enemyPos = enemy.transform.position;
+                        RaycastHit2D hit = Physics2D.Raycast(transform.position, (enemyPos - transform.position), distanceToEnemy, whatToHit);
+
+                        if (hit.collider != null && hit.collider.tag == "Enemy" && hit.collider.GetComponent<EnemyMovement>().isHacked)
+                        {
+                            print(gameObject.transform.root.name + " is in attack state");
+                            enemyMovementScript.enemyToAttack = enemy.transform;
+                            enemyMovementScript.currentState = EnemyMovement.State.Attack;
+                        }
                     }
                 }
             }

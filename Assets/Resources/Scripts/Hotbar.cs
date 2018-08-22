@@ -51,6 +51,7 @@ public class Hotbar : MonoBehaviour
         player = Player.instance;
 
         AddItemToInventory(startingWeaponID);
+        AddItemToInventory(35);
         AddItemToInventory(34);
 
         weaponObjects = GameObject.FindGameObjectsWithTag("EquippedWeapon");

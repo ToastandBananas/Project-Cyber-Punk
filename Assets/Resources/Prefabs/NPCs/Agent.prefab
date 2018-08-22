@@ -340,6 +340,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a14552927e7388a4d81801af64af42b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatToHit:
+    serializedVersion: 2
+    m_Bits: 9729
   playerInRange: 0
   spr: {fileID: 212579488857369382}
   lineOfSightEnd: {fileID: 4957726326601328}
@@ -355,6 +358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTarget: {fileID: 0}
+  enemyToAttack: {fileID: 0}
   updateRate: 2
   runSpeed: 2
   walkSpeed: 0.75
@@ -362,6 +366,7 @@ MonoBehaviour:
   stoppingDistance: 3
   stillSearching: 0
   facingRight: 1
+  isHacked: 0
   playerPositionKnown: 0
   groundCheck: {fileID: 4987469338844168}
   whatIsGround:
@@ -449,16 +454,17 @@ MonoBehaviour:
     actualMaxHealth: 1
     hearingRadius: 200
     inaccuracyFactor: 0.4
-  isAssassinationMissionTarget: 0
   deathSoundName: DeathVoice
   damageSoundName: DamageVoice
   minMoneyDrop: 2
   maxMoneyDrop: 10
   actualMoney: 0
-  distanceToPlayer: 0
-  isDead: 0
   highlightMaterial: {fileID: 2100000, guid: 82be8d44dc028c34b8a1f72b134981ee, type: 2}
   defaultMaterial: {fileID: 2100000, guid: 903c7352dda7d41cbad8ce92fb3fa8b5, type: 2}
+  distanceToPlayer: 0
+  isDead: 0
+  isAssassinationTarget: 1
+  isHackable: 1
   statusIndicator: {fileID: 0}
 --- !u!114 &114880731933560192
 MonoBehaviour:

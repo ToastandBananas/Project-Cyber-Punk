@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool inAir = false;
     public bool isTeleporting = false;
     public bool isReappearing = false;
+    public bool isHacking = false;
 
     public Transform groundCheck;
     float groundRadius = 0.1f;

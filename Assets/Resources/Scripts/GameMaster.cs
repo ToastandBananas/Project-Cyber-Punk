@@ -21,6 +21,8 @@ public class GameMaster : MonoBehaviour
     
     public int teleportationDeviceMaxCharge = 1;
     public int teleportationDeviceRange = 3;
+    public int AIHackingDeviceMaxCharge = 1;
+    public int AIHackingDeviceRange = 3;
 
     // [SerializeField] private WaveSpawner waveSpawner;
 

@@ -40,7 +40,7 @@ public class EnemyHearing : MonoBehaviour {
     {
         playerEquippedWeapon = GameObject.FindGameObjectWithTag("EquippedWeapon").GetComponent<Weapon>();
 
-        if (collision.gameObject.tag == "SoundTrigger" && enemyMovementScript.currentState != EnemyMovement.State.Attack)
+        if (collision.gameObject.tag == "SoundTrigger" && enemyMovementScript.currentState != EnemyMovement.State.Attack && !enemyMovementScript.isHacked)
         {
             if (enemySightScript.CanPlayerBeSeen() == false && enemyScript.isDead == false)
             {

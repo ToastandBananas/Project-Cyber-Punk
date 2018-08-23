@@ -62,7 +62,7 @@ public class EnemyWeapon : MonoBehaviour {
     float timeToSpawnEffect = 0;
     float effectSpawnRate = 10;
     Transform firePoint;
-    public float playerFireRate;
+    public float fireRate;
     
     // Sound
     private AudioManager audioManager;
@@ -115,8 +115,8 @@ public class EnemyWeapon : MonoBehaviour {
         damage = Mathf.Round(Random.Range(weaponItem.MinDamage, weaponItem.MaxDamage) * 100.0f) / 100.0f;
         clipSize = weaponItem.ClipSize;
         ammoType = weaponItem.AmmoType;
-        playerFireRate = Mathf.Round(Random.Range(weaponItem.MinFireRate, weaponItem.MaxFireRate) * 100.0f) / 100.0f;
-        autoCoolDownTime = Mathf.Round((1 / playerFireRate) * 100.0f) / 100.0f;
+        fireRate = Mathf.Round(Random.Range(weaponItem.MinFireRate, weaponItem.MaxFireRate) * 100.0f) / 100.0f;
+        autoCoolDownTime = Mathf.Round((1 / fireRate) * 100.0f) / 100.0f;
         actionType = weaponItem.ActionType;
         soundRadius = weaponItem.SoundRadius;
         durabilityUse = weaponItem.DurabilityUse;

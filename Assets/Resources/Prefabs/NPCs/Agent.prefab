@@ -169,7 +169,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1056793129823684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7, y: 11.36, z: 0}
+  m_LocalPosition: {x: 1.7, y: 10.27, z: 0}
   m_LocalScale: {x: 1.1875486, y: 0.9896242, z: 0.9896242}
   m_Children: []
   m_Father: {fileID: 4426508312794516}
@@ -367,6 +367,7 @@ MonoBehaviour:
   stillSearching: 0
   facingRight: 1
   isHacked: 0
+  isScanned: 0
   playerPositionKnown: 0
   groundCheck: {fileID: 4987469338844168}
   whatIsGround:

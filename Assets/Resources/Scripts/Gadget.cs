@@ -23,10 +23,15 @@ public class Gadget : MonoBehaviour
     [Header("Gadget Bools")]
     public bool teleporterActive = false;
     public bool hackerActive = false;
+    public bool scannerActive = false;
     public bool enemySelected = false;
+
+    [Header("Gadget Other")]
+    public Transform enemyBeingScanned;
 
     GameObject[] enemies;
     Transform targetEnemy;
+    [HideInInspector] public GameObject scannerInfoTooltip;
 
     ItemDatabase itemDatabase;
     GameMaster gameMaster;
@@ -37,6 +42,7 @@ public class Gadget : MonoBehaviour
 
     Item teleportationDevice;
     Item AIHackingDevice;
+    Item AIScanningDevice;
 
     void Awake()
     {
@@ -58,11 +64,16 @@ public class Gadget : MonoBehaviour
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
+        scannerInfoTooltip = GameObject.Find("ScannerInfo");
+        scannerInfoTooltip.transform.position -= new Vector3(0, Screen.height / 3);
+        scannerInfoTooltip.SetActive(false);
+
         gadgetSlot1Script = gadgetSlot1.GetComponent<Slot>();
         gadgetSlot2Script = gadgetSlot2.GetComponent<Slot>();
 
         teleportationDevice = itemDatabase.FetchItemByID(34);
         AIHackingDevice = itemDatabase.FetchItemByID(35);
+        AIScanningDevice = itemDatabase.FetchItemByID(36);
     }
 	
 	// Update is called once per frame
@@ -74,6 +85,7 @@ public class Gadget : MonoBehaviour
         ActivateGadgetItem();
         StartCoroutine(UseTeleporter());
         UseHacker();
+        UseScanner();
         DisplayCharges();
     }
 
@@ -99,6 +111,11 @@ public class Gadget : MonoBehaviour
                 gadget1MaxCharge = gameMaster.AIHackingDeviceMaxCharge;
                 gadget1CurrentCharge = gadget1MaxCharge;
             }
+            else if (gadget1.name == AIScanningDevice.ItemName)
+            {
+                gadget1MaxCharge = gameMaster.AIScanningDeviceMaxCharge;
+                gadget1CurrentCharge = gadget1MaxCharge;
+            }
         }
 
         if (gadget2 != null)
@@ -113,6 +130,65 @@ public class Gadget : MonoBehaviour
                 gadget2MaxCharge = gameMaster.AIHackingDeviceMaxCharge;
                 gadget2CurrentCharge = gadget2MaxCharge;
             }
+            else if (gadget2.name == AIScanningDevice.ItemName)
+            {
+                gadget2MaxCharge = gameMaster.AIScanningDeviceMaxCharge;
+                gadget2CurrentCharge = gadget1MaxCharge;
+            }
+        }
+    }
+
+    private void UseScanner()
+    {
+        if (scannerActive)
+        {
+            if (gadget1.name == AIScanningDevice.ItemName || gadget2.name == AIScanningDevice.ItemName)
+            {
+                enemySelected = false;
+                if (targetEnemy != null)
+                    targetEnemy.GetComponent<SpriteRenderer>().material = targetEnemy.GetComponent<Enemy>().defaultMaterial;
+                targetEnemy = null;
+
+                foreach (GameObject enemy in enemies)
+                {
+                    if (Vector2.Distance(enemy.transform.position, cursor.transform.position) < 0.25f
+                        && Vector2.Distance(player.transform.position, cursor.transform.position) <= gameMaster.AIScanningDeviceRange
+                        && targetEnemy == null)
+                    {
+                        enemySelected = true;
+                        targetEnemy = enemy.transform;
+                        targetEnemy.GetComponent<SpriteRenderer>().material = targetEnemy.GetComponent<Enemy>().highlightMaterial;
+                    }
+                }
+
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    if (enemySelected && targetEnemy.GetComponent<EnemyMovement>().isScanned == false)
+                    {
+                        print(targetEnemy.name + " scanned");
+                        targetEnemy.GetComponent<SpriteRenderer>().material = targetEnemy.GetComponent<Enemy>().defaultMaterial;
+                        audioManager.PlaySound("AI Hack"); // TO DO: Get AI Scan sound
+
+                        targetEnemy.GetComponent<EnemyMovement>().isScanned = true;
+
+                        if (gadget1.name == AIScanningDevice.ItemName)
+                            gadget1CurrentCharge--;
+                        else if (gadget2.name == AIScanningDevice.ItemName)
+                            gadget2CurrentCharge--;
+
+                        scannerActive = false;
+                        cursor.anim.SetBool("scannerActive", scannerActive);
+                    }
+                    else
+                        audioManager.PlaySound("Gadget Empty");
+                }
+                else if (Input.GetButtonDown("Fire2"))
+                {
+                    scannerActive = false;
+                    cursor.anim.SetBool("scannerActive", scannerActive);
+                    audioManager.PlaySound("Gadget Empty");
+                }
+            }
         }
     }
 
@@ -126,6 +202,7 @@ public class Gadget : MonoBehaviour
                 if (targetEnemy != null)
                     targetEnemy.GetComponent<SpriteRenderer>().material = targetEnemy.GetComponent<Enemy>().defaultMaterial;
                 targetEnemy = null;
+
                 foreach (GameObject enemy in enemies)
                 {
                     if (Vector2.Distance(enemy.transform.position, cursor.transform.position) < 0.25f 
@@ -142,9 +219,9 @@ public class Gadget : MonoBehaviour
                 {
                     if (enemySelected)
                     {
-                        print(targetEnemy.name + " hacked");
+                        // print(targetEnemy.name + " hacked");
                         targetEnemy.GetComponent<SpriteRenderer>().material = targetEnemy.GetComponent<Enemy>().defaultMaterial;
-                        audioManager.PlaySound("AIHack");
+                        audioManager.PlaySound("AI Hack");
 
                         targetEnemy.GetComponent<EnemyMovement>().isHacked = true;
                         targetEnemy.GetComponent<EnemyMovement>().currentState = targetEnemy.GetComponent<EnemyMovement>().defaultState;
@@ -247,6 +324,15 @@ public class Gadget : MonoBehaviour
                     audioManager.PlaySound("Gadget Active");
                 }
             }
+            else if (gadget1.name == AIScanningDevice.ItemName)
+            {
+                if (gadget1CurrentCharge > 0)
+                {
+                    scannerActive = true;
+                    cursor.anim.SetBool("scannerActive", scannerActive);
+                    audioManager.PlaySound("Gadget Active");
+                }
+            }
             else
                 audioManager.PlaySound("Gadget Empty");
         }
@@ -272,7 +358,16 @@ public class Gadget : MonoBehaviour
                 if (gadget2CurrentCharge > 0)
                 {
                     hackerActive = true;
-                    // Change cursor
+                    cursor.anim.SetBool("hackerActive", hackerActive);
+                    audioManager.PlaySound("Gadget Active");
+                }
+            }
+            else if (gadget2.name == AIScanningDevice.ItemName)
+            {
+                if (gadget2CurrentCharge > 0)
+                {
+                    scannerActive = true;
+                    cursor.anim.SetBool("scannerActive", scannerActive);
                     audioManager.PlaySound("Gadget Active");
                 }
             }

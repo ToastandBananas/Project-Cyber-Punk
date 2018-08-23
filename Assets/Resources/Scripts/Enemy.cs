@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(EnemyMovement))]
 public class Enemy : MonoBehaviour {
@@ -72,6 +73,10 @@ public class Enemy : MonoBehaviour {
     GameObject enemyArm;
     EnemyWeapon enemyWeaponScript;
     LevelExit levelExitScript;
+    MouseCursor cursor;
+    Gadget gadgetScript;
+
+    GameObject scannerInfoTooltip;
 
     int startingWeaponID;
 
@@ -85,11 +90,19 @@ public class Enemy : MonoBehaviour {
         enemyArm = transform.Find("EnemyArm").gameObject;
 
         RandomizeStartingWeapon();
+        
+        if (enemyArm.transform.childCount > 0)
+            enemyWeapon = enemyArm.transform.GetChild(0).gameObject;
 
         player = Player.instance;
         enemyMovementScript = gameObject.GetComponent<EnemyMovement>();
+        enemyWeaponScript = enemyArm.GetComponentInChildren<EnemyWeapon>();
         lootDropScript = GetComponent<LootDrop>();
         levelExitScript = GameObject.Find("LevelExitTrigger").GetComponent<LevelExit>();
+        cursor = MouseCursor.instance;
+        gadgetScript = GameObject.Find("GadgetSlotPanel").GetComponent<Gadget>();
+
+        scannerInfoTooltip = gadgetScript.scannerInfoTooltip;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -131,6 +144,8 @@ public class Enemy : MonoBehaviour {
             distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             // print("Distance to Player: " + distanceToPlayer + " units");
         }
+
+        DisplayScannerTooltip();
     }
 
     void RandomizeStartingWeapon()
@@ -146,6 +161,49 @@ public class Enemy : MonoBehaviour {
                     Instantiate(weapon, enemyArm.transform);
                 }
             }
+        }
+    }
+
+    void DisplayScannerTooltip()
+    {
+        if (enemyMovementScript.isScanned && isDead == false && (gadgetScript.enemyBeingScanned == null || gadgetScript.enemyBeingScanned == transform))
+        {
+            if (Vector2.Distance(transform.position, cursor.transform.position) <= 0.25f)
+            {
+                gadgetScript.enemyBeingScanned = transform;
+
+                string silencedText;
+                if (enemyWeaponScript.isSilenced)
+                    silencedText = "Silenced ";
+                else
+                    silencedText = "";
+
+                string fireRateText;
+                if (enemyWeaponScript.fireRate > 1)
+                    fireRateText = "Fire Rate: " + enemyWeaponScript.fireRate + " rounds/second" + "\n";
+                else
+                    fireRateText = "";
+
+                scannerInfoTooltip.SetActive(true);
+                scannerInfoTooltip.GetComponentInChildren<Text>().text = "Health: " + enemyStats.currentHealth + "/" + enemyStats.actualMaxHealth + "\n\n"
+                                                                            + "<size=22px>" + silencedText + enemyWeaponScript.gameObject.name + "</size>\n"
+                                                                            + "Action Type: " + enemyWeaponScript.actionType + "\n"
+                                                                            + "Ammo: " + enemyWeaponScript.currentAmmoAmount + "/" + enemyWeaponScript.clipSize + "\n"
+                                                                            + "Damage: " + enemyWeaponScript.damage + "\n"
+                                                                            + fireRateText
+                                                                            + "Durability: " + enemyWeaponScript.durability + "%" + "\n"
+                                                                            + "Ammo Type: " + enemyWeaponScript.ammoType;
+            }
+            else
+            {
+                scannerInfoTooltip.SetActive(false);
+                gadgetScript.enemyBeingScanned = null;
+            }
+        }
+        else if (isDead)
+        {
+            scannerInfoTooltip.SetActive(false);
+            gadgetScript.enemyBeingScanned = null;
         }
     }
 
@@ -206,7 +264,7 @@ public class Enemy : MonoBehaviour {
                 enemyWeaponScript = enemyWeapon.transform.GetComponent<EnemyWeapon>();
             }
             // Drop held weapon with current amount of ammo and specify the ammo type (so that it can be accessed when the player tries to pick up ammo in the WeaponPickup script's PickUpAmmo() method)
-            lootDropScript.DropWeapon(enemyWeaponScript.currentAmmoAmount, enemyWeaponScript.clipSize, enemyWeaponScript.ammoType, enemyWeaponScript.damage, enemyWeaponScript.playerFireRate, enemyWeaponScript.isSilenced, 
+            lootDropScript.DropWeapon(enemyWeaponScript.currentAmmoAmount, enemyWeaponScript.clipSize, enemyWeaponScript.ammoType, enemyWeaponScript.damage, enemyWeaponScript.fireRate, enemyWeaponScript.isSilenced, 
                                         enemyWeaponScript.hasIncreasedClipSize, enemyWeaponScript.clipSizeMultiplier, enemyWeaponScript.inaccuracyFactor, enemyWeaponScript.durability, enemyWeaponScript.hasAlteredDurability,
                                         enemyWeaponScript.durabilityMultiplier);
 

@@ -556,14 +556,14 @@
 		"maxFireRate": 0,
 		"actionType": "N/A",
 		"soundRadius": 0,
-		"durabilityUse": 1,
+		"durabilityUse": 0,
 		"stackable": false,
 		"type": "Gadget"
 	},
 	{
 		"itemID": 35,
 		"itemName": "AI Hacking Device",
-		"itemDescription": "Make enemies attack other enemies!",
+		"itemDescription": "Make enemies ignore you and attack other enemies on sight!",
 		"minDamage": 0,
 		"maxDamage": 0,
 		"clipSize": 0,
@@ -572,7 +572,23 @@
 		"maxFireRate": 0,
 		"actionType": "N/A",
 		"soundRadius": 0,
-		"durabilityUse": 1,
+		"durabilityUse": 0,
+		"stackable": false,
+		"type": "Gadget"
+	},
+	{
+		"itemID": 36,
+		"itemName": "AI Scanning Device",
+		"itemDescription": "Scan information about enemies. Works great in collaboration with the AI Hacking Device!",
+		"minDamage": 0,
+		"maxDamage": 0,
+		"clipSize": 0,
+		"ammoType": "N/A",
+		"minFireRate": 0,
+		"maxFireRate": 0,
+		"actionType": "N/A",
+		"soundRadius": 0,
+		"durabilityUse": 0,
 		"stackable": false,
 		"type": "Gadget"
 	}

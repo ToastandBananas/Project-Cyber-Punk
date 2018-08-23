@@ -36,6 +36,7 @@ public class EnemyMovement : MonoBehaviour {
     bool isWalking = false;
     bool onGround = false;
     public bool isHacked = false;
+    public bool isScanned = false;
 
     [HideInInspector] public bool playerPositionKnown = false;
     bool movingTowardsSound = false;
@@ -142,7 +143,7 @@ public class EnemyMovement : MonoBehaviour {
         enemyHearingScript = enemyHearing.GetComponent<EnemyHearing>();
         enemyScript = gameObject.GetComponent<Enemy>();
         armRotationScript = arm.GetComponent<ArmRotation>();
-        
+
         anim = GetComponent<Animator>();
 
         enemyLocalScale = transform.localScale;

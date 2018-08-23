@@ -66,7 +66,7 @@ Transform:
   m_GameObject: {fileID: 1165817749132322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 16.1, y: 3.48, z: 0}
-  m_LocalScale: {x: 0.2235316, y: 0.2710104, z: 0.2235316}
+  m_LocalScale: {x: 0.2573296, y: 0.3119872, z: 0.2573296}
   m_Children:
   - {fileID: 4163408624474636}
   m_Father: {fileID: 0}
@@ -132,7 +132,7 @@ MonoBehaviour:
     type: 2}
   muzzleFlashMinSize: 25
   muzzleFlashMaxSize: 35
-  playerFireRate: 0
+  fireRate: 0
   maxShootDistance: 5
 --- !u!114 &114650450937652348
 MonoBehaviour:

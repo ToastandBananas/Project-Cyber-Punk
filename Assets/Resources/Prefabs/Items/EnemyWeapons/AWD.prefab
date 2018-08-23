@@ -52,8 +52,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1179801859704886}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.59, y: 4.14, z: 0}
-  m_LocalScale: {x: 0.2860467, y: 0.2860467, z: 0.2860467}
+  m_LocalPosition: {x: 21.92, y: 4.28, z: 0}
+  m_LocalScale: {x: 0.3203723, y: 0.3203723, z: 0.3203723}
   m_Children:
   - {fileID: 4558278358277678}
   m_Father: {fileID: 0}
@@ -145,7 +145,7 @@ MonoBehaviour:
     type: 2}
   muzzleFlashMinSize: 25
   muzzleFlashMaxSize: 35
-  playerFireRate: 0
+  fireRate: 0
   maxShootDistance: 5
 --- !u!212 &212097380576663010
 SpriteRenderer:

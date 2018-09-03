@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - soundName: Music1
+  - soundName: Music
     clip: {fileID: 8300000, guid: aa8ce5fc65ab2d0459c6b12f283f52f5, type: 3}
     volume: 0.3
     pitch: 1

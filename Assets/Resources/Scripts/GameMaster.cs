@@ -19,6 +19,7 @@ public class GameMaster : MonoBehaviour
     public delegate void PauseMenuCallback(bool active);
     public PauseMenuCallback onTogglePauseMenu;
     [SerializeField] private GameObject pauseMenu;
+    PauseMenu pauseMenuScript;
 
     [Header("Game Stats")]
     public int totalVictimsSaved = 0;
@@ -53,6 +54,7 @@ public class GameMaster : MonoBehaviour
     {
         player = Player.instance;
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        pauseMenuScript = pauseMenu.GetComponent<PauseMenu>();
 
         // Sound
         audioManager = AudioManager.instance;
@@ -73,7 +75,12 @@ public class GameMaster : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TogglePauseMenu();
+            if (pauseMenu.activeSelf == true || (pauseMenu.activeSelf == false && pauseMenuScript.quitConfirmation.activeSelf == false && pauseMenuScript.optionsMenu.activeSelf == false))
+                TogglePauseMenu();
+            else if (pauseMenuScript.quitConfirmation.activeSelf == true)
+                pauseMenuScript.quitConfirmation.SetActive(false);
+            else if (pauseMenuScript.optionsMenu.activeSelf == true)
+                pauseMenuScript.optionsMenu.SetActive(false);
         }
 
         debugPause();

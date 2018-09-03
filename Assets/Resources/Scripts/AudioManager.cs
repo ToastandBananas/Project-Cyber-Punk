@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour {
     public static AudioManager instance;
 
     [SerializeField]
-    Sound[] sounds;
+    public Sound[] sounds;
 
     void Awake()
     {
@@ -70,7 +70,7 @@ public class AudioManager : MonoBehaviour {
             sounds[i].SetSource (_go.AddComponent<AudioSource>());
         }
 
-        PlaySound("Music1");
+        PlaySound("Music");
     }
 
     public void PlaySound(string _soundName)

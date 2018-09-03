@@ -36,6 +36,8 @@ public class Player : MonoBehaviour {
     public bool hasEquippedStartingWeapon = false;
     public GameObject itemToPickup;
 
+    GameObject[] doors;
+
     private AudioManager audioManager;
 
     public static Player instance;
@@ -67,6 +69,8 @@ public class Player : MonoBehaviour {
 
     void Start()
     {
+        doors = GameObject.FindGameObjectsWithTag("Door");
+
         playerStats.Init();
 
         playerAnim = GetComponent<Animator>();
@@ -83,6 +87,7 @@ public class Player : MonoBehaviour {
         }*/
 
         GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
+        GameMaster.gm.onTogglePauseMenu += OnPauseMenuToggle;
 
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
@@ -108,11 +113,34 @@ public class Player : MonoBehaviour {
     {
         // Handle what happens when the upgrade menu is toggled
         GetComponent<PlayerController>().enabled = !active;
+
         Weapon _weapon = GetComponentInChildren<Weapon>();
         if(_weapon != null)
-        {
             _weapon.enabled = !active;
-        }
+
+        ArmRotation playerArmRotationScript = GetComponentInChildren<ArmRotation>();
+        if (playerArmRotationScript != null)
+            playerArmRotationScript.enabled = !active;
+
+        foreach (GameObject door in doors)
+            door.GetComponentInChildren<Door>().enabled = !active;
+    }
+
+    void OnPauseMenuToggle(bool active)
+    {
+        // Handle what happens when the pause menu is toggled
+        GetComponent<PlayerController>().enabled = !active;
+
+        Weapon _weapon = GetComponentInChildren<Weapon>();
+        if (_weapon != null)
+            _weapon.enabled = !active;
+
+        ArmRotation playerArmRotationScript = GetComponentInChildren<ArmRotation>();
+        if (playerArmRotationScript != null)
+            playerArmRotationScript.enabled = !active;
+
+        foreach (GameObject door in doors)
+            door.GetComponentInChildren<Door>().enabled = !active;
     }
 
     public void DamagePlayer(float damage)

@@ -68,7 +68,7 @@ MonoBehaviour:
     loop: 0
   - soundName: ButtonHover
     clip: {fileID: 8300000, guid: 4aefb05606537b54e866519be9dcd711, type: 3}
-    volume: 0.4
+    volume: 0.7
     pitch: 1
     randomVolume: 0.1
     randomPitch: 0.1

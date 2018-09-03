@@ -174,9 +174,14 @@ MonoBehaviour:
   spawnPoint: {fileID: 4867696471067078}
   spawnDelay: 3
   upgradeMenu: {fileID: 0}
+  pauseMenu: {fileID: 0}
   totalVictimsSaved: 0
   teleportationDeviceMaxCharge: 1
   teleportationDeviceRange: 3
+  AIHackingDeviceMaxCharge: 1
+  AIHackingDeviceRange: 3
+  AIScanningDeviceMaxCharge: 1
+  AIScanningDeviceRange: 3
 --- !u!114 &114599052966741052
 MonoBehaviour:
   m_ObjectHideFlags: 1

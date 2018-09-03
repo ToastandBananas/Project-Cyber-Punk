@@ -16,6 +16,10 @@ public class GameMaster : MonoBehaviour
     public UpgradeMenuCallback onToggleUpgradeMenu;
     [SerializeField] private GameObject upgradeMenu;
 
+    public delegate void PauseMenuCallback(bool active);
+    public PauseMenuCallback onTogglePauseMenu;
+    [SerializeField] private GameObject pauseMenu;
+
     [Header("Game Stats")]
     public int totalVictimsSaved = 0;
     
@@ -30,6 +34,7 @@ public class GameMaster : MonoBehaviour
     // [SerializeField] private WaveSpawner waveSpawner;
 
     Player player;
+    GameObject[] enemies;
 
     Scene currentScene;
 
@@ -47,6 +52,7 @@ public class GameMaster : MonoBehaviour
     void Start()
     {
         player = Player.instance;
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         // Sound
         audioManager = AudioManager.instance;
@@ -65,12 +71,17 @@ public class GameMaster : MonoBehaviour
             ToggleUpgradeMenu();
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePauseMenu();
+        }
+
         debugPause();
 
         // Debug.Log("Player Health: " + player.playerStats.currentHealth);
     }
 
-    void debugPause()
+    private void debugPause()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
@@ -86,10 +97,41 @@ public class GameMaster : MonoBehaviour
 
         if (upgradeMenu.activeSelf == true)
         {
+            player.GetComponent<Rigidbody2D>().gravityScale = 0;
             Cursor.visible = true;
         }
         else
         {
+            player.GetComponent<Rigidbody2D>().gravityScale = 1;
+            Cursor.visible = false;
+        }
+    }
+
+    public void TogglePauseMenu()
+    {
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
+        // waveSpawner.enabled = !pauseMenu.activeSelf;
+        onTogglePauseMenu.Invoke(pauseMenu.activeSelf);
+
+        if (pauseMenu.activeSelf == true)
+        {
+            //Time.timeScale = 0;
+            player.GetComponent<Rigidbody2D>().gravityScale = 0;
+            foreach (GameObject enemy in enemies)
+                enemy.GetComponent<Rigidbody2D>().gravityScale = 0;
+
+            Cursor.visible = true;
+        }
+        else
+        {
+            //Time.timeScale = 1;
+            if (pauseMenu.GetComponent<PauseMenu>().quitConfirmation.activeSelf == true)
+                pauseMenu.GetComponent<PauseMenu>().quitConfirmation.SetActive(false);
+
+            player.GetComponent<Rigidbody2D>().gravityScale = 1;
+            foreach (GameObject enemy in enemies)
+                enemy.GetComponent<Rigidbody2D>().gravityScale = 1;
+
             Cursor.visible = false;
         }
     }

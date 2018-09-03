@@ -65,7 +65,7 @@ public class Gadget : MonoBehaviour
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
         scannerInfoTooltip = GameObject.Find("ScannerInfo");
-        scannerInfoTooltip.transform.position -= new Vector3(0, Screen.height / 3);
+        scannerInfoTooltip.transform.position -= new Vector3(0, (Screen.height / 10) * 8);
         scannerInfoTooltip.SetActive(false);
 
         gadgetSlot1Script = gadgetSlot1.GetComponent<Slot>();
@@ -133,7 +133,7 @@ public class Gadget : MonoBehaviour
             else if (gadget2.name == AIScanningDevice.ItemName)
             {
                 gadget2MaxCharge = gameMaster.AIScanningDeviceMaxCharge;
-                gadget2CurrentCharge = gadget1MaxCharge;
+                gadget2CurrentCharge = gadget2MaxCharge;
             }
         }
     }
@@ -301,11 +301,18 @@ public class Gadget : MonoBehaviour
     {
         if ((Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3)) && gadgetSlot1Script.isEmpty == false)
         {
+            teleporterActive = false;
+            cursor.anim.SetBool("teleporterActive", teleporterActive);
+            hackerActive = false;
+            cursor.anim.SetBool("hackerActive", hackerActive);
+            scannerActive = false;
+            cursor.anim.SetBool("scannerActive", scannerActive);
+
             if (gadget1CurrentCharge <= 0)
             {
                 audioManager.PlaySound("Gadget Empty");
             }
-            else if (gadget1.name == teleportationDevice.ItemName && playerControllerScript.isTeleporting && !playerControllerScript.isReappearing)
+            else if (gadget1.name == teleportationDevice.ItemName && !playerControllerScript.isTeleporting && !playerControllerScript.isReappearing)
             {
                 // Then use gadget in gadget slot 1
                 if (gadget1CurrentCharge > 0)
@@ -339,6 +346,13 @@ public class Gadget : MonoBehaviour
 
         if ((Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4)) && gadgetSlot2Script.isEmpty == false)
         {
+            teleporterActive = false;
+            cursor.anim.SetBool("teleporterActive", teleporterActive);
+            hackerActive = false;
+            cursor.anim.SetBool("hackerActive", hackerActive);
+            scannerActive = false;
+            cursor.anim.SetBool("scannerActive", scannerActive);
+
             if (gadget2CurrentCharge <= 0)
             {
                 audioManager.PlaySound("Gadget Empty");

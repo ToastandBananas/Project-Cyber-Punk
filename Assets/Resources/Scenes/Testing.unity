@@ -2822,11 +2822,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114507762314808680, guid: d3a1500ed99f8514f8d53210faeb9536,
-        type: 2}
-      propertyPath: upgradeMenu
-      value: 
-      objectReference: {fileID: 2091974773}
     - target: {fileID: 114599052966741052, guid: d3a1500ed99f8514f8d53210faeb9536,
         type: 2}
       propertyPath: backgrounds.Array.data[0]
@@ -2854,9 +2849,14 @@ Prefab:
       objectReference: {fileID: 1647461912}
     - target: {fileID: 114507762314808680, guid: d3a1500ed99f8514f8d53210faeb9536,
         type: 2}
-      propertyPath: AIScanningDeviceMaxCharge
-      value: 3
-      objectReference: {fileID: 0}
+      propertyPath: upgradeMenu
+      value: 
+      objectReference: {fileID: 2091974773}
+    - target: {fileID: 114507762314808680, guid: d3a1500ed99f8514f8d53210faeb9536,
+        type: 2}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1698336776}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3a1500ed99f8514f8d53210faeb9536, type: 2}
   m_IsPrefabAsset: 0
@@ -3453,6 +3453,31 @@ Prefab:
     - target: {fileID: 224883626841641352, guid: 7cbd63f922493f64ab12621320c5ac94,
         type: 2}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114714948653555180, guid: 7cbd63f922493f64ab12621320c5ac94,
+        type: 2}
+      propertyPath: m_Text
+      value: Revert to Defaults
+      objectReference: {fileID: 0}
+    - target: {fileID: 224015038629538604, guid: 7cbd63f922493f64ab12621320c5ac94,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000002861023
+      objectReference: {fileID: 0}
+    - target: {fileID: 224015038629538604, guid: 7cbd63f922493f64ab12621320c5ac94,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 213.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114632234605976610, guid: 7cbd63f922493f64ab12621320c5ac94,
+        type: 2}
+      propertyPath: m_FontData.m_AlignByGeometry
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114714948653555180, guid: 7cbd63f922493f64ab12621320c5ac94,
+        type: 2}
+      propertyPath: m_FontData.m_AlignByGeometry
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5056,6 +5081,11 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b77eddaf088c344c8e766327ff71c42, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &1698336776 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1628078673793462, guid: 7cbd63f922493f64ab12621320c5ac94,
+    type: 2}
+  m_PrefabInternal: {fileID: 978040939}
 --- !u!1 &1733842532
 GameObject:
   m_ObjectHideFlags: 0

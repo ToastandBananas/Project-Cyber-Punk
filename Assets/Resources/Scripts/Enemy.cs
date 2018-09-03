@@ -129,6 +129,7 @@ public class Enemy : MonoBehaviour {
         }*/
 
         GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
+        GameMaster.gm.onTogglePauseMenu += OnPauseMenuToggle;
 
         audioManager = AudioManager.instance;
         if (audioManager == null)
@@ -212,7 +213,18 @@ public class Enemy : MonoBehaviour {
         // Handle what happens when the upgrade menu is toggled
         if (this != null)
         {
-            GetComponent<EnemyMovement>().enabled = !active;
+            enemyMovementScript.enabled = !active;
+            enemyWeaponScript.enabled = !active;
+        }
+    }
+
+    void OnPauseMenuToggle(bool active)
+    {
+        // Handle what happens when the pause menu is toggled
+        if (this != null)
+        {
+            enemyMovementScript.enabled = !active;
+            enemyWeaponScript.enabled = !active;
         }
     }
 

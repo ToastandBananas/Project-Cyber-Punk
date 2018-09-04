@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4993285894752054}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VictimGroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 50095580515857266}
   - component: {fileID: 95199551644474576}
   - component: {fileID: 70450111867515992}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: VictimGirl
   m_TagString: Victim
   m_Icon: {fileID: 0}
@@ -106,8 +106,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.84765756, y: 0.98016196}
-  m_Size: {x: 19.371775, y: 49.0019}
+  m_Offset: {x: 0.84765756, y: -1.2917552}
+  m_Size: {x: 19.371775, y: 53.545734}
   m_Direction: 0
 --- !u!95 &95199551644474576
 Animator:
@@ -141,7 +141,7 @@ MonoBehaviour:
   groundCheck: {fileID: 4993285894752054}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 2048
   currentTarget: {fileID: 0}
   distanceToPlayer: 0
   stoppingDistance: 1
@@ -211,9 +211,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1838205595
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayerID: 790681915
+  m_SortingLayer: 3
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300016, guid: c3d087dddd3c8fc4c8b3589fb860e712, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

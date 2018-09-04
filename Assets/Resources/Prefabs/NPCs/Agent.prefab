@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212214169349630862}
   - component: {fileID: 114563533609894990}
   - component: {fileID: 114400769637986530}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyArm
   m_TagString: EnemyArm
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4987469338844168}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: EnemyGroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4060577004647694}
   - component: {fileID: 58110302320724430}
   - component: {fileID: 114225580409986022}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: Sight
   m_TagString: Sight
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 58133490609405186}
   - component: {fileID: 50313534560482934}
   - component: {fileID: 255818956274003782}
-  m_Layer: 11
+  m_Layer: 2
   m_Name: Hearing
   m_TagString: Hearing
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4957726326601328}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LineOfSiteEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatToHit:
     serializedVersion: 2
-    m_Bits: 9729
+    m_Bits: 7168
   playerInRange: 0
   spr: {fileID: 212579488857369382}
   lineOfSightEnd: {fileID: 4957726326601328}
@@ -372,7 +372,7 @@ MonoBehaviour:
   groundCheck: {fileID: 4987469338844168}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 2048
   continueSearchingForPlayerTime: 5
   enemyLocalScale: {x: 0, y: 0, z: 0}
   rooms: []
@@ -511,7 +511,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1838205595
-  m_SortingLayer: 4
+  m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300002, guid: 51041152cb379cc4a89574d9221cea95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -556,8 +556,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1838205595
-  m_SortingLayer: 4
+  m_SortingLayerID: 790681915
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 419c9793f677a194d8b415f62ea5deac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

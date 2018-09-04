@@ -8,15 +8,15 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications: []
     m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 0}
+  m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 1456881303406384}
-  m_IsPrefabParent: 1
+  m_IsPrefabAsset: 1
 --- !u!1 &1456881303406384
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4261830234728852}
   - component: {fileID: 212655614579088978}
@@ -35,9 +35,9 @@ GameObject:
 --- !u!1 &1686560168107590
 GameObject:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
+  serializedVersion: 6
   m_Component:
   - component: {fileID: 4816650608296330}
   m_Layer: 2
@@ -50,7 +50,7 @@ GameObject:
 --- !u!4 &4261830234728852
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456881303406384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
@@ -64,7 +64,7 @@ Transform:
 --- !u!4 &4816650608296330
 Transform:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1686560168107590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -77,7 +77,7 @@ Transform:
 --- !u!61 &61210698190023986
 BoxCollider2D:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456881303406384}
   m_Enabled: 0
@@ -102,7 +102,7 @@ BoxCollider2D:
 --- !u!61 &61821268106560944
 BoxCollider2D:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456881303406384}
   m_Enabled: 1
@@ -127,7 +127,7 @@ BoxCollider2D:
 --- !u!114 &114181792697209524
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456881303406384}
   m_Enabled: 1
@@ -138,7 +138,7 @@ MonoBehaviour:
   weaponID: 0
   whatToHit:
     serializedVersion: 2
-    m_Bits: 4294960857
+    m_Bits: 6929
   inaccuracyFactor: 0
   finalAccuracyFactor: 0
   fireRate: 8
@@ -146,7 +146,10 @@ MonoBehaviour:
   ammoType: 7.62mm
   clipSize: 30
   currentAmmoAmount: 0
+  durability: 0
+  durabilityUse: 0
   actionType: 
+  isBroken: 0
   isTwoHanded: 1
   isShotgun: 0
   isBoltAction: 0
@@ -157,6 +160,8 @@ MonoBehaviour:
   hasIncreasedClipSize: 0
   clipSizeMultiplier: 0
   hasAlteredInaccuracyFactor: 0
+  hasAlteredDurability: 0
+  durabilityMultiplier: 0
   BulletTrailPrefab: {fileID: 4959929317792800, guid: 844062fc802112443a2ab278850b50bd,
     type: 2}
   MuzzleFlashPrefab: {fileID: 4726169630952530, guid: 518bf1ec1f1d6fd4f80cbf7e2c8dcfb4,
@@ -170,7 +175,7 @@ MonoBehaviour:
 --- !u!114 &114446036999303076
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456881303406384}
   m_Enabled: 1
@@ -181,7 +186,7 @@ MonoBehaviour:
 --- !u!114 &114883518530747676
 MonoBehaviour:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456881303406384}
   m_Enabled: 1
@@ -194,7 +199,7 @@ MonoBehaviour:
 --- !u!212 &212655614579088978
 SpriteRenderer:
   m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1456881303406384}
   m_Enabled: 1
@@ -223,8 +228,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1413248729
-  m_SortingLayer: 5
+  m_SortingLayerID: -1682042631
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300050, guid: 93e8e268c96f87344a98f5b42faf0e0e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -236,3 +241,4 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
+  m_SpriteSortPoint: 0

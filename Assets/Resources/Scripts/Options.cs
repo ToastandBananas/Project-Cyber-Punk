@@ -8,5 +8,4 @@ public class Options
     public int antialiasing;
     public int vSync;
     public float musicVolume;
-
 }

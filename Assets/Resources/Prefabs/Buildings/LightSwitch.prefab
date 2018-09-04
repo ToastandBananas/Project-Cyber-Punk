@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212756643845166866}
   - component: {fileID: 61032895017900908}
   - component: {fileID: 114172579383294664}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightSwitch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,6 +80,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 2100000, guid: 903c7352dda7d41cbad8ce92fb3fa8b5, type: 2}
   highlightMaterial: {fileID: 2100000, guid: 82be8d44dc028c34b8a1f72b134981ee, type: 2}
+  lightOn: 0
 --- !u!212 &212756643845166866
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -113,7 +114,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 402886503
-  m_SortingLayer: 3
+  m_SortingLayer: 0
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: 31d09241ce0517b4ea55855539c233c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

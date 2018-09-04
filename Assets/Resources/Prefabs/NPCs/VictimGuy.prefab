@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 50526048038101876}
   - component: {fileID: 95435798598854664}
   - component: {fileID: 70823880512337506}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: VictimGuy
   m_TagString: Victim
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4974428868047032}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: VictimGroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,8 +106,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.84765756, y: 0.98016196}
-  m_Size: {x: 19.371775, y: 49.0019}
+  m_Offset: {x: 0.84765756, y: -1.0851523}
+  m_Size: {x: 19.371775, y: 53.13253}
   m_Direction: 0
 --- !u!95 &95435798598854664
 Animator:
@@ -141,7 +141,7 @@ MonoBehaviour:
   groundCheck: {fileID: 4974428868047032}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 2048
   currentTarget: {fileID: 0}
   distanceToPlayer: 0
   stoppingDistance: 1
@@ -211,9 +211,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1838205595
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayerID: 790681915
+  m_SortingLayer: 3
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300018, guid: 40ed488550c90a6488c4dab6c4024612, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -4,29 +4,28 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
-  - Enemy
-  - GM
-  - EquippedWeapon
-  - Arm
-  - EnemyArm
-  - EnemyWeapon
-  - Door
-  - SoundTrigger
-  - StairsDown
-  - Room
   - StairsUp
-  - Hearing
-  - Sight
-  - PatrolPoint
-  - ItemDatabase
-  - WeaponDrop
-  - InactiveWeapon
-  - SecondaryWeapon
-  - Wall
-  - Victim
-  - Stairs
+  - Door
+  - Ground
+  - Room
   - Light
+  - Wall
+  - StairsDown
+  - Arm
+  - EquippedWeapon
+  - SoundTrigger
+  - PatrolPoint
+  - Enemy
+  - EnemyArm
+  - Sight
+  - Hearing
+  - GM
+  - Victim
+  - InactiveWeapon
+  - EnemyWeapon
+  - SecondaryWeapon
+  - WeaponDrop
+  - Stairs
   layers:
   - Default
   - TransparentFX
@@ -36,12 +35,12 @@ TagManager:
   - UI
   - 
   - 
-  - Player
+  - Victim
   - Enemy
-  - Obstacle
-  - Sound
-  - Sight
+  - Player
   - Ground
+  - Obstacle
+  - 
   - 
   - 
   - 
@@ -64,21 +63,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Hidden
-    uniqueID: 1204745249
-    locked: 0
   - name: Background
-    uniqueID: 178885001
+    uniqueID: 1878561233
     locked: 0
   - name: Midground
-    uniqueID: 402886503
+    uniqueID: 4035166845
     locked: 0
   - name: Enemy
-    uniqueID: 1838205595
+    uniqueID: 790681915
     locked: 0
   - name: Player
-    uniqueID: 2881718567
+    uniqueID: 2612924665
     locked: 0
   - name: Foreground
-    uniqueID: 3654828437
+    uniqueID: 615751675
     locked: 0

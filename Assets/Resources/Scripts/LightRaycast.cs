@@ -89,8 +89,8 @@ public class LightRaycast : MonoBehaviour
 
                 RaycastHit2D castToPlayerFeet = Physics2D.Raycast(transform.position, (playerFeet - lightPosition), distanceToPlayer, whatToHit);
                 RaycastHit2D castToPlayerHead = Physics2D.Raycast(transform.position, (playerHead - lightPosition), distanceToPlayer, whatToHit);
-                // Debug.DrawLine(playerFeet, castToPlayerFeet.point, Color.red);
-                // Debug.DrawLine(playerHead, castToPlayerFeet.point, Color.red);
+                Debug.DrawLine(playerFeet, castToPlayerFeet.point, Color.red);
+                Debug.DrawLine(playerHead, castToPlayerFeet.point, Color.red);
 
                 if ((castToPlayerFeet.collider != null && castToPlayerFeet.collider.gameObject.tag == "Player") || (castToPlayerHead.collider != null && castToPlayerHead.collider.gameObject.tag == "Player"))
                 {

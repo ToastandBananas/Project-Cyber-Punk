@@ -109,10 +109,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatToHit:
     serializedVersion: 2
-    m_Bits: 4294960601
+    m_Bits: 7441
   whatToHitWhileHacked:
     serializedVersion: 2
-    m_Bits: 9745
+    m_Bits: 6673
   weaponID: 1
   inaccuracyFactor: 0
   finalAccuracyFactor: 0
@@ -179,8 +179,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1838205595
-  m_SortingLayer: 4
+  m_SortingLayerID: 790681915
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300058, guid: 93e8e268c96f87344a98f5b42faf0e0e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

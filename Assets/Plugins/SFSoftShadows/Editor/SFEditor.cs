@@ -342,7 +342,7 @@ public class SFMenus : ScriptableObject {
 		}
 	}
 
-	const string ROOT = "Component/SFShadow/";
+	const string ROOT = "SFShadow/";
 	
 	[MenuItem (ROOT + "SFRenderer", false, 1000)]
 	public static void AddRenderer(){

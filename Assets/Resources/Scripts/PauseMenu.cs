@@ -36,11 +36,6 @@ public class PauseMenu : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void RevertOptionsToDefaults()
-    {
-        print("Reverting to default options");
-    }
-
     public void ShowQuitConfirmation()
     {
         quitConfirmation.SetActive(true);

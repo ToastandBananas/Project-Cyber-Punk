@@ -78,9 +78,15 @@ public class GameMaster : MonoBehaviour
             if (pauseMenu.activeSelf == true || (pauseMenu.activeSelf == false && pauseMenuScript.quitConfirmation.activeSelf == false && pauseMenuScript.optionsMenu.activeSelf == false))
                 TogglePauseMenu();
             else if (pauseMenuScript.quitConfirmation.activeSelf == true)
+            {
                 pauseMenuScript.quitConfirmation.SetActive(false);
+                player.SetScriptsActive();
+            }
             else if (pauseMenuScript.optionsMenu.activeSelf == true)
+            {
                 pauseMenuScript.optionsMenu.SetActive(false);
+                player.SetScriptsActive();
+            }
         }
 
         debugPause();

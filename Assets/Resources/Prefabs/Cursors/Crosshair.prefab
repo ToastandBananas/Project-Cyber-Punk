@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212038849720189138}
   - component: {fileID: 114470095916771868}
   - component: {fileID: 95142133680970992}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241492965155972}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ba2461f04babe2b4da6a948217ec0520, type: 2}
   m_CullingMode: 0
@@ -75,7 +75,6 @@ MonoBehaviour:
     type: 3}
   defaultCrosshairSprite: {fileID: 21300000, guid: 85d1f4cbfdb327643921788786a3609c,
     type: 3}
-  teleporterSprite: {fileID: 21300000, guid: 9825bdabc168df24290affbb6f9e777f, type: 3}
   spriteRenderer: {fileID: 212038849720189138}
   anim: {fileID: 95142133680970992}
 --- !u!212 &212038849720189138
@@ -110,8 +109,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -640138859
-  m_SortingLayer: 6
+  m_SortingLayerID: 615751675
+  m_SortingLayer: 5
   m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: ee4995d5ac6b33344b57964955fd57b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

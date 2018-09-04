@@ -109,6 +109,26 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void SetScriptsActive()
+    {
+        // For when we want to set everything as active
+        GetComponent<PlayerController>().enabled = true;
+
+        Weapon _weapon = GetComponentInChildren<Weapon>();
+        if (_weapon != null)
+            _weapon.enabled = true;
+
+        ArmRotation playerArmRotationScript = GetComponentInChildren<ArmRotation>();
+        if (playerArmRotationScript != null)
+            playerArmRotationScript.enabled = true;
+
+        foreach (GameObject door in doors)
+            door.GetComponentInChildren<Door>().enabled = true;
+
+        GetComponent<Rigidbody2D>().gravityScale = 1;
+        Cursor.visible = false;
+    }
+
     void OnUpgradeMenuToggle(bool active)
     {
         // Handle what happens when the upgrade menu is toggled

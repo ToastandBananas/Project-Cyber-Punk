@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4808749456271244}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Skies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4310679124490364}
   - component: {fileID: 212678186366207512}
   - component: {fileID: 114660397852293192}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sky_Red (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4045491666038812}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: City4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4205384735421136}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Background_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,8 +83,7 @@ GameObject:
   - component: {fileID: 4972618818054750}
   - component: {fileID: 212217067970972856}
   - component: {fileID: 114861808450845612}
-  - component: {fileID: 114722159357362188}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CityLevel1_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +100,7 @@ GameObject:
   - component: {fileID: 4915265960339064}
   - component: {fileID: 212651315600601188}
   - component: {fileID: 114268013161870274}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sky_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,7 +117,7 @@ GameObject:
   - component: {fileID: 4610556230838590}
   - component: {fileID: 212933857878185688}
   - component: {fileID: 114439403119385478}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CityLevel3_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4340233456162740}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: City3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +149,7 @@ GameObject:
   - component: {fileID: 4198762385670836}
   - component: {fileID: 212416224250440248}
   - component: {fileID: 114491804720145900}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CityLevel4_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4261527559806104}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: City2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +181,7 @@ GameObject:
   - component: {fileID: 4425581405312364}
   - component: {fileID: 212559238306762896}
   - component: {fileID: 114048559511811444}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sky_Red (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -197,7 +196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4679065122857296}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: City1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -214,7 +213,7 @@ GameObject:
   - component: {fileID: 4679193150863598}
   - component: {fileID: 212803913346685554}
   - component: {fileID: 114032741389845900}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CityLevel2_Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,28 +491,6 @@ MonoBehaviour:
   hasRightBuddy: 0
   hasLeftBuddy: 0
   reverseScale: 0
---- !u!114 &114722159357362188
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1248221239445120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f7b15544ddfa4e49b82852d600f44d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _verts:
-  - {x: 32.10872, y: 18.897327}
-  - {x: 32.25458, y: -8.712347}
-  - {x: -31.94417, y: -8.715515}
-  - {x: -31.697927, y: 18.811361}
-  _looped: 1
-  _shadowLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  _lightPenetration: 0
-  _opacity: 1
 --- !u!114 &114861808450845612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -544,7 +521,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 78add833d2f9d4a7c806b520a60ed176, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -561,9 +538,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 178885001
-  m_SortingLayer: 2
-  m_SortingOrder: -1
+  m_SortingLayerID: 1878561233
+  m_SortingLayer: 1
+  m_SortingOrder: 4
   m_Sprite: {fileID: 21300000, guid: 513d94ac96c74bb43ae17678d8e1559d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -607,9 +584,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 178885001
-  m_SortingLayer: 2
-  m_SortingOrder: -4
+  m_SortingLayerID: 1878561233
+  m_SortingLayer: 1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 29367dde49758a7429a1093d2d9e69b6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -653,9 +630,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 178885001
-  m_SortingLayer: 2
-  m_SortingOrder: -6
+  m_SortingLayerID: 1878561233
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e649825f48220654eae9ed476bc3c2a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -699,9 +676,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 178885001
-  m_SortingLayer: 2
-  m_SortingOrder: -5
+  m_SortingLayerID: 1878561233
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e649825f48220654eae9ed476bc3c2a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -745,9 +722,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 178885001
-  m_SortingLayer: 2
-  m_SortingOrder: -6
+  m_SortingLayerID: 1878561233
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e649825f48220654eae9ed476bc3c2a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -791,9 +768,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 178885001
-  m_SortingLayer: 2
-  m_SortingOrder: -2
+  m_SortingLayerID: 1878561233
+  m_SortingLayer: 1
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 6612d33c6ae25ef4fbc3fc24e6872a7c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -837,9 +814,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 178885001
-  m_SortingLayer: 2
-  m_SortingOrder: -3
+  m_SortingLayerID: 1878561233
+  m_SortingLayer: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 20dbf8b7fefa1b14f81e7a25b43555ac, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4943588445093064}
   - component: {fileID: 212209475260478948}
   - component: {fileID: 61413406370279478}
-  m_Layer: 13
+  m_Layer: 11
   m_Name: Floor1-Short
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -640138859
-  m_SortingLayer: 6
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 422a84bba2a60fa4094899c14a9c56b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

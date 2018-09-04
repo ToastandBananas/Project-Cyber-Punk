@@ -204,8 +204,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatToHit:
     serializedVersion: 2
-    m_Bits: 9473
+    m_Bits: 7168
   floorLevel: 0
+  feetOffset: 0.135
+  headOffset: 0.17
 --- !u!114 &114490358789074846
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,7 +225,7 @@ MonoBehaviour:
   _cookieTexture: {fileID: 2800000, guid: 8c9424686718749a79efeb06eb69c15c, type: 3}
   _shadowLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 6145
   _parallaxLight: 0
 --- !u!114 &114772180800832176
 MonoBehaviour:
@@ -271,8 +273,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 402886503
-  m_SortingLayer: 3
+  m_SortingLayerID: -259800451
+  m_SortingLayer: 2
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: 31d09241ce0517b4ea55855539c233c4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -317,8 +319,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 402886503
-  m_SortingLayer: 3
+  m_SortingLayerID: -259800451
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 3ad72b95ceb8f0b499e6de7026015ff4, type: 3}
   m_Color: {r: 1, g: 0.9893416, b: 0.8160377, a: 1}

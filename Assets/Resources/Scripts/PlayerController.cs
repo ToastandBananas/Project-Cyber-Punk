@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
     //[SerializeField] float walkSpeed = 2.3f;
     [SerializeField] float runSpeed = 4f;
     [SerializeField] float jumpPower = 5f;
-    [SerializeField] string landingSoundName = "LandingFootsteps";
+    string landingSoundName = "LandingFootsteps";
 
     float speedFactor = 2.3f;
     float moveSpeed;
@@ -127,8 +127,7 @@ public class PlayerController : MonoBehaviour
         {
             inAir = true;
         }
-
-        if (onGround && inAir)
+        else if (onGround && inAir)
         {
             inAir = false;
             audioManager.PlaySound(landingSoundName);
@@ -200,7 +199,7 @@ public class PlayerController : MonoBehaviour
         {
             isAiming = true;
 
-            for (int i = 1; i < childSpriteRenderer.Length; ++i) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the player's body)
+            for (int i = 1; i < childSpriteRenderer.Length; i++) // Enable Arm and Weapon sprite renderers if aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
                 if (childSpriteRenderer[i] != null)
                 {
@@ -214,7 +213,7 @@ public class PlayerController : MonoBehaviour
         {
             isAiming = false;
 
-            for (int i = 1; i < childSpriteRenderer.Length; ++i) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the player's body)
+            for (int i = 1; i < childSpriteRenderer.Length; i++) // Disable Arm and Weapon sprite renderers if not aiming...Start with i = 1 to skip the parent sprite (the player's body)
             {
                 if (childSpriteRenderer[i] != null)
                 {

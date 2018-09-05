@@ -45,7 +45,7 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         // Might change this to quit to main menu, but for now will just quit game altogether
-        print("Quitting Game");
+        // print("Quitting Game");
         Application.Quit();
     }
 

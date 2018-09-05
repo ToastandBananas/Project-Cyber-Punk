@@ -52,7 +52,7 @@ public class Hotbar : MonoBehaviour
 
         AddItemToInventory(startingWeaponID);
         AddItemToInventory(34);
-        AddItemToInventory(36);
+        AddItemToInventory(35);
 
         weaponObjects = GameObject.FindGameObjectsWithTag("EquippedWeapon");
         foreach (GameObject weaponObject in weaponObjects)

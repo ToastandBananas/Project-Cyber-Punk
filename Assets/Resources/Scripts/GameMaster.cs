@@ -81,11 +81,15 @@ public class GameMaster : MonoBehaviour
             {
                 pauseMenuScript.quitConfirmation.SetActive(false);
                 player.SetScriptsActive();
+                foreach (GameObject enemy in enemies)
+                    enemy.GetComponent<Enemy>().SetScriptsActive();
             }
             else if (pauseMenuScript.optionsMenu.activeSelf == true)
             {
                 pauseMenuScript.optionsMenu.SetActive(false);
                 player.SetScriptsActive();
+                foreach (GameObject enemy in enemies)
+                    enemy.GetComponent<Enemy>().SetScriptsActive();
             }
         }
 

@@ -122,11 +122,14 @@ public class Weapon : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = true;
             foreach (GameObject ground in groundObjects)
             {
-                Physics2D.IgnoreCollision(ground.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>()); // Ignore collision between ground and weapons
+                if (GetComponent<BoxCollider2D>() != null && ground.GetComponent<BoxCollider2D>() != null)
+                    Physics2D.IgnoreCollision(ground.GetComponent<BoxCollider2D>(), GetComponent<BoxCollider2D>()); // Ignore collision between ground and weapons
             }
+
             foreach (GameObject enemy in enemies)
             {
-                Physics2D.IgnoreCollision(enemy.GetComponent<CapsuleCollider2D>(), GetComponent<BoxCollider2D>());
+                if (GetComponent<BoxCollider2D>() != null && enemy.GetComponent<CapsuleCollider2D>() != null)
+                    Physics2D.IgnoreCollision(enemy.GetComponent<CapsuleCollider2D>(), GetComponent<BoxCollider2D>());
             }
         }
         else

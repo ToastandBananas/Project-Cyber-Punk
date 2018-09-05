@@ -452,28 +452,28 @@ public class EnemyMovement : MonoBehaviour {
 
             MoveTowardsTarget();
         }
-        else if (currentFloorLevel + 1 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If sound is one level above enemy
+        else if (currentFloorLevel + 1 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If patrol point is one level above enemy
         {
             Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom;
             currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsUpTo.transform;
 
             MoveTowardsTarget();
         }
-        else if (currentFloorLevel - 1 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If sound is one level below enemy
+        else if (currentFloorLevel - 1 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If patrol point is one level below enemy
         {
             Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom;
             currentTarget = targetRoomName.gameObject.GetComponent<Room>().nearestStairsDownTo.transform;
 
             MoveTowardsTarget();
         }
-        else if (currentFloorLevel + 2 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If sound is two levels above enemy
+        else if (currentFloorLevel + 2 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If patrol point is two levels above enemy
         {
             Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom;
             currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsUpTo.transform;
 
             MoveTowardsTarget();
         }
-        else if (currentFloorLevel - 2 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If sound is two levels below enemy
+        else if (currentFloorLevel - 2 == currentPatrolPoint.GetComponent<PatrolPoint>().currentFloorLevel) // If patrol point is two levels below enemy
         {
             Transform targetRoomName = currentPatrolPoint.GetComponent<PatrolPoint>().currentRoom;
             currentTarget = targetRoomName.gameObject.GetComponent<Room>().secondNearestStairsDownTo.transform;
@@ -565,7 +565,7 @@ public class EnemyMovement : MonoBehaviour {
             }
 
             EnemyMovement enemyToAttackMovementScript = enemyToAttack.GetComponent<EnemyMovement>();
-            if (enemyToAttackMovementScript.currentFloorLevel == currentFloorLevel)
+            if (enemyToAttackMovementScript.currentFloorLevel == currentFloorLevel && (enemyToAttackMovementScript.currentBuildingNumber == currentBuildingNumber || (enemyToAttackMovementScript.currentFloorLevel == 1 && currentFloorLevel == 1)))
             {
                 currentTarget = enemyToAttack;
 
@@ -631,7 +631,8 @@ public class EnemyMovement : MonoBehaviour {
         }
         else if (enemyScript.isDead == false && player.isDead == false && !isHacked)
         {
-            if ((enemySightScript.CanPlayerBeSeen() == true || playerPositionKnown == true) && currentFloorLevel == playerControllerScript.currentFloorLevel)
+            if ((enemySightScript.CanPlayerBeSeen() == true || playerPositionKnown == true) && currentFloorLevel == playerControllerScript.currentFloorLevel 
+                && (currentBuildingNumber == playerControllerScript.currentBuildingNumber || (currentFloorLevel == 1 && playerControllerScript.currentFloorLevel == 1)))
             {
                 currentTarget = player.transform;
 

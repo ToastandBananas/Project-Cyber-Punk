@@ -1,33 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.Audio;
 
 public class OptionsManager : MonoBehaviour
 {
     public Toggle fullscreenToggle;
     public Dropdown resolutionDropdown;
-    public Dropdown graphicsQualityDropdown;
-    public Dropdown antialiasingDropdown;
-    public Toggle vSyncToggle;
+    public Slider masterVolumeSlider;
     public Slider musicVolumeSlider;
     public Button revertToDefaultsButton;
-
-    //public AudioSource musicSource;
-    public AudioManager audioManager;
+    
+    public AudioMixer masterAudioMixer;
+    AudioManager audioManager;
 
     public Resolution[] resolutions;
 
     public Options options;
 
+    public static OptionsManager instance;
+
+    void Start()
+    {
+        audioManager = AudioManager.instance;
+        LoadOptions();
+    }
+
     void OnEnable()
     {
+        if (instance != null)
+        {
+            if (instance != this)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+        else
+        {
+            instance = this;
+        }
+
         options = new Options();
 
         fullscreenToggle.onValueChanged.AddListener(delegate { OnFullScreenToggle(); });
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
-        graphicsQualityDropdown.onValueChanged.AddListener(delegate { OnGraphicsQualityChange(); });
-        antialiasingDropdown.onValueChanged.AddListener(delegate { OnAntialiasingChange(); });
-        vSyncToggle.onValueChanged.AddListener(delegate { OnVSyncToggle(); });
+        masterVolumeSlider.onValueChanged.AddListener(delegate { OnMasterVolumeChange(); });
         musicVolumeSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChange(); });
         revertToDefaultsButton.onClick.AddListener(delegate { OnRevertToDefaultsButtonClick(); });
 
@@ -36,8 +53,6 @@ public class OptionsManager : MonoBehaviour
         {
             resolutionDropdown.options.Add(new Dropdown.OptionData(resolution.ToString()));
         }
-
-        LoadOptions();
     }
 
     public void OnFullScreenToggle()
@@ -55,68 +70,18 @@ public class OptionsManager : MonoBehaviour
         SaveOptions();
     }
 
-    public void OnGraphicsQualityChange()
-    {
-        options.graphicsQuality = graphicsQualityDropdown.value;
-        QualitySettings.SetQualityLevel(options.graphicsQuality);
-
-        if (QualitySettings.vSyncCount == 1)
-        {
-            vSyncToggle.isOn = true;
-            options.vSync = 1;
-        }
-        else if (QualitySettings.vSyncCount == 0)
-        {
-            vSyncToggle.isOn = false;
-            options.vSync = 0;
-        }
-
-        options.antialiasing = antialiasingDropdown.value = QualitySettings.antiAliasing;
-
-        SaveOptions();
-    }
-
-    public void OnAntialiasingChange()
-    {
-        QualitySettings.antiAliasing = (int)Mathf.Pow(2f, antialiasingDropdown.value);
-        options.antialiasing = antialiasingDropdown.value;
-
-        SaveOptions();
-    }
-
-    public void OnVSyncToggle()
-    {
-        if (vSyncToggle.isOn)
-        {
-            QualitySettings.vSyncCount = 1;
-            options.vSync = 1;
-        }
-        else
-        {
-            QualitySettings.vSyncCount = 0;
-            options.vSync = 0;
-        }
-
-        SaveOptions();
-    }
-
     public void OnMasterVolumeChange()
     {
+        masterAudioMixer.SetFloat("MasterVolume", masterVolumeSlider.value);
+        options.masterVolume = masterVolumeSlider.value;
 
+        SaveOptions();
     }
 
     public void OnMusicVolumeChange()
     {
         if (audioManager.transform.childCount > 0)
             audioManager.sounds[0].volume = audioManager.transform.GetChild(0).GetComponent<AudioSource>().volume = options.musicVolume = musicVolumeSlider.value;
-
-        /*foreach (Sound sound in audioManager.sounds)
-        {
-            if (sound.soundName == "Music")
-            {
-                sound.volume = audioManager.transform.GetChild(0).GetComponent<AudioSource>().volume = options.musicVolume = musicVolumeSlider.value;
-            }
-        }*/
 
         SaveOptions();
     }
@@ -136,17 +101,11 @@ public class OptionsManager : MonoBehaviour
             }
         }
 
-        QualitySettings.SetQualityLevel(5);
-        graphicsQualityDropdown.value = options.graphicsQuality = 5;
+        masterVolumeSlider.value = -16.0f;
+        masterAudioMixer.SetFloat("MasterVolume", masterVolumeSlider.value);
+        options.masterVolume = masterVolumeSlider.value;
 
-        antialiasingDropdown.value = 3;
-        QualitySettings.antiAliasing = (int)Mathf.Pow(2f, antialiasingDropdown.value);
-        options.antialiasing = antialiasingDropdown.value;
-
-        vSyncToggle.isOn = true;
-        QualitySettings.vSyncCount = options.vSync = 1;
-
-        audioManager.sounds[0].volume = audioManager.transform.GetChild(0).GetComponent<AudioSource>().volume = options.musicVolume = musicVolumeSlider.value = 0.3f;
+        audioManager.sounds[0].volume = audioManager.transform.GetChild(0).GetComponent<AudioSource>().volume = options.musicVolume = musicVolumeSlider.value = 1.2f;
 
         SaveOptions();
     }
@@ -159,19 +118,23 @@ public class OptionsManager : MonoBehaviour
 
     public void LoadOptions()
     {
-        options = JsonUtility.FromJson<Options>(File.ReadAllText(Application.persistentDataPath + "/gameOptions.json"));
+        if (File.Exists(Application.persistentDataPath + "/gameOptions.json"))
+        {
+            options = JsonUtility.FromJson<Options>(File.ReadAllText(Application.persistentDataPath + "/gameOptions.json"));
 
-        fullscreenToggle.isOn = options.fullscreen;
-        Screen.fullScreen = options.fullscreen;
-        resolutionDropdown.value = options.resolutionIndex;
-        graphicsQualityDropdown.value = options.graphicsQuality;
-        antialiasingDropdown.value = options.antialiasing;
-        if (options.vSync == 0)
-            vSyncToggle.isOn = false;
-        else if (options.vSync == 1)
-            vSyncToggle.isOn = true;
-        musicVolumeSlider.value = options.musicVolume;
+            fullscreenToggle.isOn = options.fullscreen;
+            Screen.fullScreen = options.fullscreen;
 
-        resolutionDropdown.RefreshShownValue();
-    }
+            resolutionDropdown.value = options.resolutionIndex;
+            Screen.SetResolution(resolutions[resolutionDropdown.value].width, resolutions[resolutionDropdown.value].height, Screen.fullScreen);
+            resolutionDropdown.RefreshShownValue();
+
+            masterVolumeSlider.value = options.masterVolume;
+            masterAudioMixer.SetFloat("MasterVolume", masterVolumeSlider.value);
+            
+            musicVolumeSlider.value = options.musicVolume;
+            audioManager.sounds[0].volume = options.musicVolume;
+            audioManager.transform.GetChild(0).GetComponent<AudioSource>().volume = options.musicVolume;
+        }
+    } 
 }

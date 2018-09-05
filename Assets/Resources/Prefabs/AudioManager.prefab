@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dd81891259dff94fb94e03db0ea4072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterAudioMixerGroup: {fileID: 24300002, guid: afe1d7b9f99a8774c8926ca59de4603c,
+    type: 2}
   sounds:
   - soundName: Music
     clip: {fileID: 8300000, guid: aa8ce5fc65ab2d0459c6b12f283f52f5, type: 3}

@@ -228,6 +228,12 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public void SetScriptsActive()
+    {
+        enemyMovementScript.enabled = true;
+        enemyWeaponScript.enabled = true;
+    }
+
     public void DamageEnemy(float damage)
     {
         if (enemyStats.currentHealth > 0)

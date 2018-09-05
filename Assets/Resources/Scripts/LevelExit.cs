@@ -55,6 +55,8 @@ public class LevelExit : MonoBehaviour
 
     GameObject missionFailedText;
     AudioManager audioManager;
+    Player player;
+    PlayerController playerControllerScript;
 
     // Use this for initialization
     void Start ()
@@ -65,6 +67,9 @@ public class LevelExit : MonoBehaviour
         audioManager = AudioManager.instance;
         if (audioManager == null)
             Debug.LogError("No AudioManager found in the scene");
+
+        player = Player.instance;
+        playerControllerScript = player.GetComponent<PlayerController>();
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         enemyCount = enemies.Length;
@@ -131,10 +136,24 @@ public class LevelExit : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                // Play teleport animation and go to mission complete screen
                 print("Level complete!");
+                playerControllerScript.isTeleporting = true;
+                playerControllerScript.playerAnim.SetBool("isTeleporting", true);
+                Invoke("DeactivatePlayer", 0.5f);
+                Invoke("LoadNextScene", 2f);
             }
         }
+    }
+
+    void DeactivatePlayer()
+    {
+        player.GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    void LoadNextScene()
+    {
+        // Currently just reloads the level, but eventually will load next scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void AquireItemMissionComplete() // This is called in the ___

@@ -390,7 +390,7 @@ MonoBehaviour:
   currentRoom: {fileID: 0}
   mayBeAlert: 1
   mayBeAlertTimer: 0
-  startState: 1
+  startState: 2
   currentState: 0
   defaultState: 2
 --- !u!114 &114400769637986530
@@ -510,8 +510,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1838205595
-  m_SortingLayer: 0
+  m_SortingLayerID: 790681915
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300002, guid: 51041152cb379cc4a89574d9221cea95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

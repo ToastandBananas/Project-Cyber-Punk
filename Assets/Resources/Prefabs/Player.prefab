@@ -4132,7 +4132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStats:
-    maxHealth: 10000
+    maxHealth: 5
     startHealthPercent: 1
     inaccuracyFactor: 0.15
     _currentHealth: 0

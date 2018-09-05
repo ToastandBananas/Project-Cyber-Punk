@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 [System.Serializable]
 public class Sound {
@@ -42,6 +43,10 @@ public class AudioManager : MonoBehaviour {
 
     public static AudioManager instance;
 
+    [Header("Master Audio Mixer:")]
+    public AudioMixerGroup masterAudioMixerGroup;
+
+    [Header("Sounds:")]
     [SerializeField]
     public Sound[] sounds;
 
@@ -67,7 +72,8 @@ public class AudioManager : MonoBehaviour {
         {
             GameObject _go = new GameObject("Sound_" + i + " " + sounds[i].soundName);
             _go.transform.SetParent(this.transform);
-            sounds[i].SetSource (_go.AddComponent<AudioSource>());
+            sounds[i].SetSource(_go.AddComponent<AudioSource>());
+            _go.GetComponent<AudioSource>().outputAudioMixerGroup = masterAudioMixerGroup;
         }
 
         PlaySound("Music");

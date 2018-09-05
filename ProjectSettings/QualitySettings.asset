@@ -211,7 +211,7 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
-    Android: 3
+    Android: 5
     Nintendo 3DS: 5
     Nintendo Switch: 5
     PS4: 5
@@ -220,5 +220,5 @@ QualitySettings:
     WebGL: 3
     Windows Store Apps: 5
     XboxOne: 5
-    iPhone: 3
+    iPhone: 5
     tvOS: 2

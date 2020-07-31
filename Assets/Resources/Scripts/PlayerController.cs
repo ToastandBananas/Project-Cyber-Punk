@@ -101,12 +101,12 @@ public class PlayerController : MonoBehaviour
         CheckIfAiming();
         MoveHorizontally();
         childSpriteRenderer = GetComponentsInChildren<SpriteRenderer>();
+        Jump();
     }
 
     void FixedUpdate()
     {
         PlayLandingSoundUponLanding();
-        Jump();
         GetPlayerVerticalVelocity();
     }
 
